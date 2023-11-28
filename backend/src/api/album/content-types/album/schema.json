@@ -16,15 +16,8 @@
       "type": "string",
       "required": true
     },
-    "year": {
-      "type": "string"
-    },
     "genre": {
       "type": "string"
-    },
-    "artist": {
-      "type": "string",
-      "required": true
     },
     "cover": {
       "type": "media",
@@ -39,6 +32,28 @@
       "relation": "oneToMany",
       "target": "api::track.track",
       "mappedBy": "album"
+    },
+    "album_type": {
+      "type": "enumeration",
+      "enum": [
+        "album",
+        "single"
+      ],
+      "required": true
+    },
+    "artist": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::artist.artist",
+      "inversedBy": "albums"
+    },
+    "release_date": {
+      "type": "datetime",
+      "required": true
+    },
+    "duration_sec": {
+      "type": "float",
+      "required": true
     }
   }
 }

@@ -2,7 +2,7 @@ import { env } from '@/env.mjs';
 import type { SiteConfig } from '@/types';
 
 export const siteConfig: SiteConfig = {
-  name: 'SECTIONZ',
+  name: 'SectionZ',
   description: 'Listen to new music',
   url: env.NEXT_PUBLIC_APP_URL,
   ogImage: `${env.NEXT_PUBLIC_APP_URL}/og.jpg`,

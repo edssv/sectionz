@@ -12,12 +12,16 @@ export function Player() {
 
   const trackUrl = useLoadTrackUrl(track!);
 
-  // if (!track || !trackUrl || !player.activeId) {
-  //   return null;
-  // }
+  if (!track || !trackUrl || !player.activeId) {
+    return null;
+  }
+
+  const handleMouseLeave = () => {
+    player.setIsShownVolumeController(false);
+  };
 
   return (
-    <div className='fixed bottom-0 z-50 w-full'>
+    <div className='fixed bottom-0 z-50 w-full' onMouseLeave={handleMouseLeave}>
       <PlayerContent key={trackUrl} track={track} trackUrl={trackUrl} />
     </div>
   );

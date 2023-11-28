@@ -1,18 +1,24 @@
-import type { User } from 'next-auth';
+import type { User as DefaultUser } from 'next-auth';
 
 type UserId = number;
+type JwtFromStrapi = string;
 
 declare module 'next-auth/jwt' {
   interface JWT {
     id: UserId;
+    jwt: JwtFromStrapi;
   }
 }
 
 declare module 'next-auth' {
   interface Session {
-    user: User & {
+    user: DefaultUser & {
       id: UserId;
     };
-    jwt: string;
+    jwt: JwtFromStrapi;
+  }
+
+  interface User extends DefaultUser {
+    jwt: JwtFromStrapi;
   }
 }

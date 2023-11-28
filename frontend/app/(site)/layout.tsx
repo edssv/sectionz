@@ -1,32 +1,47 @@
-import Link from 'next/link';
-
-import { MainNav } from '@/components/main-nav';
-import { Player } from '@/components/player';
+import { Player } from '@/components/player/player';
+import { Sidebar } from '@/components/sidebar';
 import { SiteFooter } from '@/components/site-footer';
-import { buttonVariants } from '@/components/ui/button';
-import { getPublicUrl } from '@/lib/publicUrlBuilder';
+import { SiteHeader } from '@/components/site-header';
+import { getCurrentUser } from '@/lib/session';
 import { cn } from '@/lib/utils';
 
 interface MarketingLayoutProps {
   children: React.ReactNode;
 }
 
-export default function Layout({ children }: MarketingLayoutProps) {
+export default async function Layout({ children }: MarketingLayoutProps) {
+  const user = await getCurrentUser();
+
   return (
-    <div className='flex min-h-screen flex-col border-x'>
-      <header className='z-40 bg-background'>
-        <div className='container flex h-16 items-center justify-between border-x py-6'>
-          <MainNav />
-          <Link className={cn(buttonVariants({ variant: 'secondary' }), 'px-4')} href={getPublicUrl.login()}>
-            Login
-          </Link>
+    <div className='min-h-full overflow-hidden'>
+      <div className='fixed top-0 flex h-full w-full'>
+        <Sidebar
+          className='hidden w-full max-w-[var(--sidebar-nav-width)] border-r md:block'
+          playlists={[
+            'Recently Added',
+            'Recently Played',
+            'Top Songs',
+            'Top Albums',
+            'Top Artists',
+            'Logic Discography',
+            'Bedtime Beats',
+            'Feeling Happy',
+            'I miss Y2K Pop',
+            'Runtober',
+            'Mellow Days',
+            'Eminem Essentials'
+          ]}
+        />
+        <SiteHeader user={user} />
+        <div
+          className={cn('mt-[var(--header-nav-height)] h-auto w-full overflow-y-auto overflow-x-hidden')}
+          id='main_outer'
+        >
+          <main className='container min-h-main-height w-full flex-grow justify-between py-10 '>{children}</main>
+          <SiteFooter />
         </div>
-      </header>
-      <main className='container flex min-h-screen flex-1 flex-col items-center justify-between border-x border-t'>
-        {children}
-      </main>
-      <SiteFooter />
-      <Player />
+        <Player />
+      </div>
     </div>
   );
 }

@@ -4,7 +4,8 @@
   "info": {
     "singularName": "track",
     "pluralName": "tracks",
-    "displayName": "Track"
+    "displayName": "Track",
+    "description": ""
   },
   "options": {
     "draftAndPublish": true
@@ -15,35 +16,44 @@
       "type": "string",
       "required": true
     },
-    "artist": {
-      "type": "string",
-      "required": true
-    },
     "genre": {
       "type": "string"
     },
-    "year": {
-      "type": "string"
-    },
     "cover": {
+      "type": "media",
+      "multiple": false,
+      "required": false,
       "allowedTypes": [
         "images"
-      ],
-      "type": "media",
-      "multiple": false
+      ]
     },
     "audio": {
+      "type": "media",
+      "multiple": false,
+      "required": false,
       "allowedTypes": [
         "audios"
-      ],
-      "type": "media",
-      "multiple": false
+      ]
     },
     "album": {
       "type": "relation",
       "relation": "manyToOne",
       "target": "api::album.album",
       "inversedBy": "tracks"
+    },
+    "artist": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::artist.artist",
+      "inversedBy": "tracks"
+    },
+    "plays_number": {
+      "type": "biginteger",
+      "default": "0",
+      "min": "0"
+    },
+    "duration_ms": {
+      "type": "float"
     }
   }
 }

@@ -1,82 +1,161 @@
 import {
-  ExclamationTriangleIcon,
   ArrowRightIcon,
-  CheckIcon,
-  ChevronLeftIcon,
-  ChevronRightIcon,
   FileIcon,
   FileTextIcon,
   QuestionMarkCircledIcon,
   ImageIcon,
   LaptopIcon,
   MoonIcon,
-  DotsVerticalIcon,
   PlusIcon,
   SunIcon,
   TrashIcon,
-  HeartIcon,
-  TwitterLogoIcon,
   Share2Icon,
   PinTopIcon,
-  HeartFilledIcon,
-  TrackPreviousIcon,
-  TrackNextIcon,
-  PlayIcon,
-  SpeakerLoudIcon,
-  PauseIcon,
-  SpeakerOffIcon
+  ClockIcon,
+  AvatarIcon,
+  DotsHorizontalIcon
 } from '@radix-ui/react-icons';
-import { Loader2, Pizza, X, User, Settings, Command, CreditCard, Eye } from 'lucide-react';
+import {
+  Loader2,
+  X,
+  User,
+  Settings,
+  PlayIcon,
+  Command,
+  Eye,
+  PauseIcon,
+  SearchIcon,
+  Volume2,
+  VolumeX,
+  PlayCircleIcon,
+  LayoutGridIcon,
+  ListMusicIcon,
+  Music2Icon,
+  Mic2Icon,
+  LibraryIcon,
+  ListPlusIcon,
+  HomeIcon,
+  ChevronLeft,
+  AlertCircleIcon,
+  CalendarDaysIcon,
+  ExternalLinkIcon
+} from 'lucide-react';
 import type { LucideProps } from 'lucide-react';
 
 export const Icons = {
-  trackPrevious: TrackPreviousIcon,
-  trackNext: TrackNextIcon,
-  play: PlayIcon,
-  pause: PauseIcon,
-  speakerLoud: SpeakerLoudIcon,
-  speakerOff: SpeakerOffIcon,
-  logo: Command,
-  share: Share2Icon,
-  pinTop: PinTopIcon,
-  close: X,
-  spinner: Loader2,
-  chevronLeft: ChevronLeftIcon,
-  chevronRight: ChevronRightIcon,
-  trash: TrashIcon,
-  post: FileTextIcon,
-  page: FileIcon,
-  heart: HeartIcon,
-  filledHeart: HeartFilledIcon,
-  media: ImageIcon,
-  settings: Settings,
-  billing: CreditCard,
-  ellipsis: DotsVerticalIcon,
   add: PlusIcon,
-  warning: ExclamationTriangleIcon,
-  user: User,
   arrowRight: ArrowRightIcon,
-  help: QuestionMarkCircledIcon,
-  pizza: Pizza,
-  sun: SunIcon,
-  moon: MoonIcon,
-  laptop: LaptopIcon,
+  avatar: AvatarIcon,
+  browse: LayoutGridIcon,
+  calendar: CalendarDaysIcon,
+  chevronLeft: ChevronLeft,
+  clock: ClockIcon,
+  close: X,
+  dotsHorizontal: DotsHorizontalIcon,
   eyeOpen: Eye,
-  gitHub: ({ ...props }: LucideProps) => (
-    <svg
-      aria-hidden='true'
-      data-icon='github'
-      data-prefix='fab'
-      focusable='false'
-      role='img'
-      viewBox='0 0 496 512'
-      xmlns='http://www.w3.org/2000/svg'
-      {...props}
-    >
+  externalLink: ExternalLinkIcon,
+  help: QuestionMarkCircledIcon,
+  home: HomeIcon,
+  laptop: LaptopIcon,
+  library: LibraryIcon,
+  listPlus: ListPlusIcon,
+  logo: Command,
+  media: ImageIcon,
+  mic: Mic2Icon,
+  moon: MoonIcon,
+  page: FileIcon,
+  pause: PauseIcon,
+  pinTop: PinTopIcon,
+  play: PlayIcon,
+  playCircle: PlayCircleIcon,
+  playlists: ListMusicIcon,
+  post: FileTextIcon,
+  search: SearchIcon,
+  settings: Settings,
+  share: Share2Icon,
+  songs: Music2Icon,
+  speakerLoud: Volume2,
+  speakerOff: VolumeX,
+  spinner: Loader2,
+  sun: SunIcon,
+  trash: TrashIcon,
+  user: User,
+  warning: AlertCircleIcon,
+
+  heart: ({ ...props }: LucideProps) => (
+    <svg aria-hidden='true' data-encore-id='icon' fill='currentColor' role='img' viewBox='0 0 16 16' {...props}>
       <path
-        d='M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3 .3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5 .3-6.2 2.3zm44.2-1.7c-2.9 .7-4.9 2.6-4.6 4.9 .3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3 .7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3 .3 2.9 2.3 3.9 1.6 1 3.6 .7 4.3-.7 .7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3 .7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3 .7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z'
+        d='M1.69 2A4.582 4.582 0 0 1 8 2.023 4.583 4.583 0 0 1 11.88.817h.002a4.618 4.618 0 0 1 3.782 3.65v.003a4.543 4.543 0 0 1-1.011 3.84L9.35 14.629a1.765 1.765 0 0 1-2.093.464 1.762 1.762 0 0 1-.605-.463L1.348 8.309A4.582 4.582 0 0 1 1.689 2zm3.158.252A3.082 3.082 0 0 0 2.49 7.337l.005.005L7.8 13.664a.264.264 0 0 0 .311.069.262.262 0 0 0 .09-.069l5.312-6.33a3.043 3.043 0 0 0 .68-2.573 3.118 3.118 0 0 0-2.551-2.463 3.079 3.079 0 0 0-2.612.816l-.007.007a1.501 1.501 0 0 1-2.045 0l-.009-.008a3.082 3.082 0 0 0-2.121-.861z'
         fill='currentColor'
       />
+    </svg>
+  ),
+  heartFilled: ({ ...props }: LucideProps) => (
+    <svg aria-hidden='true' data-encore-id='icon' fill='currentColor' role='img' viewBox='0 0 16 16' {...props}>
+      <path
+        d='M15.724 4.22A4.313 4.313 0 0 0 12.192.814a4.269 4.269 0 0 0-3.622 1.13.837.837 0 0 1-1.14 0 4.272 4.272 0 0 0-6.21 5.855l5.916 7.05a1.128 1.128 0 0 0 1.727 0l5.916-7.05a4.228 4.228 0 0 0 .945-3.577z'
+        fill='currentColor'
+      />
+    </svg>
+  ),
+  trackPrevious: ({ ...props }: LucideProps) => (
+    <svg viewBox='0 0 16 16' xmlns='http://www.w3.org/2000/svg' {...props}>
+      <g clipPath='url(#clip0_0_1014)'>
+        <path
+          d='M3.3 1.20312C3.48565 1.20312 3.6637 1.27687 3.79497 1.40815C3.92625 1.53943 4 1.71747 4 1.90313V7.05312L13.95 1.30912C14.0564 1.2477 14.1771 1.21535 14.2999 1.21534C14.4228 1.21533 14.5435 1.24766 14.6499 1.30907C14.7563 1.37048 14.8447 1.45882 14.9061 1.5652C14.9676 1.67158 15 1.79227 15 1.91513V14.4901C15.0001 14.6131 14.9679 14.7339 14.9065 14.8404C14.8451 14.9469 14.7568 15.0354 14.6503 15.0969C14.5439 15.1585 14.4231 15.1909 14.3002 15.1909C14.1773 15.1909 14.0565 15.1586 13.95 15.0971L4 9.35213V14.5031C4 14.6888 3.92625 14.8668 3.79497 14.9981C3.6637 15.1294 3.48565 15.2031 3.3 15.2031H1.7C1.51435 15.2031 1.3363 15.1294 1.20503 14.9981C1.07375 14.8668 1 14.6888 1 14.5031V1.90313C1 1.71747 1.07375 1.53943 1.20503 1.40815C1.3363 1.27687 1.51435 1.20313 1.7 1.20312H3.3Z'
+          fill='currentColor'
+        />
+      </g>
+      <defs>
+        <clipPath id='clip0_0_1014'>
+          <rect fill='currentColor' height='16' transform='translate(0 0.203125)' width='16' />
+        </clipPath>
+      </defs>
+    </svg>
+  ),
+  trackNext: ({ ...props }: LucideProps) => (
+    <svg viewBox='0 0 16 16' xmlns='http://www.w3.org/2000/svg' {...props}>
+      <g clipPath='url(#clip0_0_1022)'>
+        <path
+          d='M12.7 1.20312C12.5143 1.20312 12.3363 1.27687 12.205 1.40815C12.0738 1.53943 12 1.71747 12 1.90313V7.05312L2.05 1.31012C1.94368 1.24874 1.82308 1.2164 1.7003 1.21634C1.57753 1.21629 1.4569 1.24853 1.35053 1.30982C1.24415 1.37111 1.15576 1.45931 1.09424 1.56555C1.03271 1.6718 1.00021 1.79235 1 1.91513V14.4901C0.999863 14.6131 1.03211 14.7339 1.09349 14.8404C1.15487 14.9469 1.24322 15.0354 1.34966 15.0969C1.4561 15.1585 1.57686 15.1909 1.6998 15.1909C1.82275 15.1909 1.94353 15.1586 2.05 15.0971L12 9.35213V14.5031C12 14.6888 12.0738 14.8668 12.205 14.9981C12.3363 15.1294 12.5143 15.2031 12.7 15.2031H14.3C14.4857 15.2031 14.6637 15.1294 14.795 14.9981C14.9262 14.8668 15 14.6888 15 14.5031V1.90313C15 1.71747 14.9262 1.53943 14.795 1.40815C14.6637 1.27687 14.4857 1.20313 14.3 1.20312H12.7Z'
+          fill='currentColor'
+        />
+      </g>
+      <defs>
+        <clipPath id='clip0_0_1022'>
+          <rect fill='currentColor' height='16' transform='translate(0 0.203125)' width='16' />
+        </clipPath>
+      </defs>
+    </svg>
+  ),
+  playerPlay: ({ ...props }: LucideProps) => (
+    <svg fill='currentColor' viewBox='0 0 16 16' xmlns='http://www.w3.org/2000/svg' {...props}>
+      <g clipPath='url(#clip0_0_1018)'>
+        <path
+          d='M3 1.91611C2.99986 1.79317 3.03211 1.67236 3.09349 1.56584C3.15487 1.45932 3.24322 1.37084 3.34966 1.30931C3.4561 1.24778 3.57686 1.21537 3.6998 1.21533C3.82275 1.2153 3.94353 1.24764 4.05 1.30911L14.94 7.59711C15.0463 7.65858 15.1346 7.74693 15.1959 7.8533C15.2573 7.95967 15.2896 8.08031 15.2896 8.20311C15.2896 8.32592 15.2573 8.44656 15.1959 8.55293C15.1346 8.65929 15.0463 8.74765 14.94 8.80911L4.05 15.0971C3.9436 15.1585 3.82291 15.1909 3.70005 15.1909C3.5772 15.1909 3.4565 15.1586 3.35009 15.0972C3.24369 15.0358 3.15532 14.9474 3.09386 14.841C3.03241 14.7347 3.00004 14.614 3 14.4911V1.91611Z'
+          fill='currentColor'
+        />
+      </g>
+      <defs>
+        <clipPath id='clip0_0_1018'>
+          <rect fill='currentColor' height='16' transform='translate(0 0.203125)' width='16' />
+        </clipPath>
+      </defs>
+    </svg>
+  ),
+  playerPause: ({ ...props }: LucideProps) => (
+    <svg fill='currentColor' viewBox='0 0 16 16' xmlns='http://www.w3.org/2000/svg' {...props}>
+      <g clipPath='url(#clip0_0_1746)'>
+        <path
+          d='M2.7 1.20312C2.51435 1.20312 2.3363 1.27687 2.20503 1.40815C2.07375 1.53943 2 1.71747 2 1.90313V14.5031C2 14.6888 2.07375 14.8668 2.20503 14.9981C2.3363 15.1294 2.51435 15.2031 2.7 15.2031H5.3C5.48565 15.2031 5.6637 15.1294 5.79497 14.9981C5.92625 14.8668 6 14.6888 6 14.5031V1.90313C6 1.71747 5.92625 1.53943 5.79497 1.40815C5.6637 1.27687 5.48565 1.20313 5.3 1.20312H2.7ZM10.7 1.20312C10.5143 1.20312 10.3363 1.27687 10.205 1.40815C10.0738 1.53943 10 1.71747 10 1.90313V14.5031C10 14.6888 10.0738 14.8668 10.205 14.9981C10.3363 15.1294 10.5143 15.2031 10.7 15.2031H13.3C13.4857 15.2031 13.6637 15.1294 13.795 14.9981C13.9262 14.8668 14 14.6888 14 14.5031V1.90313C14 1.71747 13.9262 1.53943 13.795 1.40815C13.6637 1.27687 13.4857 1.20313 13.3 1.20312H10.7Z'
+          fill='currentColor'
+        />
+      </g>
+      <defs>
+        <clipPath id='clip0_0_1746'>
+          <rect fill='currentColor' height='16' transform='translate(0 0.203125)' width='16' />
+        </clipPath>
+      </defs>
     </svg>
   ),
   google: ({ ...props }: LucideProps) => (
@@ -112,8 +191,6 @@ export const Icons = {
       />
     </svg>
   ),
-  twitter: TwitterLogoIcon,
-  check: CheckIcon,
   vk: ({ ...props }: LucideProps) => (
     <svg fill='none' height='24' width='24' xmlns='http://www.w3.org/2000/svg' {...props}>
       <g clipPath='url(#new_logo_vk_with_text__a)'>

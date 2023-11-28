@@ -1,5 +1,11 @@
+/* eslint-disable jsx-a11y/no-static-element-interactions */
+/* eslint-disable jsx-a11y/click-events-have-key-events */
+
+'use client';
+
 import { PlusCircledIcon } from '@radix-ui/react-icons';
 import Image from 'next/image';
+import Link from 'next/link';
 
 import {
   ContextMenu,
@@ -11,13 +17,20 @@ import {
   ContextMenuSubTrigger,
   ContextMenuTrigger
 } from '@/components/ui/context-menu';
+import useOnPlay from '@/hooks/useOnPlay';
+import { usePlayer } from '@/hooks/usePlayer';
+import type { Album } from '@/interfaces/album';
+import { getPublicUrl } from '@/lib/publicUrlBuilder';
 import { cn } from '@/lib/utils';
 
-import type { Album } from '../data/albums';
 import { playlists } from '../data/playlists';
+
+import { PlayButton } from './play-button';
+import { TypographyMuted } from './ui/typography-muted';
 
 interface AlbumArtworkProps extends React.HTMLAttributes<HTMLDivElement> {
   album: Album;
+  coverUrl: string;
   aspectRatio?: 'portrait' | 'square';
   width?: number;
   height?: number;
@@ -27,25 +40,55 @@ export function AlbumArtwork({
   album,
   aspectRatio = 'portrait',
   className,
+  coverUrl,
   height,
   width,
   ...props
 }: AlbumArtworkProps) {
+  const onPlay = useOnPlay(album.attributes.tracks.data);
+  const player = usePlayer();
+
+  const isPlaying = player.activeId === album.id && player.isPlaying;
+
+  const handleClickOnPlay = () => {
+    if (album.id === player.activeId) {
+      if (player.isPlaying) {
+        player.setIsPlaying(false);
+      } else player.setIsPlaying(true);
+    }
+
+    player.setActiveAlbumId(album.id);
+    onPlay(album.attributes.tracks.data[0].id);
+  };
+
   return (
     <div className={cn('space-y-3', className)} {...props}>
       <ContextMenu>
-        <ContextMenuTrigger>
-          <div className='overflow-hidden rounded-md'>
+        <ContextMenuTrigger className='group relative cursor-pointer'>
+          <Link className='block overflow-hidden rounded-md' href={getPublicUrl.album(album.id)}>
             <Image
-              alt={album.name}
+              alt={album.attributes.name}
               height={height}
-              src={album.cover}
+              src={coverUrl}
               width={width}
               className={cn(
-                'h-auto w-auto object-cover transition-all hover:scale-105',
+                'h-auto w-auto object-cover transition-all group-hover:brightness-75 group-hover:saturate-100',
                 aspectRatio === 'portrait' ? 'aspect-[3/4]' : 'aspect-square'
               )}
             />
+          </Link>
+          <div className='opacity-0 transition-all group-hover:opacity-100'>
+            <PlayButton
+              className='absolute bottom-3 right-3 z-10 h-12 w-12 rounded-full'
+              isPlaying={isPlaying}
+              size='icon'
+              onClick={handleClickOnPlay}
+            />
+            {/* <ButtonIcon
+              className='absolute right-2 top-2 h-10 w-10 rounded-full'
+              icon='dotsHorizontal'
+              variant='secondary'
+            /> */}
           </div>
         </ContextMenuTrigger>
         <ContextMenuContent className='w-40'>
@@ -87,8 +130,8 @@ export function AlbumArtwork({
         </ContextMenuContent>
       </ContextMenu>
       <div className='space-y-1 text-sm'>
-        <h3 className='font-medium leading-none'>{album.name}</h3>
-        <p className='text-xs text-muted-foreground'>{album.artist}</p>
+        <h3 className='font-medium leading-none'>{album.attributes.name}</h3>
+        <TypographyMuted className='text-xs'>{album.attributes.artist.data.attributes.name}</TypographyMuted>
       </div>
     </div>
   );

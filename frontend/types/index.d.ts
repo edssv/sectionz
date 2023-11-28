@@ -1,3 +1,4 @@
+import type { Artist } from '@/components/artist';
 import type { Icons } from '@/components/icons';
 
 export type NavItem = {
@@ -7,6 +8,11 @@ export type NavItem = {
 };
 
 export type MainNavItem = NavItem;
+
+export type SidebarNavPart = {
+  title: string;
+  items: SidebarNavItem[];
+};
 
 export type SidebarNavItem = {
   title: string;
@@ -19,15 +25,14 @@ export type SidebarNavItem = {
       items?: never;
     }
   | {
-      href?: string;
+      href: string;
       items: NavLink[];
     }
 );
 
-export type ArticleShareItem = {
+export type ArtistSection = {
   title: string;
-  icon?: keyof typeof Icons;
-  color?: string;
+  component: keyof typeof Artist;
 };
 
 export type SiteConfig = {
@@ -42,20 +47,11 @@ export type SiteConfig = {
   creator: string;
 };
 
-export type DocsConfig = {
-  mainNav: MainNavItem[];
-  sidebarNav: SidebarNavItem[];
-};
-
 export type NavConfig = {
   mainNav: MainNavItem[];
+  sidebarNav: SidebarNavPart[];
 };
 
-export type DashboardConfig = {
-  mainNav: MainNavItem[];
-  sidebarNav: SidebarNavItem[];
-};
-
-export type ArticleShareConfig = {
-  articleShare: ArticleShareItem[];
+export type ArtistConfig = {
+  sections: ArtistSection[];
 };

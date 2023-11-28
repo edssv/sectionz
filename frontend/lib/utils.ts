@@ -8,7 +8,7 @@ export function cn(...inputs: ClassValue[]) {
 }
 
 export function formatDate(
-  input: string | number,
+  input: string | number | Date,
   options: Intl.DateTimeFormatOptions = {
     month: 'long',
     day: 'numeric',
@@ -19,24 +19,23 @@ export function formatDate(
   return date.toLocaleDateString('ru-RU', options);
 }
 
-export function convertMsToMinutes(milliseconds: number): string {
+export function convertSecToMinutes(seconds: number, format: 'album' | 'track' = 'track'): string {
   const padTo2Digits = (num: number) => num.toString().padStart(2, '0');
 
-  let seconds = Math.floor(milliseconds / 1000);
+  seconds = Math.floor(seconds);
   let minutes = Math.floor(seconds / 60);
 
   seconds %= 60;
   minutes %= 60;
 
-  return `${padTo2Digits(minutes)}:${padTo2Digits(seconds)}`;
+  if (format === 'track') {
+    return `${minutes}:${padTo2Digits(seconds)}`;
+  }
+  return `${minutes} мин. ${padTo2Digits(seconds)} сек.`;
 }
 
-export function absoluteUrl(path: string) {
-  return `${env.NEXT_PUBLIC_APP_URL}${path}`;
-}
-
-export function absoluteUrlImageFromStrapi(imageSrc: string) {
-  return `${env.NEXT_PUBLIC_STRAPI_URL}${imageSrc}`;
+export function absoluteUrlStrapi(path: string | undefined) {
+  return `${env.NEXT_PUBLIC_STRAPI_URL}${path}`;
 }
 
 export function plural(count: number, messages: string[]) {

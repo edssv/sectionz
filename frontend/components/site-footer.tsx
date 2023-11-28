@@ -1,23 +1,17 @@
-import Image from 'next/image';
 import * as React from 'react';
 
 import { ModeToggle } from '@/components/mode-toggle';
 import { siteConfig } from '@/config/site';
 import { cn } from '@/lib/utils';
 
+import { TypographyMuted } from './ui/typography-muted';
+
 export function SiteFooter({ className }: React.HTMLAttributes<HTMLElement>) {
   return (
-    <footer className={cn(className, 'container w-full border-x pb-36')}>
-      <div className='flex flex-col items-center justify-between gap-4 border-t py-10 md:h-20 md:flex-row md:py-0'>
-        <div className='flex flex-col items-center gap-4 px-8 md:flex-row md:gap-2 md:px-0'>
-          <Image
-            alt={`${siteConfig.name}`}
-            height={32}
-            sizes='20vw'
-            src={`${siteConfig.url}/android-chrome-192x192.png`}
-            width={32}
-          />
-          <p className='text-center text-sm leading-loose md:text-left'>
+    <footer className={cn(className, 'h-[var(--footer-height)] border-t')}>
+      <div className='container h-full'>
+        <div className='flex h-full items-center justify-between'>
+          <TypographyMuted className='text-center leading-loose md:text-left'>
             Built by{' '}
             <a
               className='font-medium underline underline-offset-4'
@@ -46,9 +40,11 @@ export function SiteFooter({ className }: React.HTMLAttributes<HTMLElement>) {
               GitHub
             </a>
             .
-          </p>
+          </TypographyMuted>
+          <div className='hidden md:block'>
+            <ModeToggle />
+          </div>
         </div>
-        <ModeToggle />
       </div>
     </footer>
   );
