@@ -46,5 +46,28 @@ export const navConfig: NavConfig = {
       title: 'Плейлисты',
       items: []
     }
+  ],
+  settingsSidebarNav: [
+    {
+      title: 'Профиль',
+      href: '/settings',
+      icon: 'user'
+    },
+
+    {
+      title: 'Уведомления',
+      href: '/settings/notifications',
+      icon: 'bell'
+    },
+    {
+      title: 'Дисплей',
+      href: '/settings/display',
+      icon: 'tv'
+    },
+    {
+      title: 'Безопасность',
+      href: '/settings/security',
+      icon: 'shieldCheck'
+    }
   ]
 };

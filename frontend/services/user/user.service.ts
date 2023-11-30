@@ -4,7 +4,7 @@ import { toast } from '@/components/ui/use-toast';
 import { env } from '@/env.mjs';
 import { getClientJwt } from '@/lib/client-jwt';
 
-import type { GetMeResponse } from './user.interface';
+import type { GetMeResponse, GetUserResponse } from './user.interface';
 
 export const UserService = {
   async update(data: any) {
@@ -20,7 +20,7 @@ export const UserService = {
       body: JSON.stringify(data)
     });
   },
-  async getMe(jwt: any) {
+  async getMe(jwt: string) {
     const res = await fetch(`${env.NEXT_PUBLIC_STRAPI_API_URL}/users/me?populate=image`, {
       headers: {
         Authorization: `bearer ${jwt}`
@@ -37,5 +37,14 @@ export const UserService = {
     }
 
     return res.json() as Promise<GetMeResponse>;
+  },
+  async getUser(userId: number | string) {
+    const res = await fetch(`${env.NEXT_PUBLIC_STRAPI_API_URL}/users/${userId}?populate=image`, {
+      headers: {
+        Authorization: `bearer ${env.STRAPI_API_TOKEN}`
+      }
+    });
+
+    return res.json() as Promise<GetUserResponse>;
   }
 };

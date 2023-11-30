@@ -34,11 +34,11 @@ export function ConfirmStep({ className }: RegisterFormProps) {
   });
 
   const onSubmit = async (formData: FormData) => {
-    setValue({ social_emails: formData.social_emails });
+    setValue({ marketing_emails: formData.marketing_emails });
 
     setIsLoading(true);
 
-    await AuthService.register(registerState);
+    await AuthService.register({ ...registerState, ...formData });
 
     const signInResult = await signIn('credentials', {
       email: registerState?.email?.toLowerCase(),
@@ -67,7 +67,7 @@ export function ConfirmStep({ className }: RegisterFormProps) {
         {' '}
         <FormField
           control={form.control}
-          name='social_emails'
+          name='marketing_emails'
           render={({ field }) => (
             <FormItem className='flex flex-row items-start space-x-3 space-y-0 rounded-md border p-4 shadow'>
               <FormControl>

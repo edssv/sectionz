@@ -56,7 +56,7 @@ export default function HomePageContent({ data }: HomePageContentProps) {
                     key={album.id}
                     album={album}
                     aspectRatio='square'
-                    className='w-[240px]'
+                    // className='w-[240px]'
                     coverUrl={absoluteUrlStrapi(album.attributes.cover?.data.attributes.url)}
                     height={240}
                     width={240}

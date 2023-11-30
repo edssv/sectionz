@@ -1,5 +1,5 @@
 import { Player } from '@/components/player/player';
-import { Sidebar } from '@/components/sidebar';
+import { Sidebar } from '@/components/sidebar/sidebar';
 import { SiteFooter } from '@/components/site-footer';
 import { SiteHeader } from '@/components/site-header';
 import { getCurrentUser } from '@/lib/session';

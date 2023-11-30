@@ -12,9 +12,10 @@ import {
   DropdownMenuTrigger
 } from '@/components/ui/dropdown-menu';
 import { UserAvatar } from '@/components/user-avatar';
+import { getPublicUrl } from '@/lib/publicUrlBuilder';
 
 interface UserAccountNavProps extends React.HTMLAttributes<HTMLDivElement> {
-  user: Pick<User, 'name' | 'image' | 'email'>;
+  user: Pick<User, 'name' | 'image' | 'email' | 'id'>;
 }
 
 export function UserAccountNav({ user }: UserAccountNavProps) {
@@ -32,13 +33,10 @@ export function UserAccountNav({ user }: UserAccountNavProps) {
         </div>
         <DropdownMenuSeparator />
         <DropdownMenuItem asChild>
-          <Link href='/dashboard'>Аккаунт</Link>
+          <Link href={getPublicUrl.profile(user.id)}>Профиль</Link>
         </DropdownMenuItem>
         <DropdownMenuItem asChild>
-          <Link href='/dashboard/billing'>Профиль</Link>
-        </DropdownMenuItem>
-        <DropdownMenuItem asChild>
-          <Link href='/dashboard/settings'>Настройки</Link>
+          <Link href={getPublicUrl.settings()}>Настройки</Link>
         </DropdownMenuItem>
         <DropdownMenuSeparator />
         <DropdownMenuItem

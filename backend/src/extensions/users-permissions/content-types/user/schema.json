@@ -88,6 +88,14 @@
     "social_emails": {
       "type": "boolean",
       "default": false
+    },
+    "communication_emails": {
+      "type": "boolean",
+      "default": false
+    },
+    "marketing_emails": {
+      "type": "boolean",
+      "default": false
     }
   }
 }

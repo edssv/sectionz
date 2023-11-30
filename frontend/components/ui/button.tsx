@@ -4,6 +4,8 @@ import * as React from 'react';
 
 import { cn } from '@/lib/utils';
 
+import { Icons } from '../icons';
+
 const buttonVariants = cva(
   'inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50',
   {
@@ -34,12 +36,32 @@ export interface ButtonProps
   extends React.ButtonHTMLAttributes<HTMLButtonElement>,
     VariantProps<typeof buttonVariants> {
   asChild?: boolean;
+  isLoading?: boolean;
 }
 
 const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
-  ({ asChild = false, className, size, variant, ...props }, ref) => {
+  ({ asChild = false, children, className, disabled, isLoading, size, variant, ...props }, ref) => {
     const Comp = asChild ? Slot : 'button';
-    return <Comp ref={ref} className={cn(buttonVariants({ variant, size, className }))} {...props} />;
+
+    if (isLoading) {
+      return (
+        <Comp
+          ref={ref}
+          className={cn(buttonVariants({ variant, size, className }))}
+          disabled={disabled || isLoading}
+          {...props}
+        >
+          <Icons.spinner className='mr-2 h-4 w-4 animate-spin' />
+          {children}
+        </Comp>
+      );
+    }
+
+    return (
+      <Comp ref={ref} className={cn(buttonVariants({ variant, size, className }))} disabled={disabled} {...props}>
+        {children}
+      </Comp>
+    );
   }
 );
 Button.displayName = 'Button';

@@ -25,7 +25,7 @@ export default ({ env }) => ({
   "users-permissions": {
     config: {
       register: {
-        allowedFields: ["profile_name", "dob", "gender", "social_emails"],
+        allowedFields: ["profile_name", "dob", "gender", "marketing_emails"],
       },
     },
   },

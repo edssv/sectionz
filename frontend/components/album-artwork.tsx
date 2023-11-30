@@ -51,12 +51,6 @@ export function AlbumArtwork({
   const isPlaying = player.activeId === album.id && player.isPlaying;
 
   const handleClickOnPlay = () => {
-    if (album.id === player.activeId) {
-      if (player.isPlaying) {
-        player.setIsPlaying(false);
-      } else player.setIsPlaying(true);
-    }
-
     player.setActiveAlbumId(album.id);
     onPlay(album.attributes.tracks.data[0].id);
   };

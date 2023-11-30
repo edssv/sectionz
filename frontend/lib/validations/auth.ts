@@ -2,6 +2,8 @@ import * as z from 'zod';
 
 import { AuthService } from '@/services/auth/auth.service';
 
+import { userDobSchema, userGenderSchema, userProfileNameSchema } from './user';
+
 export const userLoginSchema = z.object({
   email: z.string().email(),
   password: z.string().min(6)
@@ -37,18 +39,15 @@ export const userRegisterPasswordSchema = z.object({
     .min(8, { message: 'Пароль должен содержать не менее 8 символов.' })
     .max(22, { message: 'Ваш пароль слишком длинный.' })
 });
+
 export const userRegisterInfoSchema = z.object({
-  profile_name: z
-    .string({ required_error: 'Введите имя для своего профиля.' })
-    .min(3, { message: 'Имя должно содержать не менее 3 символов.' })
-    .max(22, { message: 'Имя профиля слишком длинное.' }),
-  dob: z.date({ required_error: 'Пожалуйста выберите дату вашего рождения.' }),
-  gender: z.enum(['man', 'woman', 'something_else', 'prefer_not_to_say'], {
-    required_error: 'Выберите свой пол.'
-  })
+  profile_name: userProfileNameSchema,
+  dob: userDobSchema,
+  gender: userGenderSchema
 });
+
 export const userRegisterConfirmSchema = z.object({
-  social_emails: z.boolean().default(false).optional()
+  marketing_emails: z.boolean().default(false).optional()
 });
 
 export const userEmailConfirmSchema = z.object({

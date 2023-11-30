@@ -30,7 +30,7 @@ export const AuthService = {
         profile_name: credentials.profile_name,
         dob: credentials?.dob,
         gender: credentials?.gender,
-        social_emails: credentials?.social_emails
+        marketing_emails: credentials?.marketing_emails
       })
     });
   },

@@ -7,3 +7,9 @@ export async function getCurrentUser() {
 
   return session?.user;
 }
+
+export async function getApiUserToken() {
+  const session = await getServerSession(authOptions);
+
+  return session?.jwt;
+}

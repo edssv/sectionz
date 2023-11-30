@@ -38,14 +38,20 @@ import {
   ChevronLeft,
   AlertCircleIcon,
   CalendarDaysIcon,
-  ExternalLinkIcon
+  ExternalLinkIcon,
+  BellIcon,
+  ShieldIcon,
+  Tv2Icon,
+  AlbumIcon
 } from 'lucide-react';
 import type { LucideProps } from 'lucide-react';
 
 export const Icons = {
   add: PlusIcon,
+  album: AlbumIcon,
   arrowRight: ArrowRightIcon,
   avatar: AvatarIcon,
+  bell: BellIcon,
   browse: LayoutGridIcon,
   calendar: CalendarDaysIcon,
   chevronLeft: ChevronLeft,
@@ -73,12 +79,14 @@ export const Icons = {
   search: SearchIcon,
   settings: Settings,
   share: Share2Icon,
+  shieldCheck: ShieldIcon,
   songs: Music2Icon,
   speakerLoud: Volume2,
   speakerOff: VolumeX,
   spinner: Loader2,
   sun: SunIcon,
   trash: TrashIcon,
+  tv: Tv2Icon,
   user: User,
   warning: AlertCircleIcon,
 

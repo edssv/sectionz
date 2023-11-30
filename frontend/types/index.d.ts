@@ -50,6 +50,7 @@ export type SiteConfig = {
 export type NavConfig = {
   mainNav: MainNavItem[];
   sidebarNav: SidebarNavPart[];
+  settingsSidebarNav: SidebarNavItem[];
 };
 
 export type ArtistConfig = {

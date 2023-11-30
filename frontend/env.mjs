@@ -3,6 +3,7 @@ import { z } from 'zod';
 
 export const env = createEnv({
   server: {
+    GRAPHQL_SERVER_URL: z.string().min(1),
     NEXTAUTH_URL: z.string().url().optional(),
     STRAPI_API_TOKEN: z.string().min(1),
     RECAPTCHA_SECRET_KEY: z.string().min(1)
@@ -18,6 +19,7 @@ export const env = createEnv({
     NEXT_PUBLIC_STRAPI_API_TOKEN: z.string().min(1)
   },
   runtimeEnv: {
+    GRAPHQL_SERVER_URL: process.env.GRAPHQL_SERVER_URL,
     NEXTAUTH_URL: process.env.NEXTAUTH_URL,
     STRAPI_API_TOKEN: process.env.STRAPI_API_TOKEN,
     RECAPTCHA_SECRET_KEY: process.env.RECAPTCHA_SECRET_KEY,

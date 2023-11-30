@@ -1,5 +1,7 @@
 import { env } from '@/env.mjs';
 
+import type { GetUserResponse } from '../user/user.interface';
+
 import type { GetTrackResponse, GetTracksResponse } from './track.interface';
 
 export const TrackService = {
@@ -28,6 +30,6 @@ export const TrackService = {
       },
       next: { revalidate: 3 }
     });
-    return res.json() as Promise<GetTracksResponse>;
+    return res.json() as Promise<GetUserResponse>;
   }
 };
