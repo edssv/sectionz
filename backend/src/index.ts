@@ -1,18 +1,30 @@
-export default {
-  /**
-   * An asynchronous register function that runs before
-   * your application is initialized.
-   *
-   * This gives you an opportunity to extend code.
-   */
-  register(/*{ strapi }*/) {},
+import { typeDefs } from "./extensions/graphql/types/typeDefs";
+import { emailAvailable } from "./extensions/graphql/resolvers/email-available";
+import { updateUserProfile } from "./extensions/graphql/resolvers/update-user-profile";
+import { updateUserNotifications } from "./extensions/graphql/resolvers/update-user-notifications";
 
-  /**
-   * An asynchronous bootstrap function that runs before
-   * your application gets started.
-   *
-   * This gives you an opportunity to set up your data model,
-   * run jobs, or perform some special logic.
-   */
-  bootstrap(/*{ strapi }*/) {},
+export default {
+  bootstrap() {},
+
+  register({ strapi }) {
+    const extension = ({ strapi }) => ({
+      typeDefs: typeDefs,
+      resolvers: {
+        Query: {
+          emailAvailable,
+        },
+        Mutation: {
+          updateUserProfile,
+          updateUserNotifications,
+        },
+      },
+      resolversConfig: {
+        "Query.emailAvailable": {
+          auth: false,
+        },
+      },
+    });
+
+    strapi.plugin("graphql").service("extension").use(extension);
+  },
 };

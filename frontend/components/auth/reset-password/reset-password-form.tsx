@@ -1,22 +1,24 @@
 'use client';
 
 import { zodResolver } from '@hookform/resolvers/zod';
+import { signIn } from 'next-auth/react';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import type * as z from 'zod';
 
 import { Button } from '@/components/ui/button';
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
+import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { TypographyMuted } from '@/components/ui/typography-muted';
+import { formConfig } from '@/config/form';
+import { useResetPasswordMutation } from '@/gql/types';
 import { userResetPasswordSchema } from '@/lib/validations/auth';
-import { AuthService } from '@/services/auth/auth.service';
 
 interface ResetPasswordProps {
   code: string;
 }
 export function ResetPasswordForm({ code }: ResetPasswordProps) {
-  const [isLoading, setIsLoading] = useState(false);
+  const [resetPassword, { loading }] = useResetPasswordMutation();
   const [isComplete, setIsComplete] = useState(false);
   const form = useForm<z.infer<typeof userResetPasswordSchema>>({
     mode: 'onTouched',
@@ -27,18 +29,20 @@ export function ResetPasswordForm({ code }: ResetPasswordProps) {
   });
 
   const onSubmit = async (values: z.infer<typeof userResetPasswordSchema>) => {
-    setIsLoading(true);
-    const res = await AuthService.resetPassword(values);
+    const res = await resetPassword({ variables: values });
 
-    if (res) {
+    if (res.data?.resetPassword) {
       setIsComplete(true);
+      signIn('credentials', {
+        email: res.data.resetPassword.user.email.toLowerCase(),
+        password: values.password,
+        redirect: false
+      });
     }
-
-    setIsLoading(false);
   };
 
   if (isComplete) {
-    return <p className='text-center leading-7'>Ваш новый пароль установлен, теперь вы можете войти в систему.</p>;
+    return <p className='text-center leading-7'>Ваш новый пароль установлен, и вы вошли в систему.</p>;
   }
 
   return (
@@ -60,7 +64,7 @@ export function ResetPasswordForm({ code }: ResetPasswordProps) {
           />
           <FormField
             control={form.control}
-            name='passwords.password'
+            name='password'
             render={({ field }) => (
               <FormItem>
                 <FormLabel>Новый пароль</FormLabel>
@@ -75,15 +79,16 @@ export function ResetPasswordForm({ code }: ResetPasswordProps) {
                   />
                 </FormControl>
                 <FormMessage />
+                <FormDescription>{formConfig.password.description}</FormDescription>
               </FormItem>
             )}
           />
           <FormField
             control={form.control}
-            name='passwords.passwordConfirmation'
+            name='passwordConfirmation'
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Повторите новый пароль</FormLabel>
+                <FormLabel>Подтверждение нового пароля</FormLabel>
                 <FormControl>
                   <Input
                     autoCapitalize='none'
@@ -95,10 +100,11 @@ export function ResetPasswordForm({ code }: ResetPasswordProps) {
                   />
                 </FormControl>
                 <FormMessage />
+                <FormDescription>{formConfig.passwordConfirmation.description}</FormDescription>
               </FormItem>
             )}
           />
-          <Button disabled={!form.formState.isValid || isLoading} type='submit'>
+          <Button isLoading={loading} type='submit'>
             Отправить
           </Button>
         </form>

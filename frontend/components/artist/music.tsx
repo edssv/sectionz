@@ -1,4 +1,4 @@
-import type { Album } from '@/interfaces/album';
+import type { Album } from '@/lib/interfaces/album';
 import { absoluteUrlStrapi } from '@/lib/utils';
 
 import { AlbumArtwork } from '../album-artwork';

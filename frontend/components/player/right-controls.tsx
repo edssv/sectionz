@@ -3,7 +3,7 @@
 
 'use client';
 
-import { usePlayer } from '@/hooks/usePlayer';
+import { usePlayer } from '@/hooks/use-player';
 import { cn } from '@/lib/utils';
 
 import { Icons } from '../icons';

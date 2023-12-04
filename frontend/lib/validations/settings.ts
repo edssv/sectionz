@@ -1,5 +1,7 @@
 import { z } from 'zod';
 
+import { userPasswordSchema } from './auth';
+
 const languageSchema = z.string({
   required_error: 'Пожалуйста, выберите язык.'
 });
@@ -13,9 +15,25 @@ export const displayFormSchema = z.object({
   theme: themeSchema
 });
 
-export const notificationsFormSchema = z.object({
-  communication_emails: z.boolean().default(false).optional(),
-  social_emails: z.boolean().default(false).optional(),
-  marketing_emails: z.boolean().default(false).optional(),
-  security_emails: z.boolean()
+export const updateUserNotificationsFormSchema = z.object({
+  communicationEmails: z.boolean().default(false).optional(),
+  socialEmails: z.boolean().default(false).optional(),
+  marketingEmails: z.boolean().default(false).optional(),
+  securityEmails: z.boolean()
 });
+
+export const changePasswordFormSchema = z
+  .object({
+    currentPassword: z.string({ required_error: 'Введите текущий пароль.' }),
+    password: userPasswordSchema,
+    passwordConfirmation: userPasswordSchema
+  })
+  .superRefine(({ password, passwordConfirmation }, ctx) => {
+    if (passwordConfirmation !== password) {
+      ctx.addIssue({
+        code: 'custom',
+        message: 'Пароли не совпадают',
+        path: ['passwordConfirmation']
+      });
+    }
+  });

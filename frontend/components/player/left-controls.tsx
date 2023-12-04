@@ -1,6 +1,6 @@
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
-import { usePlayer } from '@/hooks/usePlayer';
+import { usePlayer } from '@/hooks/use-player';
 import { convertSecToMinutes } from '@/lib/utils';
 
 import { Icons } from '../icons';

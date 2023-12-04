@@ -4,7 +4,7 @@ import { useForm } from 'react-hook-form';
 import type { z } from 'zod';
 
 import { Button } from '@/components/ui/button';
-import { useRegister } from '@/hooks/useRegister';
+import { useRegister } from '@/hooks/use-register';
 import { getPublicUrl } from '@/lib/publicUrlBuilder';
 import { cn } from '@/lib/utils';
 import { userRegisterEmailSchema } from '@/lib/validations/auth';

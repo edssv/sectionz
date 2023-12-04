@@ -1,28 +1,30 @@
 'use client';
 
-import useOnPlay from '@/hooks/useOnPlay';
-import { usePlayer } from '@/hooks/usePlayer';
-import type { Album } from '@/interfaces/album';
+import type { GetAlbumQuery } from '@/gql/types';
+import useOnPlay from '@/hooks/use-on-play';
+import { usePlayer } from '@/hooks/use-player';
 
 import { Icons } from '../icons';
 import { PlayButton } from '../play-button';
 import { Button } from '../ui/button';
 
+type AlbumControlsData = GetAlbumQuery['album']['data'];
+
 interface AlbumControlsProps {
-  album: Album;
+  data: AlbumControlsData;
 }
 
-export function AlbumControls({ album }: AlbumControlsProps) {
-  const onPlay = useOnPlay(album.attributes.tracks.data);
+export function AlbumControls({ data }: AlbumControlsProps) {
+  const onPlay = useOnPlay(data.attributes.tracks.data);
   const player = usePlayer();
 
-  const isPlaying = player.activeAlbumId === album.id && player.isPlaying;
+  const isPlaying = player.activeAlbumId === data.id && player.isPlaying;
 
   const handleClickOnPlay = () => {
     player.setIsPlaying(!player.isPlaying);
-    player.setActiveAlbumId(album.id);
+    player.setActiveAlbumId(data.id);
 
-    onPlay(album.attributes.tracks.data[0].id);
+    onPlay(data.attributes.tracks.data[0].id);
   };
 
   return (

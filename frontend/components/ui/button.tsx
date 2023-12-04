@@ -47,11 +47,11 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
       return (
         <Comp
           ref={ref}
-          className={cn(buttonVariants({ variant, size, className }))}
+          className={cn(buttonVariants({ variant, size, className }), '[&>svg]:hidden')}
           disabled={disabled || isLoading}
           {...props}
         >
-          <Icons.spinner className='mr-2 h-4 w-4 animate-spin' />
+          <Icons.spinner className='mr-2 !block h-4 w-4 animate-spin' />
           {children}
         </Comp>
       );

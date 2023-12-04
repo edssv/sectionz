@@ -17,13 +17,13 @@ import {
   ContextMenuSubTrigger,
   ContextMenuTrigger
 } from '@/components/ui/context-menu';
-import useOnPlay from '@/hooks/useOnPlay';
-import { usePlayer } from '@/hooks/usePlayer';
-import type { Album } from '@/interfaces/album';
+import useOnPlay from '@/hooks/use-on-play';
+import { usePlayer } from '@/hooks/use-player';
+import type { Album } from '@/lib/interfaces/album';
 import { getPublicUrl } from '@/lib/publicUrlBuilder';
 import { cn } from '@/lib/utils';
 
-import { playlists } from '../data/playlists';
+import { playlists } from '../lib/data/playlists';
 
 import { PlayButton } from './play-button';
 import { TypographyMuted } from './ui/typography-muted';

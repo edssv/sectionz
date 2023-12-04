@@ -1,7 +1,7 @@
 'use client';
 
 import { Table, TableBody } from '@/components/ui/table';
-import type { Track as ITrack } from '@/interfaces/strapi-track';
+import type { Track as ITrack } from '@/lib/interfaces/strapi-track';
 
 import { Track } from '../track';
 import { Button } from '../ui/button';

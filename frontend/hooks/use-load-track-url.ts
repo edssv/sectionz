@@ -1,4 +1,4 @@
-import type { Track } from '@/interfaces/strapi-track';
+import type { Track } from '@/lib/interfaces/strapi-track';
 import { absoluteUrlStrapi } from '@/lib/utils';
 
 export function useLoadTrackUrl(track: Track) {

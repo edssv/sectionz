@@ -1,0 +1,37 @@
+fragment Album on AlbumEntity {
+  id
+  attributes {
+    name
+    genre
+    cover {
+      data {
+        attributes {
+          url
+        }
+      }
+    }
+    tracks {
+      data {
+        ...Track
+      }
+    }
+    artist {
+      data {
+        id
+        attributes {
+          name
+          image {
+            data {
+              attributes {
+                url
+              }
+            }
+          }
+        }
+      }
+    }
+    albumType
+    durationSec
+    releaseDate
+  }
+}

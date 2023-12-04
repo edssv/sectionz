@@ -4,8 +4,8 @@
 
 import { useEffect, useRef } from 'react';
 
-import { usePlayer } from '@/hooks/usePlayer';
-import type { Track } from '@/interfaces/strapi-track';
+import { usePlayer } from '@/hooks/use-player';
+import type { Track } from '@/lib/interfaces/strapi-track';
 
 import { LeftControls } from './left-controls';
 import { MiddleControls } from './middle-controls';

@@ -33,7 +33,7 @@
       "target": "api::track.track",
       "mappedBy": "album"
     },
-    "album_type": {
+    "albumType": {
       "type": "enumeration",
       "enum": [
         "album",
@@ -47,13 +47,14 @@
       "target": "api::artist.artist",
       "inversedBy": "albums"
     },
-    "release_date": {
+    "releaseDate": {
       "type": "datetime",
       "required": true
     },
-    "duration_sec": {
+    "durationSec": {
       "type": "float",
-      "required": true
+      "required": true,
+      "default": 0
     }
   }
 }

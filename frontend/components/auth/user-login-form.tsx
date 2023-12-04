@@ -14,7 +14,7 @@ import { cn } from '@/lib/utils';
 import { userLoginSchema } from '@/lib/validations/auth';
 
 import { Icons } from '../icons';
-import { buttonVariants } from '../ui/button';
+import { Button } from '../ui/button';
 import { Input } from '../ui/input';
 import { toast } from '../ui/use-toast';
 
@@ -25,8 +25,10 @@ type FormData = z.infer<typeof userLoginSchema>;
 export function UserLoginForm({ className, ...props }: UserLoginFormProps) {
   const router = useRouter();
   const form = useForm<z.infer<typeof userLoginSchema>>({ resolver: zodResolver(userLoginSchema) });
-  const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [isGoogleLoading, setIsGoogleLoading] = useState<boolean>(false);
+  const [isError, setIsError] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const [isVkLoading, setIsVkLoading] = useState(false);
+  const [isGoogleLoading, setIsGoogleLoading] = useState(false);
   const searchParams = useSearchParams();
 
   async function onSubmit(data: FormData) {
@@ -42,6 +44,8 @@ export function UserLoginForm({ className, ...props }: UserLoginFormProps) {
     setIsLoading(false);
 
     if (!signInResult?.ok) {
+      setIsError(true);
+
       return toast({
         title: 'Что-то пошло не так.',
         description: 'Ваш запрос на вход не выполнен. Пожалуйста, попробуйте еще раз.',
@@ -97,13 +101,14 @@ export function UserLoginForm({ className, ...props }: UserLoginFormProps) {
               </FormItem>
             )}
           />
-          <button className={cn(buttonVariants())} disabled={isLoading}>
-            {isLoading && <Icons.spinner className='mr-2 h-4 w-4 animate-spin' />}
+          <Button disabled={isVkLoading || isGoogleLoading} isLoading={isLoading}>
             Войти с помощью почты
-          </button>
-          <Link className='text-center text-sm text-muted-foreground underline' href={getPublicUrl.passwordReset()}>
-            Сбросить пароль
-          </Link>
+          </Button>
+          {isError && (
+            <Link className='text-center text-sm text-muted-foreground underline' href={getPublicUrl.passwordReset()}>
+              Сбросить пароль
+            </Link>
+          )}
         </form>
       </Form>
 
@@ -115,23 +120,34 @@ export function UserLoginForm({ className, ...props }: UserLoginFormProps) {
           <span className='bg-background px-2 text-muted-foreground'>Или продолжить с</span>
         </div>
       </div>
-
-      <button
-        className={cn(buttonVariants({ variant: 'outline' }))}
-        disabled={isLoading || isGoogleLoading}
-        type='button'
-        onClick={() => {
-          setIsGoogleLoading(true);
-          signIn('google');
-        }}
-      >
-        {isGoogleLoading ? (
-          <Icons.spinner className='mr-2 h-4 w-4 animate-spin' />
-        ) : (
+      <div className='grid gap-2'>
+        <Button
+          className='bg-[rgb(0,119,255)] text-white hover:bg-[rgb(0,110,255)] hover:no-underline'
+          disabled={isGoogleLoading || isLoading}
+          isLoading={isVkLoading}
+          type='button'
+          onClick={() => {
+            setIsVkLoading(true);
+            signIn('vk');
+          }}
+        >
+          <Icons.vk className='mr-2 h-4 w-4' />
+          VK ID
+        </Button>
+        <Button
+          disabled={isVkLoading || isLoading}
+          isLoading={isGoogleLoading}
+          type='button'
+          variant='outline'
+          onClick={() => {
+            setIsGoogleLoading(true);
+            signIn('google');
+          }}
+        >
           <Icons.google className='mr-2 h-4 w-4' />
-        )}{' '}
-        Google
-      </button>
+          Google
+        </Button>
+      </div>
     </div>
   );
 }

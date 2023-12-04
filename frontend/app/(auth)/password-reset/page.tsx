@@ -2,7 +2,7 @@ import type { Metadata } from 'next';
 import Image from 'next/image';
 import Link from 'next/link';
 
-import { EmailConfirmationForm } from '@/components/auth/reset-password/email-confirmation-form';
+import { ForgotPasswordForm } from '@/components/auth/reset-password/forgot-password-form';
 import { Icons } from '@/components/icons';
 import { buttonVariants } from '@/components/ui/button';
 import { siteConfig } from '@/config/site';
@@ -37,7 +37,7 @@ export default function PasswordResetPage() {
           />
           <h1 className='text-2xl font-semibold tracking-tight'>Сброс пароля</h1>
         </div>
-        <EmailConfirmationForm />
+        <ForgotPasswordForm />
       </div>
     </div>
   );

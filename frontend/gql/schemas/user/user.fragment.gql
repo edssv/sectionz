@@ -1,0 +1,14 @@
+fragment User on UsersPermissionsUserEntity {
+  id
+  attributes {
+    username
+    profileName
+    image {
+      data {
+        attributes {
+          url
+        }
+      }
+    }
+  }
+}

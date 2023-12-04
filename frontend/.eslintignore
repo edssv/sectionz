@@ -1,0 +1,6 @@
+node_modules
+dist
+gql
+.eslintrc.js
+schema.graphql
+./lib/validations/validation.ts

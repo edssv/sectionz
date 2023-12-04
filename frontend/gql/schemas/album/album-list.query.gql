@@ -1,0 +1,7 @@
+query GetAlbumList {
+  albums {
+    data {
+      id
+    }
+  }
+}

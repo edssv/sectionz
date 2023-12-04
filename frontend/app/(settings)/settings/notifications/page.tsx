@@ -28,9 +28,9 @@ export default async function SettingsNotificationsPage() {
       <Separator />
       <NotificationsForm
         data={{
-          social_emails: me.social_emails,
-          communication_emails: me.communication_emails,
-          marketing_emails: me.marketing_emails
+          socialEmails: me.socialEmails,
+          communicationEmails: me.communicationEmails,
+          marketingEmails: me.marketingEmails
         }}
       />
     </div>

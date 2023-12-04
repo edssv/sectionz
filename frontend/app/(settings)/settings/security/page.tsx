@@ -1,3 +1,4 @@
+import { ChangePasswordForm } from '@/components/settings/change-password-form';
 import { Separator } from '@/components/ui/separator';
 import { TypographyMuted } from '@/components/ui/typography-muted';
 
@@ -11,6 +12,7 @@ export default function SettingsSecurityPage() {
         </TypographyMuted>
       </div>
       <Separator />
+      <ChangePasswordForm />
     </div>
   );
 }

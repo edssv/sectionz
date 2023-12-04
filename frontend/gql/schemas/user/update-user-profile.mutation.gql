@@ -1,0 +1,5 @@
+mutation UpdateUserProfile($data: UpdateUserProfileInput!) {
+  updateUserProfile(data: $data) {
+    __typename
+  }
+}

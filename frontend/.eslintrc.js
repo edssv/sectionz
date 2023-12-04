@@ -9,16 +9,7 @@ module.exports = {
     'plugin:@typescript-eslint/recommended-requiring-type-checking',
     'prettier'
   ],
-  overrides: [
-    {
-      files: ['*.ts', '*.tsx'],
-      parserOptions: {
-        project: ['tsconfig.json', 'tsconfig.node.json'],
-        tsconfigRootDir: __dirname,
-        sourceType: 'module'
-      }
-    }
-  ],
+
   parserOptions: {
     ecmaFeatures: {
       jsx: true
@@ -105,5 +96,15 @@ module.exports = {
         }
       }
     ]
-  }
+  },
+  overrides: [
+    {
+      files: ['*.ts', '*.tsx'],
+      parserOptions: {
+        project: ['tsconfig.json', 'tsconfig.node.json'],
+        tsconfigRootDir: __dirname,
+        sourceType: 'module'
+      }
+    }
+  ]
 };

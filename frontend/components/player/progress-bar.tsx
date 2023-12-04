@@ -3,7 +3,7 @@
 import * as SliderPrimitive from '@radix-ui/react-slider';
 import * as React from 'react';
 
-import { usePlayer } from '@/hooks/usePlayer';
+import { usePlayer } from '@/hooks/use-player';
 import { cn } from '@/lib/utils';
 
 interface ProgressBarProps {

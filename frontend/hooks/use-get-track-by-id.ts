@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useState } from 'react';
 
 import { useToast } from '@/components/ui/use-toast';
-import type { Track } from '@/interfaces/strapi-track';
+import type { Track } from '@/lib/interfaces/strapi-track';
 import { TrackService } from '@/services/track/track.service';
 
 export function useGetTrackById(id: number) {

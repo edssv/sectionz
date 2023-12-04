@@ -5,9 +5,9 @@ import { signIn } from 'next-auth/react';
 import * as React from 'react';
 
 import { Icons } from '@/components/icons';
-import { Button, buttonVariants } from '@/components/ui/button';
+import { Button } from '@/components/ui/button';
 import { registerStepsConfig } from '@/config/auth';
-import { useRegister } from '@/hooks/useRegister';
+import { useRegister } from '@/hooks/use-register';
 import { getPublicUrl } from '@/lib/publicUrlBuilder';
 import { cn } from '@/lib/utils';
 
@@ -24,6 +24,7 @@ export interface RegisterFormProps extends React.HTMLAttributes<HTMLDivElement> 
 export function UserRegisterForm({ className, ...props }: RegisterFormProps) {
   const { reset, setStep, step } = useRegister();
 
+  const [isVkLoading, setIsVkLoading] = React.useState(false);
   const [isGoogleLoading, setIsGoogleLoading] = React.useState(false);
 
   React.useEffect(() => () => reset(), [reset]);
@@ -68,22 +69,34 @@ export function UserRegisterForm({ className, ...props }: RegisterFormProps) {
             </div>
           </div>
 
-          <button
-            className={cn(buttonVariants({ variant: 'outline' }))}
-            disabled={isGoogleLoading}
-            type='button'
-            onClick={() => {
-              setIsGoogleLoading(true);
-              signIn('google');
-            }}
-          >
-            {isGoogleLoading ? (
-              <Icons.spinner className='mr-2 h-4 w-4 animate-spin' />
-            ) : (
+          <div className='grid gap-2'>
+            <Button
+              className='bg-[rgb(0,119,255)] text-white hover:bg-[rgb(0,110,255)] hover:no-underline'
+              disabled={isGoogleLoading}
+              isLoading={isVkLoading}
+              type='button'
+              onClick={() => {
+                setIsVkLoading(true);
+                signIn('vk');
+              }}
+            >
+              <Icons.vk className='mr-2 h-4 w-4' />
+              VK ID
+            </Button>
+            <Button
+              disabled={isVkLoading}
+              isLoading={isGoogleLoading}
+              type='button'
+              variant='outline'
+              onClick={() => {
+                setIsGoogleLoading(true);
+                signIn('google');
+              }}
+            >
               <Icons.google className='mr-2 h-4 w-4' />
-            )}{' '}
-            Google
-          </button>
+              Google
+            </Button>
+          </div>
         </>
       ) : null}
       {step === 3 && (

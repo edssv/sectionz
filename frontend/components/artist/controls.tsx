@@ -1,8 +1,8 @@
 'use client';
 
-import useOnPlay from '@/hooks/useOnPlay';
-import { usePlayer } from '@/hooks/usePlayer';
-import type { Artist } from '@/interfaces/strapi-artist';
+import useOnPlay from '@/hooks/use-on-play';
+import { usePlayer } from '@/hooks/use-player';
+import type { Artist } from '@/lib/interfaces/strapi-artist';
 
 import { PlayButton } from '../play-button';
 import { Button } from '../ui/button';

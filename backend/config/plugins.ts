@@ -1,9 +1,4 @@
 export default ({ env }) => ({
-  "strapi-plugin-populate-deep": {
-    config: {
-      defaultDepth: 3, // Default is 5
-    },
-  },
   email: {
     config: {
       provider: "nodemailer",
@@ -25,7 +20,7 @@ export default ({ env }) => ({
   "users-permissions": {
     config: {
       register: {
-        allowedFields: ["profile_name", "dob", "gender", "marketing_emails"],
+        allowedFields: ["profileName", "dob", "gender", "marketingEmails"],
       },
     },
   },

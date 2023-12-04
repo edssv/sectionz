@@ -25,7 +25,7 @@ export default async function SettingsAccountPage() {
         <TypographyMuted>Именно так другие будут видеть вас на сайте.</TypographyMuted>
       </div>
       <Separator />
-      <ProfileForm data={{ profile_name: me.profile_name, dob: me.dob, gender: me.gender }} />
+      <ProfileForm data={{ profile_name: me.profileName, dob: me.dob, gender: me.gender }} />
     </div>
   );
 }

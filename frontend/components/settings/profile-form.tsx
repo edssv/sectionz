@@ -1,10 +1,8 @@
 'use client';
 
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useRouter } from 'next/navigation';
-import { useState } from 'react';
 import { useForm } from 'react-hook-form';
-import type * as z from 'zod';
+import type { z } from 'zod';
 
 import { Button } from '@/components/ui/button';
 import { Calendar } from '@/components/ui/calendar';
@@ -13,23 +11,25 @@ import { Input } from '@/components/ui/input';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { toast } from '@/components/ui/use-toast';
+import type { UpdateUserProfileInput } from '@/gql/types';
+import { useUpdateUserProfileMutation } from '@/gql/types';
 import { cn, formatDate } from '@/lib/utils';
-import { profileFormSchema } from '@/lib/validations/account';
-import { UserService } from '@/services/user/user.service';
+import { updateUserProfileFormSchema } from '@/lib/validations/account';
 
 import { Icons } from '../icons';
 
-type ProfileFormValues = z.infer<typeof profileFormSchema>;
-
 interface ProfileFormProps {
-  data: ProfileFormValues;
+  data: UpdateUserProfileInput;
 }
 
+type UpdateUserProfileValues = z.infer<typeof updateUserProfileFormSchema>;
+
 export function ProfileForm({ data }: ProfileFormProps) {
-  const router = useRouter();
-  const [isLoading, setIsLoading] = useState(false);
-  const form = useForm<ProfileFormValues>({
-    resolver: zodResolver(profileFormSchema),
+  const [updateProfile, { loading }] = useUpdateUserProfileMutation();
+
+  const form = useForm<UpdateUserProfileValues>({
+    mode: 'onTouched',
+    resolver: zodResolver(updateUserProfileFormSchema),
     defaultValues: {
       profile_name: data.profile_name,
       gender: data.gender,
@@ -37,26 +37,14 @@ export function ProfileForm({ data }: ProfileFormProps) {
     }
   });
 
-  async function onSubmit(data: ProfileFormValues) {
-    setIsLoading(true);
-
-    const res = await UserService.update(data);
-
-    setIsLoading(false);
-
-    if (!res.ok) {
-      return toast({
-        title: 'Что-то пошло не так.',
-        description: 'Ваш запрос на обновление профиля не выполнен. Пожалуйста, попробуйте еще раз.',
-        variant: 'destructive'
-      });
-    }
+  async function onSubmit(data: UpdateUserProfileValues) {
+    await updateProfile({ variables: { data } });
 
     toast({
       description: 'Настройки профиля изменены.'
     });
 
-    router.refresh();
+    form.reset(data);
   }
 
   return (
@@ -139,7 +127,7 @@ export function ProfileForm({ data }: ProfileFormProps) {
           )}
         />
 
-        <Button isLoading={isLoading} type='submit'>
+        <Button disabled={!form.formState.isDirty} isLoading={loading} type='submit'>
           Обновить аккаунт
         </Button>
       </form>

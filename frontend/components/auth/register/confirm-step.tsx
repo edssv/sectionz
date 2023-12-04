@@ -3,18 +3,17 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { signIn } from 'next-auth/react';
-import { useState } from 'react';
+
 import { useForm } from 'react-hook-form';
 import type { z } from 'zod';
 
-import { Icons } from '@/components/icons';
 import { toast } from '@/components/ui/use-toast';
 import { siteConfig } from '@/config/site';
-import { useRegister } from '@/hooks/useRegister';
+import { useRegisterMutation } from '@/gql/types';
+import { useRegister } from '@/hooks/use-register';
 import { getPublicUrl } from '@/lib/publicUrlBuilder';
 import { cn } from '@/lib/utils';
 import { userRegisterConfirmSchema } from '@/lib/validations/auth';
-import { AuthService } from '@/services/auth/auth.service';
 
 import { Button } from '../../ui/button';
 import { Checkbox } from '../../ui/checkbox';
@@ -27,18 +26,24 @@ type FormData = z.infer<typeof userRegisterConfirmSchema>;
 export function ConfirmStep({ className }: RegisterFormProps) {
   const router = useRouter();
   const searchParams = useSearchParams();
+  const [register, { loading }] = useRegisterMutation();
   const { registerState, setValue } = useRegister();
-  const [isLoading, setIsLoading] = useState(false);
   const form = useForm<FormData>({
     resolver: zodResolver(userRegisterConfirmSchema)
   });
 
   const onSubmit = async (formData: FormData) => {
-    setValue({ marketing_emails: formData.marketing_emails });
+    setValue({ marketingEmails: formData.marketingEmails });
 
-    setIsLoading(true);
-
-    await AuthService.register({ ...registerState, ...formData });
+    await register({
+      variables: {
+        input: {
+          ...registerState,
+          ...formData,
+          ...{ username: `${registerState?.email.split('@')[0]}_${Math.floor(Math.random() * 1000)}` }
+        }
+      }
+    });
 
     const signInResult = await signIn('credentials', {
       email: registerState?.email?.toLowerCase(),
@@ -47,12 +52,10 @@ export function ConfirmStep({ className }: RegisterFormProps) {
       callbackUrl: searchParams?.get('from') || getPublicUrl.home()
     });
 
-    setIsLoading(false);
-
     if (!signInResult?.ok) {
       return toast({
         title: 'Что-то пошло не так.',
-        description: 'Ваш запрос на вход не выполнен. Пожалуйста, попробуйте еще раз.',
+        description: 'Ваш запрос на регистрацию не выполнен. Пожалуйста, попробуйте еще раз.',
         variant: 'destructive'
       });
     }
@@ -67,7 +70,7 @@ export function ConfirmStep({ className }: RegisterFormProps) {
         {' '}
         <FormField
           control={form.control}
-          name='marketing_emails'
+          name='marketingEmails'
           render={({ field }) => (
             <FormItem className='flex flex-row items-start space-x-3 space-y-0 rounded-md border p-4 shadow'>
               <FormControl>
@@ -80,9 +83,7 @@ export function ConfirmStep({ className }: RegisterFormProps) {
             </FormItem>
           )}
         />
-        <Button disabled={isLoading}>
-          {isLoading && <Icons.spinner className='mr-2 h-4 w-4 animate-spin' />} Создать аккаунт
-        </Button>
+        <Button isLoading={loading}>Создать аккаунт</Button>
       </form>
     </Form>
   );

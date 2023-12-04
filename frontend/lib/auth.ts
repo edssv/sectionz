@@ -1,15 +1,19 @@
 import type { NextAuthOptions } from 'next-auth';
 import CredentialsProvider from 'next-auth/providers/credentials';
 import GoogleProvider from 'next-auth/providers/google';
+import VkProvider from 'next-auth/providers/vk';
 
+import client from '@/apollo/apollo-client';
 import { env } from '@/env.mjs';
+import type { LoginMutation, LoginMutationVariables } from '@/gql/types';
+import { LoginDocument } from '@/gql/types';
 import { AuthService } from '@/services/auth/auth.service';
 import { UserService } from '@/services/user/user.service';
 
 import { absoluteUrlStrapi } from './utils';
 
 export const authOptions: NextAuthOptions = {
-  secret: env.NEXT_PUBLIC_NEXTAUTH_SECRET,
+  secret: env.NEXTAUTH_SECRET,
   session: {
     strategy: 'jwt'
   },
@@ -18,8 +22,12 @@ export const authOptions: NextAuthOptions = {
   },
   providers: [
     GoogleProvider({
-      clientId: env.NEXT_PUBLIC_GOOGLE_CLIENT_ID,
-      clientSecret: env.NEXT_PUBLIC_GOOGLE_CLIENT_SECRET
+      clientId: env.GOOGLE_CLIENT_ID,
+      clientSecret: env.GOOGLE_CLIENT_SECRET
+    }),
+    VkProvider({
+      clientId: env.VK_CLIENT_ID,
+      clientSecret: env.VK_CLIENT_SECRET
     }),
     CredentialsProvider({
       name: 'credentials',
@@ -30,13 +38,19 @@ export const authOptions: NextAuthOptions = {
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
       authorize: async (credentials) => {
-        const data = await AuthService.login(credentials!);
+        if (!credentials) {
+          return null;
+        }
 
-        if (data) {
+        const { data } = await client.mutate<LoginMutation, LoginMutationVariables>({
+          mutation: LoginDocument,
+          variables: { input: { identifier: credentials.email, password: credentials.password, provider: 'local' } }
+        });
+
+        if (data?.login) {
           return {
-            ...data.user,
-            jwt: data.jwt,
-            image: data.user?.image ? absoluteUrlStrapi(data.user.image.url) : null
+            ...data.login.user,
+            jwt: data.login.jwt
           };
         }
         return null;

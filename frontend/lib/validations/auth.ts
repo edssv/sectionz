@@ -1,6 +1,8 @@
 import * as z from 'zod';
 
-import { AuthService } from '@/services/auth/auth.service';
+import client from '@/apollo/apollo-client';
+import type { EmailAvailableQuery, EmailAvailableQueryVariables } from '@/gql/types';
+import { EmailAvailableDocument } from '@/gql/types';
 
 import { userDobSchema, userGenderSchema, userProfileNameSchema } from './user';
 
@@ -17,13 +19,12 @@ export const userRegisterEmailSchema = z
   })
   .superRefine(async (val, ctx) => {
     if (val.email.includes('@')) {
-      const res = await AuthService.emailAvailable(val.email);
+      const { data } = await client.query<EmailAvailableQuery, EmailAvailableQueryVariables>({
+        query: EmailAvailableDocument,
+        variables: { email: val.email }
+      });
 
-      if (!res.ok) return null;
-
-      const isEmailAvailable = await res.json();
-
-      if (!isEmailAvailable) {
+      if (!data.emailAvailable) {
         ctx.addIssue({
           code: 'custom',
           message: ' ',
@@ -33,45 +34,41 @@ export const userRegisterEmailSchema = z
     }
   });
 
+export const userPasswordSchema = z
+  .string({ required_error: 'Пароль должен содержать не менее 8 символов.' })
+  .min(8, { message: 'Пароль должен содержать не менее 8 символов.' })
+  .max(22, { message: 'Ваш пароль слишком длинный.' });
+
 export const userRegisterPasswordSchema = z.object({
-  password: z
-    .string({ required_error: 'Пароль должен содержать не менее 8 символов.' })
-    .min(8, { message: 'Пароль должен содержать не менее 8 символов.' })
-    .max(22, { message: 'Ваш пароль слишком длинный.' })
+  password: userPasswordSchema
 });
 
 export const userRegisterInfoSchema = z.object({
-  profile_name: userProfileNameSchema,
+  profileName: userProfileNameSchema,
   dob: userDobSchema,
   gender: userGenderSchema
 });
 
 export const userRegisterConfirmSchema = z.object({
-  marketing_emails: z.boolean().default(false).optional()
+  marketingEmails: z.boolean().default(false).optional()
 });
 
 export const userEmailConfirmSchema = z.object({
   email: z.string().email('Недействительный адрес электронной почты.')
 });
 
-export const userResetPasswordSchema = z.object({
-  code: z.string(),
-  passwords: z
-    .object({
-      password: z
-        .string({ required_error: 'Это обязательное поле.' })
-        .min(8, { message: 'Пароль должен содержать не менее 8 символов.' }),
-      passwordConfirmation: z
-        .string({ required_error: 'Это обязательное поле.' })
-        .min(8, { message: 'Пароль должен содержать не менее 8 символов.' })
-    })
-    .superRefine(({ password, passwordConfirmation }, ctx) => {
-      if (passwordConfirmation !== password) {
-        ctx.addIssue({
-          code: 'custom',
-          message: 'Пароли не совпадают',
-          path: ['passwordConfirmation']
-        });
-      }
-    })
-});
+export const userResetPasswordSchema = z
+  .object({
+    code: z.string(),
+    password: userPasswordSchema,
+    passwordConfirmation: userPasswordSchema
+  })
+  .superRefine(({ password, passwordConfirmation }, ctx) => {
+    if (passwordConfirmation !== password) {
+      ctx.addIssue({
+        code: 'custom',
+        message: 'Пароли не совпадают',
+        path: ['passwordConfirmation']
+      });
+    }
+  });

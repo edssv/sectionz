@@ -1,8 +1,8 @@
-import type { Track } from '@/interfaces/strapi-track';
+import type { TrackFragment } from '@/gql/types';
 
-import { usePlayer } from './usePlayer';
+import { usePlayer } from './use-player';
 
-export function useOnPlay(tracks: Track[]) {
+export function useOnPlay(tracks: TrackFragment[]) {
   const player = usePlayer();
 
   const onPlay = (id: number) => {

@@ -4,6 +4,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { CaretSortIcon, CheckIcon } from '@radix-ui/react-icons';
 import { useRouter } from 'next/navigation';
 import { useTheme } from 'next-themes';
+import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import type * as z from 'zod';
 
@@ -13,7 +14,7 @@ import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, For
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import { toast } from '@/components/ui/use-toast';
-import { languages } from '@/data/languages';
+import { languages } from '@/lib/data/languages';
 import { cn } from '@/lib/utils';
 import { displayFormSchema } from '@/lib/validations/settings';
 
@@ -21,12 +22,18 @@ type DisplayFormValues = z.infer<typeof displayFormSchema>;
 
 export function DisplayForm() {
   const router = useRouter();
+  const [isClient, setIsClient] = useState(false);
   const { setTheme, theme } = useTheme();
+
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
 
   const form = useForm<DisplayFormValues>({
     resolver: zodResolver(displayFormSchema),
     defaultValues: {
-      language: 'ru'
+      language: 'ru',
+      theme: isClient ? theme : ''
     }
   });
 
@@ -155,7 +162,9 @@ export function DisplayForm() {
             </FormItem>
           )}
         />
-        <Button type='submit'>Обновить дисплей</Button>
+        <Button disabled={!form.formState.isDirty} type='submit'>
+          Обновить дисплей
+        </Button>
       </form>
     </Form>
   );

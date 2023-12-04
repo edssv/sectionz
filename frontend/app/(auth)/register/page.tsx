@@ -5,8 +5,8 @@ import { memo } from 'react';
 import { UserRegisterForm } from '@/components/auth/register/user-register-form';
 import { buttonVariants } from '@/components/ui/button';
 import { siteConfig } from '@/config/site';
-import { authCovers } from '@/data/auth-covers';
-import { slogans } from '@/data/slogans';
+import { authCovers } from '@/lib/data/auth-covers';
+import { slogans } from '@/lib/data/slogans';
 import { absoluteUrlStrapi, cn } from '@/lib/utils';
 
 export const metadata = {

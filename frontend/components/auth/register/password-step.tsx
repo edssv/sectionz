@@ -3,7 +3,8 @@ import { useForm } from 'react-hook-form';
 import type { z } from 'zod';
 
 import { Button } from '@/components/ui/button';
-import { useRegister } from '@/hooks/useRegister';
+import { formConfig } from '@/config/form';
+import { useRegister } from '@/hooks/use-register';
 import { cn } from '@/lib/utils';
 import { userRegisterPasswordSchema } from '@/lib/validations/auth';
 
@@ -48,10 +49,7 @@ export function PasswordStep({ className }: RegisterFormProps) {
                 />
               </FormControl>
               <FormMessage />
-              <FormDescription>
-                Пароль должен содержать не менее 8 символов. Мы рекомендуем включать как минимум 1 цифру и 1 специальный
-                символ.
-              </FormDescription>
+              <FormDescription>{formConfig.password.description}</FormDescription>
             </FormItem>
           )}
         />

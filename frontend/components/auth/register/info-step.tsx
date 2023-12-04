@@ -4,7 +4,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import type { z } from 'zod';
 
-import { useRegister } from '@/hooks/useRegister';
+import { useRegister } from '@/hooks/use-register';
 import { cn, formatDate } from '@/lib/utils';
 import { userRegisterInfoSchema } from '@/lib/validations/auth';
 
@@ -37,7 +37,7 @@ export function InfoStep({ className }: RegisterFormProps) {
       <form className={cn('grid gap-4', className)} onSubmit={form.handleSubmit(onSubmit)}>
         <FormField
           control={form.control}
-          name='profile_name'
+          name='profileName'
           render={({ field }) => (
             <FormItem>
               <FormLabel>Имя профиля</FormLabel>

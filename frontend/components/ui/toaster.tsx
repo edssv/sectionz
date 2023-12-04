@@ -2,7 +2,7 @@
 
 import { Toast, ToastClose, ToastDescription, ToastProvider, ToastTitle, ToastViewport } from '@/components/ui/toast';
 import { useToast } from '@/components/ui/use-toast';
-import { usePlayer } from '@/hooks/usePlayer';
+import { usePlayer } from '@/hooks/use-player';
 import { cn } from '@/lib/utils';
 
 export function Toaster() {

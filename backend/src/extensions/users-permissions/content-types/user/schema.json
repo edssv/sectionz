@@ -65,35 +65,41 @@
       "inversedBy": "users",
       "configurable": false
     },
-    "profile_name": {
+    "profileName": {
       "type": "string",
       "minLength": 3,
       "unique": false,
-      "configurable": true,
       "required": true
     },
     "image": {
       "type": "media",
       "multiple": false,
       "required": false,
-      "allowedTypes": ["images"]
+      "allowedTypes": [
+        "images"
+      ]
     },
     "dob": {
       "type": "datetime"
     },
     "gender": {
       "type": "enumeration",
-      "enum": ["man", "woman", "something_else", "prefer_not_to_say"]
+      "enum": [
+        "man",
+        "woman",
+        "something_else",
+        "prefer_not_to_say"
+      ]
     },
-    "social_emails": {
+    "socialEmails": {
+      "type": "boolean",
+      "default": true
+    },
+    "communicationEmails": {
       "type": "boolean",
       "default": false
     },
-    "communication_emails": {
-      "type": "boolean",
-      "default": false
-    },
-    "marketing_emails": {
+    "marketingEmails": {
       "type": "boolean",
       "default": false
     }

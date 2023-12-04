@@ -1,8 +1,8 @@
 'use client';
 
-import { useGetTrackById } from '@/hooks/useGetTrackById';
-import { useLoadTrackUrl } from '@/hooks/useLoadTrackUrl';
-import { usePlayer } from '@/hooks/usePlayer';
+import { useGetTrackById } from '@/hooks/use-get-track-by-id';
+import { useLoadTrackUrl } from '@/hooks/use-load-track-url';
+import { usePlayer } from '@/hooks/use-player';
 
 import { PlayerContent } from './player-content';
 

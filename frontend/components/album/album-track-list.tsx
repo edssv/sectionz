@@ -1,27 +1,29 @@
 import { Icons } from '@/components/icons';
 import { Table, TableBody, TableCaption, TableHead, TableHeader, TableRow } from '@/components/ui/table';
-import type { Album } from '@/interfaces/album';
+import type { GetAlbumQuery } from '@/gql/types';
 import { convertSecToMinutes, formatDate, plural } from '@/lib/utils';
 
 import { Track } from '../track';
 
+type AlbumControlsData = GetAlbumQuery['album']['data'];
+
 interface AlbumPageListProps {
-  album: Album;
+  data: AlbumControlsData;
 }
 
-export function AlbumList({ album }: AlbumPageListProps) {
+export function AlbumTrackList({ data }: AlbumPageListProps) {
   return (
     <Table>
       <TableCaption className='mt-10 text-left md:pl-3'>
-        <p>{formatDate(album.attributes.release_date)}</p>
+        <p>{formatDate(data.attributes.release_date)}</p>
         <span>
-          {`${album.attributes.tracks.data.length} ${plural(album.attributes.tracks.data.length, [
+          {`${data.attributes.tracks.data.length} ${plural(data.attributes.tracks.data.length, [
             'трек',
             'трека',
             'треков',
             'треков'
           ])},
-          ${convertSecToMinutes(album.attributes.duration_sec, 'album')}`}
+          ${convertSecToMinutes(data.attributes.duration_sec, 'album')}`}
         </span>
       </TableCaption>
       <TableHeader>
@@ -35,8 +37,8 @@ export function AlbumList({ album }: AlbumPageListProps) {
         </TableRow>
       </TableHeader>
       <TableBody>
-        {album.attributes.tracks.data.map((track, index) => (
-          <Track hideCover index={index} track={track} />
+        {data.attributes.tracks.data.map((track, index) => (
+          <Track key={track.id} hideCover index={index} track={track} />
         ))}
       </TableBody>
     </Table>

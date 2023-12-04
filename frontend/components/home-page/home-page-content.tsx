@@ -3,7 +3,7 @@
 import { AlbumArtwork } from '@/components/album-artwork';
 import { ScrollArea, ScrollBar } from '@/components/ui/scroll-area';
 import { Separator } from '@/components/ui/separator';
-import type { Album } from '@/interfaces/album';
+import type { Album } from '@/lib/interfaces/album';
 import { absoluteUrlStrapi } from '@/lib/utils';
 
 interface HomePageContentProps {

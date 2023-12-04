@@ -5,7 +5,7 @@ import { useRouter } from 'next/navigation';
 import { navConfig } from '@/config/nav';
 import { cn } from '@/lib/utils';
 
-import type { Playlist } from '../../data/playlists';
+import type { Playlist } from '../../lib/data/playlists';
 import { Icons } from '../icons';
 import { SiteBrand } from '../site-brand';
 import { Button } from '../ui/button';

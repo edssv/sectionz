@@ -613,9 +613,8 @@ export interface PluginUsersPermissionsUser extends Schema.CollectionType {
       'manyToOne',
       'plugin::users-permissions.role'
     >;
-    profile_name: Attribute.String &
+    profileName: Attribute.String &
       Attribute.Required &
-      Attribute.Configurable &
       Attribute.SetMinMaxLength<{
         minLength: 3;
       }>;
@@ -624,9 +623,9 @@ export interface PluginUsersPermissionsUser extends Schema.CollectionType {
     gender: Attribute.Enumeration<
       ['man', 'woman', 'something_else', 'prefer_not_to_say']
     >;
-    social_emails: Attribute.Boolean & Attribute.DefaultTo<false>;
-    communication_emails: Attribute.Boolean & Attribute.DefaultTo<false>;
-    marketing_emails: Attribute.Boolean & Attribute.DefaultTo<false>;
+    socialEmails: Attribute.Boolean & Attribute.DefaultTo<true>;
+    communicationEmails: Attribute.Boolean & Attribute.DefaultTo<false>;
+    marketingEmails: Attribute.Boolean & Attribute.DefaultTo<false>;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     createdBy: Attribute.Relation<
@@ -708,14 +707,14 @@ export interface ApiAlbumAlbum extends Schema.CollectionType {
       'oneToMany',
       'api::track.track'
     >;
-    album_type: Attribute.Enumeration<['album', 'single']> & Attribute.Required;
+    albumType: Attribute.Enumeration<['album', 'single']> & Attribute.Required;
     artist: Attribute.Relation<
       'api::album.album',
       'manyToOne',
       'api::artist.artist'
     >;
-    release_date: Attribute.DateTime & Attribute.Required;
-    duration_sec: Attribute.Float & Attribute.Required;
+    releaseDate: Attribute.DateTime & Attribute.Required;
+    durationSec: Attribute.Float & Attribute.Required & Attribute.DefaultTo<0>;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     publishedAt: Attribute.DateTime;
@@ -833,12 +832,12 @@ export interface ApiTrackTrack extends Schema.CollectionType {
       'manyToOne',
       'api::artist.artist'
     >;
-    plays_number: Attribute.BigInteger &
+    playsNumber: Attribute.BigInteger &
       Attribute.SetMinMax<{
         min: '0';
       }> &
       Attribute.DefaultTo<'0'>;
-    duration_ms: Attribute.Float;
+    durationMs: Attribute.Float;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     publishedAt: Attribute.DateTime;

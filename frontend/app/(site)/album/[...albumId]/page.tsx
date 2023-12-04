@@ -1,7 +1,11 @@
 import { notFound } from 'next/navigation';
 
-import { Album } from '@/components/album';
-import { AlbumService } from '@/services/album/album.service';
+import client from '@/apollo/apollo-client';
+import { AlbumControls } from '@/components/album/album-controls';
+import { AlbumHeader } from '@/components/album/album-header';
+import { AlbumTrackList } from '@/components/album/album-track-list';
+import type { GetAlbumQuery, GetAlbumQueryVariables } from '@/gql/types';
+import { GetAlbumDocument } from '@/gql/types';
 
 interface AlbumPageProps {
   params: {
@@ -11,13 +15,16 @@ interface AlbumPageProps {
 
 async function getAlbumFromParams(params: AlbumPageProps['params']) {
   const albumId = Number(params?.albumId);
-  const { data: album } = await AlbumService.getAlbum(albumId);
+  const { data } = await client.query<GetAlbumQuery, GetAlbumQueryVariables>({
+    query: GetAlbumDocument,
+    variables: { id: albumId }
+  });
 
-  if (!album) {
+  if (!data.album.data) {
     return notFound();
   }
 
-  return album;
+  return data.album.data;
 }
 
 export default async function AlbumPage({ params }: AlbumPageProps) {
@@ -25,10 +32,10 @@ export default async function AlbumPage({ params }: AlbumPageProps) {
 
   return (
     <div className='space-y-8 md:space-y-12'>
-      <Album.header album={album} />
+      <AlbumHeader data={album} />
       <div className='space-y-8'>
-        <Album.controls album={album} />
-        <Album.list album={album} />
+        <AlbumControls data={album} />
+        <AlbumTrackList data={album} />
       </div>
     </div>
   );

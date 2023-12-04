@@ -2,7 +2,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { useState } from 'react';
 
-import type { Track } from '@/interfaces/strapi-track';
+import type { Track } from '@/lib/interfaces/strapi-track';
 import { getPublicUrl } from '@/lib/publicUrlBuilder';
 import { absoluteUrlStrapi, cn, formatDate } from '@/lib/utils';
 

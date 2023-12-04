@@ -1,13 +1,13 @@
-import './globals.css';
+import '@/styles/globals.css';
 import type { Viewport } from 'next';
 
+import { Analytics } from '@/components/analytics';
 import Providers from '@/components/providers';
 import { TailwindIndicator } from '@/components/tailwind-indicator';
 import { Toaster } from '@/components/ui/toaster';
 import { siteConfig } from '@/config/site';
 import { fontSans } from '@/lib/fonts';
 import { cn } from '@/lib/utils';
-import { ThemeProvider } from '@/providers/theme-provider';
 
 export const metadata = {
   title: {
@@ -56,11 +56,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang='en'>
       <body className={cn('', fontSans.className)}>
-        <ThemeProvider enableSystem attribute='class' defaultTheme='system'>
-          <Providers>{children}</Providers>
-          <TailwindIndicator />
-          <Toaster />
-        </ThemeProvider>
+        <Providers>{children}</Providers>
+        <TailwindIndicator />
+        <Analytics />
+        <Toaster />
       </body>
     </html>
   );

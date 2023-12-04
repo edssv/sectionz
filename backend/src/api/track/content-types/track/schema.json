@@ -47,12 +47,12 @@
       "target": "api::artist.artist",
       "inversedBy": "tracks"
     },
-    "plays_number": {
+    "playsNumber": {
       "type": "biginteger",
       "default": "0",
       "min": "0"
     },
-    "duration_ms": {
+    "durationMs": {
       "type": "float"
     }
   }

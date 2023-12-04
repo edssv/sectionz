@@ -1,0 +1,39 @@
+fragment Track on TrackEntity {
+  id
+  attributes {
+    name
+    durationMs
+    playsNumber
+    cover {
+      data {
+        attributes {
+          url
+        }
+      }
+    }
+    audio {
+      data {
+        attributes {
+          name
+          url
+        }
+      }
+    }
+    album {
+      data {
+        id
+        attributes {
+          name
+        }
+      }
+    }
+    artist {
+      data {
+        id
+        attributes {
+          name
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,5 @@
+mutation UpdateUserNotifications($data: UpdateUserNotificationsInput!) {
+  updateUserNotifications(data: $data) {
+    __typename
+  }
+}

@@ -2,9 +2,9 @@
 
 import Image from 'next/image';
 
-import useOnPlay from '@/hooks/useOnPlay';
-import { usePlayer } from '@/hooks/usePlayer';
-import type { Track as ITrack } from '@/interfaces/strapi-track';
+import type { TrackFragment } from '@/gql/types';
+import useOnPlay from '@/hooks/use-on-play';
+import { usePlayer } from '@/hooks/use-player';
 import { absoluteUrlStrapi, convertSecToMinutes } from '@/lib/utils';
 
 import { PlayButton } from './play-button';
@@ -13,7 +13,7 @@ import { TypographyMuted } from './ui/typography-muted';
 
 interface TrackProps {
   index: number;
-  track: ITrack;
+  track: TrackFragment;
   hideArtist?: boolean;
   hideCover?: boolean;
 }
@@ -41,8 +41,9 @@ export function Track({ hideArtist = false, hideCover = false, index, track }: T
         <PlayButton
           className='hidden h-8 w-8 rounded-full p-0 group-hover:flex'
           isPlaying={isPlaying}
+          size='icon'
           title={`Включить трек "${track.attributes.name}" исполнителя ${track.attributes.artist.data.attributes.name}`}
-          variant='icon'
+          variant='outline'
           onClick={handleClickOnPlay}
         />
 

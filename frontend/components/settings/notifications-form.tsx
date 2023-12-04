@@ -1,8 +1,6 @@
 'use client';
 
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useRouter } from 'next/navigation';
-import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import type * as z from 'zod';
 
@@ -10,48 +8,36 @@ import { Button } from '@/components/ui/button';
 import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel } from '@/components/ui/form';
 import { Switch } from '@/components/ui/switch';
 import { toast } from '@/components/ui/use-toast';
-import { notificationsFormSchema } from '@/lib/validations/settings';
-import { UserService } from '@/services/user/user.service';
+import { useUpdateUserNotificationsMutation } from '@/gql/types';
+import { updateUserNotificationsFormSchema } from '@/lib/validations/settings';
 
-type NotificationsFormValues = z.infer<typeof notificationsFormSchema>;
+type NotificationsFormValues = z.infer<typeof updateUserNotificationsFormSchema>;
 
 interface NotificationsFormProps {
-  data: Omit<NotificationsFormValues, 'security_emails'>;
+  data: Omit<NotificationsFormValues, 'securityEmails'>;
 }
 
 export function NotificationsForm({ data }: NotificationsFormProps) {
-  const router = useRouter();
-  const [isLoading, setIsLoading] = useState(false);
+  const [updateNotifications, { loading }] = useUpdateUserNotificationsMutation();
   const form = useForm<NotificationsFormValues>({
-    resolver: zodResolver(notificationsFormSchema),
+    resolver: zodResolver(updateUserNotificationsFormSchema),
     defaultValues: {
-      communication_emails: data.communication_emails,
-      marketing_emails: data.marketing_emails,
-      social_emails: data.social_emails,
-      security_emails: true
+      communicationEmails: data.communicationEmails,
+      marketingEmails: data.marketingEmails,
+      socialEmails: data.socialEmails,
+      securityEmails: true
     }
   });
 
   async function onSubmit(data: NotificationsFormValues) {
-    setIsLoading(true);
-
-    const res = await UserService.update(data);
-
-    setIsLoading(false);
-
-    if (!res.ok) {
-      return toast({
-        title: 'Что-то пошло не так.',
-        description: 'Ваш запрос на обновление настроек уведомлений не выполнен. Пожалуйста, попробуйте еще раз.',
-        variant: 'destructive'
-      });
-    }
+    const { securityEmails, ...values } = data;
+    await updateNotifications({ variables: { data: values } });
 
     toast({
       description: 'Настройки уведомлений изменены.'
     });
 
-    router.refresh();
+    form.reset(data);
   }
 
   return (
@@ -62,7 +48,7 @@ export function NotificationsForm({ data }: NotificationsFormProps) {
           <div className='space-y-4'>
             <FormField
               control={form.control}
-              name='communication_emails'
+              name='communicationEmails'
               render={({ field }) => (
                 <FormItem className='flex flex-row items-center justify-between rounded-lg border p-4'>
                   <div className='space-y-0.5'>
@@ -77,7 +63,7 @@ export function NotificationsForm({ data }: NotificationsFormProps) {
             />
             <FormField
               control={form.control}
-              name='marketing_emails'
+              name='marketingEmails'
               render={({ field }) => (
                 <FormItem className='flex flex-row items-center justify-between rounded-lg border p-4'>
                   <div className='space-y-0.5'>
@@ -94,7 +80,7 @@ export function NotificationsForm({ data }: NotificationsFormProps) {
             />
             <FormField
               control={form.control}
-              name='social_emails'
+              name='socialEmails'
               render={({ field }) => (
                 <FormItem className='flex flex-row items-center justify-between rounded-lg border p-4'>
                   <div className='space-y-0.5'>
@@ -111,7 +97,7 @@ export function NotificationsForm({ data }: NotificationsFormProps) {
             />
             <FormField
               control={form.control}
-              name='security_emails'
+              name='securityEmails'
               render={({ field }) => (
                 <FormItem className='flex flex-row items-center justify-between rounded-lg border p-4'>
                   <div className='space-y-0.5'>
@@ -129,7 +115,7 @@ export function NotificationsForm({ data }: NotificationsFormProps) {
           </div>
         </div>
 
-        <Button isLoading={isLoading} type='submit'>
+        <Button disabled={!form.formState.isDirty} isLoading={loading} type='submit'>
           Обновить уведомления
         </Button>
       </form>
