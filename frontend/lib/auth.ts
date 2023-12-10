@@ -5,10 +5,9 @@ import VkProvider from 'next-auth/providers/vk';
 
 import client from '@/apollo/apollo-client';
 import { env } from '@/env.mjs';
-import type { LoginMutation, LoginMutationVariables } from '@/gql/types';
-import { LoginDocument } from '@/gql/types';
+import type { LoginMutation, LoginMutationVariables, MeQuery } from '@/gql/types';
+import { LoginDocument, MeDocument } from '@/gql/types';
 import { AuthService } from '@/services/auth/auth.service';
-import { UserService } from '@/services/user/user.service';
 
 import { absoluteUrlStrapi } from './utils';
 
@@ -73,13 +72,16 @@ export const authOptions: NextAuthOptions = {
     },
     async jwt({ account, token, user }) {
       if (token?.jwt) {
-        const me = await UserService.getMe(token.jwt);
+        const { data } = await client.query<MeQuery>({
+          query: MeDocument,
+          context: { headers: { authorization: `bearer ${token.jwt}` } }
+        });
 
-        if (me) {
-          token.id = me.id;
-          token.name = me.profile_name;
-          token.email = me.email;
-          token.picture = me?.image ? absoluteUrlStrapi(me.image.url) : null;
+        if (data.me) {
+          token.id = data.me.id;
+          token.name = data.me.profileName;
+          token.email = data.me.email;
+          token.picture = data.me?.image ? absoluteUrlStrapi(data.me.image.url) : null;
 
           return token;
         }

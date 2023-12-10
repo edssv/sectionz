@@ -21,7 +21,7 @@ import type { RegisterFormProps } from './user-register-form';
 type FormData = z.infer<typeof userRegisterInfoSchema>;
 
 export function InfoStep({ className }: RegisterFormProps) {
-  const { registerState, setStep, setValue, step } = useRegister();
+  const { setStep, setValue, step, values } = useRegister();
   const form = useForm<FormData>({
     mode: 'onTouched',
     resolver: zodResolver(userRegisterInfoSchema)
@@ -73,7 +73,7 @@ export function InfoStep({ className }: RegisterFormProps) {
                     disabled={(date: Date) => date > new Date() || date < new Date('1900-01-01')}
                     fromYear={1900}
                     mode='single'
-                    selected={registerState.dob}
+                    selected={values.dob}
                     toYear={new Date().getFullYear()}
                     onSelect={(val) => {
                       field.onChange(val);

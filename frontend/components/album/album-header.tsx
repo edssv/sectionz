@@ -3,9 +3,9 @@
 import Image from 'next/image';
 import Link from 'next/link';
 
-import type { GetAlbumQuery } from '@/gql/types';
+import { Enum_Album_Albumtype, type GetAlbumQuery } from '@/gql/types';
 import { getPublicUrl } from '@/lib/publicUrlBuilder';
-import { absoluteUrlStrapi, convertSecToMinutes } from '@/lib/utils';
+import { absoluteUrlStrapi, parseAlbumDuration } from '@/lib/utils';
 
 import { TypographyH1 } from '../ui/typography-h1';
 import { TypographyMuted } from '../ui/typography-muted';
@@ -33,7 +33,7 @@ export function AlbumHeader({ data }: AlbumPageHeaderProps) {
       <div className='flex w-full flex-col md:w-auto'>
         <span className='hidden text-sm md:inline-block'>
           {' '}
-          {data.attributes?.album_type === 'album' ? 'Альбом' : 'Сингл'}
+          {data.attributes?.albumType === Enum_Album_Albumtype.Album ? 'Альбом' : 'Сингл'}
         </span>
         <TypographyH1 className='mb-2 mt-4 md:mb-16'>{data.attributes.name}</TypographyH1>
         <div className='flex items-center gap-[1px] text-sm'>
@@ -54,7 +54,7 @@ export function AlbumHeader({ data }: AlbumPageHeaderProps) {
           <span>{data.attributes.genre}</span>
           <span className='dot-separator'>&nbsp;</span>
           <span className='mr-[2px]'>{data.attributes.tracks.data.length} треков,</span>
-          <TypographyMuted>{convertSecToMinutes(data.attributes.duration_sec, 'album')}</TypographyMuted>
+          <TypographyMuted>{parseAlbumDuration(data.attributes.duration)}</TypographyMuted>
         </div>
       </div>
     </div>

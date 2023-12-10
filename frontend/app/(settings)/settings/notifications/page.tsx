@@ -1,21 +1,22 @@
 import { notFound } from 'next/navigation';
 
+import client from '@/apollo/apollo-client';
 import { NotificationsForm } from '@/components/settings/notifications-form';
 import { Separator } from '@/components/ui/separator';
 import { TypographyMuted } from '@/components/ui/typography-muted';
+import type { MeQuery } from '@/gql/types';
+import { MeDocument } from '@/gql/types';
 import { getApiUserToken } from '@/lib/session';
-import { UserService } from '@/services/user/user.service';
 
 export default async function SettingsNotificationsPage() {
-  const jwt = await getApiUserToken();
+  const token = await getApiUserToken();
+  const { data } = await client.query<MeQuery>({
+    query: MeDocument,
+    context: { headers: { authorization: `bearer ${token}` } },
+    fetchPolicy: 'no-cache'
+  });
 
-  if (!jwt) {
-    return notFound();
-  }
-
-  const me = await UserService.getMe(jwt);
-
-  if (!me) {
+  if (!data.me) {
     return notFound();
   }
 
@@ -28,9 +29,9 @@ export default async function SettingsNotificationsPage() {
       <Separator />
       <NotificationsForm
         data={{
-          socialEmails: me.socialEmails,
-          communicationEmails: me.communicationEmails,
-          marketingEmails: me.marketingEmails
+          socialEmails: data.me.socialEmails,
+          communicationEmails: data.me.communicationEmails,
+          marketingEmails: data.me.marketingEmails
         }}
       />
     </div>

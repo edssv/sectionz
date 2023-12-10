@@ -66,11 +66,16 @@ module.exports = {
         'accordion-up': {
           from: { height: 'var(--radix-accordion-content-height)' },
           to: { height: 0 }
+        },
+        'bar-animate': {
+          '0%, 100%': { transform: 'scale3d(1, 0, 1)' },
+          '50%': { transform: 'scale3d(1, 1, 1)' }
         }
       },
       animation: {
         'accordion-down': 'accordion-down 0.2s ease-out',
-        'accordion-up': 'accordion-up 0.2s ease-out'
+        'accordion-up': 'accordion-up 0.2s ease-out',
+        bar: 'bar-animate 1s ease-in-out infinite'
       },
       backgroundImage: {
         'gradient-container': 'linear-gradient(1turn,hsl(20 14.3% 4.1%) 8.98%,rgba(0,0,0,0) 100%)',

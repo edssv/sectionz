@@ -1,6 +1,6 @@
 import Image from 'next/image';
 
-import type { User } from '@/lib/interfaces/user';
+import type { User } from '@/lib/types/user';
 import { absoluteUrlStrapi } from '@/lib/utils';
 
 import { Icons } from '../icons';

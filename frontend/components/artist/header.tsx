@@ -1,6 +1,6 @@
 import Image from 'next/image';
 
-import type { Artist } from '@/lib/interfaces/strapi-artist';
+import type { Artist } from '@/lib/types/strapi-artist';
 import { absoluteUrlStrapi } from '@/lib/utils';
 
 import { Icons } from '../icons';

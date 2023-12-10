@@ -2,15 +2,8 @@ fragment Track on TrackEntity {
   id
   attributes {
     name
-    durationMs
-    playsNumber
-    cover {
-      data {
-        attributes {
-          url
-        }
-      }
-    }
+    duration
+    playCount
     audio {
       data {
         attributes {
@@ -24,6 +17,14 @@ fragment Track on TrackEntity {
         id
         attributes {
           name
+          releaseDate
+          cover {
+            data {
+              attributes {
+                url
+              }
+            }
+          }
         }
       }
     }

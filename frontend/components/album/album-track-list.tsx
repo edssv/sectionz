@@ -1,7 +1,14 @@
+'use client';
+
+import { useCallback } from 'react';
+
 import { Icons } from '@/components/icons';
 import { Table, TableBody, TableCaption, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import type { GetAlbumQuery } from '@/gql/types';
-import { convertSecToMinutes, formatDate, plural } from '@/lib/utils';
+import usePlayingTrackID from '@/hooks/use-playing-track-id';
+import { PlayerStatus } from '@/lib/types/types';
+import { formatDate, parseAlbumDuration, plural } from '@/lib/utils';
+import usePlayerStore, { usePlayerAPI } from '@/stores/use-player-store';
 
 import { Track } from '../track';
 
@@ -12,18 +19,26 @@ interface AlbumPageListProps {
 }
 
 export function AlbumTrackList({ data }: AlbumPageListProps) {
+  const playerAPI = usePlayerAPI();
+  const trackPlayingID = usePlayingTrackID();
+  const { playerStatus } = usePlayerStore();
+
+  const tracks = data.attributes.tracks.data;
+
+  const startPlayback = useCallback(
+    (trackID: number) => {
+      playerAPI.start(tracks, trackID);
+    },
+    [tracks, playerAPI]
+  );
+
   return (
     <Table>
       <TableCaption className='mt-10 text-left md:pl-3'>
-        <p>{formatDate(data.attributes.release_date)}</p>
+        <p>{formatDate(data.attributes.releaseDate)}</p>
         <span>
-          {`${data.attributes.tracks.data.length} ${plural(data.attributes.tracks.data.length, [
-            'трек',
-            'трека',
-            'треков',
-            'треков'
-          ])},
-          ${convertSecToMinutes(data.attributes.duration_sec, 'album')}`}
+          {`${tracks.length} ${plural(tracks.length, ['трек', 'трека', 'треков', 'треков'])},
+          ${parseAlbumDuration(data.attributes.duration)}`}
         </span>
       </TableCaption>
       <TableHeader>
@@ -37,8 +52,16 @@ export function AlbumTrackList({ data }: AlbumPageListProps) {
         </TableRow>
       </TableHeader>
       <TableBody>
-        {data.attributes.tracks.data.map((track, index) => (
-          <Track key={track.id} hideCover index={index} track={track} />
+        {tracks.map((track, index) => (
+          <Track
+            key={track.id}
+            hideCover
+            index={index}
+            isCurrentTrack={trackPlayingID === track.id}
+            isPlaying={playerStatus === PlayerStatus.PLAY}
+            track={track}
+            onClick={startPlayback}
+          />
         ))}
       </TableBody>
     </Table>

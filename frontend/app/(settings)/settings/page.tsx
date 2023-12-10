@@ -1,23 +1,25 @@
 import { notFound } from 'next/navigation';
 
+import client from '@/apollo/apollo-client';
 import { ProfileForm } from '@/components/settings/profile-form';
 import { Separator } from '@/components/ui/separator';
 import { TypographyMuted } from '@/components/ui/typography-muted';
+import type { MeQuery } from '@/gql/types';
+import { MeDocument } from '@/gql/types';
 import { getApiUserToken } from '@/lib/session';
-import { UserService } from '@/services/user/user.service';
 
 export default async function SettingsAccountPage() {
-  const jwt = await getApiUserToken();
+  const token = await getApiUserToken();
+  const { data } = await client.query<MeQuery>({
+    query: MeDocument,
+    context: { headers: { authorization: `bearer ${token}` } },
+    partialRefetch: true
+  });
 
-  if (!jwt) {
+  if (!data.me) {
     return notFound();
   }
-  const me = await UserService.getMe(jwt);
-
-  if (!me) {
-    return notFound();
-  }
-
+  console.log(data.me);
   return (
     <div className='space-y-6'>
       <div>
@@ -25,7 +27,7 @@ export default async function SettingsAccountPage() {
         <TypographyMuted>Именно так другие будут видеть вас на сайте.</TypographyMuted>
       </div>
       <Separator />
-      <ProfileForm data={{ profile_name: me.profileName, dob: me.dob, gender: me.gender }} />
+      <ProfileForm data={{ profileName: data.me.profileName, dob: data.me.dob, gender: data.me.gender }} />
     </div>
   );
 }

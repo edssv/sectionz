@@ -1,57 +1,47 @@
-/* eslint-disable jsx-a11y/no-static-element-interactions */
-/* eslint-disable jsx-a11y/click-events-have-key-events */
+/* eslint-disable jsx-a11y/control-has-associated-label */
 
 'use client';
 
-import { usePlayer } from '@/hooks/use-player';
+import { Repeat } from '@/lib/types/types';
 import { cn } from '@/lib/utils';
+import usePlayerStore, { usePlayerAPI } from '@/stores/use-player-store';
 
 import { Icons } from '../icons';
 import { Button } from '../ui/button';
-import { Slider } from '../ui/slider';
 
-export function RightControls() {
-  const player = usePlayer();
+import VolumeControl from './volume-control';
 
-  const VolumeIcon = player.isMuted ? Icons.speakerOff : Icons.speakerLoud;
+interface RightControlsProps {
+  showVolume: boolean;
+  setShowVolume: React.Dispatch<React.SetStateAction<boolean>>;
+}
 
-  const onChangeVolume = (volume: number) => {
-    player.setVolume(volume);
-    if (volume === 0) player.setIsMuted(true);
-    if (player.isMuted && volume > 0) player.setIsMuted(false);
-  };
+const titleMap = {
+  [Repeat.ONE]: 'Отключить повтор',
+  [Repeat.ALL]: 'Включить повтор одной',
+  [Repeat.NONE]: 'Включить повтор всех',
+  default: 'Включить повтор всех'
+};
 
-  const toggleMute = () => {
-    if (player.isMuted) {
-      player.setIsMuted(false);
-    } else {
-      player.setIsMuted(true);
-    }
-  };
+export function RightControls({ setShowVolume, showVolume }: RightControlsProps) {
+  const { repeat, shuffle } = usePlayerStore();
+  const playerAPI = usePlayerAPI();
 
-  const handleHover = () => {
-    player.setIsShownVolumeController(true);
-  };
+  const RepeatIcon = repeat === Repeat.ONE ? Icons.repeatOne : Icons.repeat;
 
   return (
-    <div className='flex items-center justify-end gap-4'>
-      <Slider
-        className={cn('h-1 w-20 transition-all', player.isShownVolumeController ? 'opacity-100' : 'opacity-0')}
-        defaultValue={[player.volume]}
-        max={100}
-        step={1}
-        value={[player.isMuted ? 0 : player.volume]}
-        onValueChange={(values) => onChangeVolume(values[0])}
-      />
+    <div className='flex items-center gap-1.5'>
+      <VolumeControl setShowVolume={setShowVolume} showVolume={showVolume} />
       <Button
-        className='cursor-pointer'
         size='icon'
-        title={player.isMuted ? 'Включить звук' : 'Отключить звук'}
+        title={titleMap[repeat] || titleMap.default}
         variant='ghost'
-        onClick={toggleMute}
-        onMouseEnter={handleHover}
+        onClick={() => playerAPI.toggleRepeat()}
       >
-        <VolumeIcon className='h-[1.2rem] w-[1.2rem] text-muted-foreground' />
+        <RepeatIcon className={cn('h-[1.1rem] w-[1.1rem]', { 'text-muted-foreground': repeat === Repeat.NONE })} />
+      </Button>
+      <Button size='icon' title='Включить случайный порядок' variant='ghost' onClick={() => playerAPI.toggleShuffle()}>
+        <Icons.shuffle className={cn('h-[1.1rem] w-[1.1rem]', { 'text-muted-foreground': !shuffle })} />
       </Button>
     </div>
   );

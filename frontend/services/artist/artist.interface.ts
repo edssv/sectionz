@@ -1,5 +1,5 @@
-import type { Artist } from '@/lib/interfaces/strapi-artist';
-import type { Track } from '@/lib/interfaces/strapi-track';
+import type { Artist } from '@/lib/types/strapi-artist';
+import type { Track } from '@/lib/types/strapi-track';
 
 export interface GetArtistResponse {
   data: Artist;

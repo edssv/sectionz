@@ -1,7 +1,7 @@
-query GetAlbumList {
+query AlbumList {
   albums {
     data {
-      id
+      ...Album
     }
   }
 }

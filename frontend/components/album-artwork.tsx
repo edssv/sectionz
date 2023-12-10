@@ -6,6 +6,7 @@
 import { PlusCircledIcon } from '@radix-ui/react-icons';
 import Image from 'next/image';
 import Link from 'next/link';
+import { useCallback } from 'react';
 
 import {
   ContextMenu,
@@ -17,11 +18,10 @@ import {
   ContextMenuSubTrigger,
   ContextMenuTrigger
 } from '@/components/ui/context-menu';
-import useOnPlay from '@/hooks/use-on-play';
-import { usePlayer } from '@/hooks/use-player';
-import type { Album } from '@/lib/interfaces/album';
+import type { AlbumFragment } from '@/gql/types';
 import { getPublicUrl } from '@/lib/publicUrlBuilder';
 import { cn } from '@/lib/utils';
+import { usePlayerAPI } from '@/stores/use-player-store';
 
 import { playlists } from '../lib/data/playlists';
 
@@ -29,7 +29,7 @@ import { PlayButton } from './play-button';
 import { TypographyMuted } from './ui/typography-muted';
 
 interface AlbumArtworkProps extends React.HTMLAttributes<HTMLDivElement> {
-  album: Album;
+  album: AlbumFragment;
   coverUrl: string;
   aspectRatio?: 'portrait' | 'square';
   width?: number;
@@ -45,15 +45,14 @@ export function AlbumArtwork({
   width,
   ...props
 }: AlbumArtworkProps) {
-  const onPlay = useOnPlay(album.attributes.tracks.data);
-  const player = usePlayer();
+  const playerAPI = usePlayerAPI();
 
-  const isPlaying = player.activeId === album.id && player.isPlaying;
-
-  const handleClickOnPlay = () => {
-    player.setActiveAlbumId(album.id);
-    onPlay(album.attributes.tracks.data[0].id);
-  };
+  const startPlayback = useCallback(
+    (trackID?: string) => {
+      playerAPI.start(album.attributes.tracks.data, trackID);
+    },
+    [album, playerAPI]
+  );
 
   return (
     <div className={cn('space-y-3', className)} {...props}>
@@ -74,9 +73,9 @@ export function AlbumArtwork({
           <div className='opacity-0 transition-all group-hover:opacity-100'>
             <PlayButton
               className='absolute bottom-3 right-3 z-10 h-12 w-12 rounded-full'
-              isPlaying={isPlaying}
+              isPlaying={false}
               size='icon'
-              onClick={handleClickOnPlay}
+              onClick={() => startPlayback()}
             />
             {/* <ButtonIcon
               className='absolute right-2 top-2 h-10 w-10 rounded-full'

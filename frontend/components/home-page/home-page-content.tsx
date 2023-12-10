@@ -1,19 +1,18 @@
-'use client';
-
 import { AlbumArtwork } from '@/components/album-artwork';
 import { ScrollArea, ScrollBar } from '@/components/ui/scroll-area';
 import { Separator } from '@/components/ui/separator';
-import type { Album } from '@/lib/interfaces/album';
+import type { AlbumFragment } from '@/gql/types';
 import { absoluteUrlStrapi } from '@/lib/utils';
 
 interface HomePageContentProps {
   data: {
-    listenNowAlbums: Album[];
-    albums: Album[];
+    listenNowAlbums: AlbumFragment[];
+    albums: AlbumFragment[];
   };
 }
 
 export default function HomePageContent({ data }: HomePageContentProps) {
+  console.log('data ===>>>>>', data);
   return (
     <div className='grid w-full lg:grid-cols-5'>
       <div className='col-span-3 lg:col-span-5'>
@@ -34,7 +33,7 @@ export default function HomePageContent({ data }: HomePageContentProps) {
                     album={album}
                     aspectRatio='portrait'
                     className='w-[250px]'
-                    coverUrl={absoluteUrlStrapi(album.attributes.cover?.data.attributes.url)}
+                    coverUrl={absoluteUrlStrapi(album.attributes.cover.data.attributes.url)}
                     height={330}
                     width={250}
                   />

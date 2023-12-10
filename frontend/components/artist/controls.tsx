@@ -2,7 +2,7 @@
 
 import useOnPlay from '@/hooks/use-on-play';
 import { usePlayer } from '@/hooks/use-player';
-import type { Artist } from '@/lib/interfaces/strapi-artist';
+import type { Artist } from '@/lib/types/strapi-artist';
 
 import { PlayButton } from '../play-button';
 import { Button } from '../ui/button';

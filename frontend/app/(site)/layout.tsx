@@ -1,3 +1,4 @@
+import PlayerEvents from '@/components/events/player-events';
 import { Player } from '@/components/player/player';
 import { Sidebar } from '@/components/sidebar/sidebar';
 import { SiteFooter } from '@/components/site-footer';
@@ -41,6 +42,7 @@ export default async function Layout({ children }: MarketingLayoutProps) {
           <SiteFooter />
         </div>
         <Player />
+        <PlayerEvents />
       </div>
     </div>
   );

@@ -19,21 +19,6 @@ export function formatDate(
   return date.toLocaleDateString('ru-RU', options);
 }
 
-export function convertSecToMinutes(seconds: number, format: 'album' | 'track' = 'track'): string {
-  const padTo2Digits = (num: number) => num.toString().padStart(2, '0');
-
-  seconds = Math.floor(seconds);
-  let minutes = Math.floor(seconds / 60);
-
-  seconds %= 60;
-  minutes %= 60;
-
-  if (format === 'track') {
-    return `${minutes}:${padTo2Digits(seconds)}`;
-  }
-  return `${minutes} мин. ${padTo2Digits(seconds)} сек.`;
-}
-
 export function absoluteUrlStrapi(path: string | undefined) {
   return `${env.NEXT_PUBLIC_STRAPI_URL}${path}`;
 }
@@ -56,3 +41,44 @@ export function plural(count: number, messages: string[]) {
 
   return messages[2];
 }
+
+export const parseDuration = (duration: number | null): string => {
+  if (duration !== null) {
+    const hours = Math.trunc(duration / 3600);
+    const minutes = Math.trunc(duration / 60) % 60;
+    const seconds = Math.trunc(duration) % 60;
+
+    const hoursStringified = hours < 10 ? `0${hours}` : hours;
+    const minutesStringified = minutes < 10 ? `${minutes}` : minutes;
+    const secondsStringified = seconds < 10 ? `0${seconds}` : seconds;
+
+    let result = hours > 0 ? `${hoursStringified}:` : '';
+    result += `${minutesStringified}:${secondsStringified}`;
+
+    return result;
+  }
+
+  return '0:00';
+};
+
+export const parseAlbumDuration = (duration: number | null): string => {
+  if (duration === null) {
+    return '0:00';
+  }
+
+  const hours = Math.trunc(duration / 3600);
+  const minutes = Math.trunc(duration / 60) % 60;
+  const seconds = Math.trunc(duration) % 60;
+
+  const hoursStringified = hours < 10 ? `${hours}` : hours;
+  const minutesStringified = minutes < 10 ? `${minutes}` : minutes;
+  const secondsStringified = seconds < 10 ? `${seconds}` : seconds;
+
+  let result;
+
+  if (hours) {
+    result = `${hoursStringified} ч. ${minutesStringified} мин.`;
+  } else result = `${minutesStringified} мин. ${secondsStringified} сек.`;
+
+  return result;
+};

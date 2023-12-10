@@ -1,0 +1,7 @@
+query Track($id: ID!) {
+  track(id: $id) {
+    data {
+      ...Track
+    }
+  }
+}

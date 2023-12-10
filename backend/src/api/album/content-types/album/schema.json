@@ -51,7 +51,7 @@
       "type": "datetime",
       "required": true
     },
-    "durationSec": {
+    "duration": {
       "type": "float",
       "required": true,
       "default": 0

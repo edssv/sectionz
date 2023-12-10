@@ -19,18 +19,10 @@
     "genre": {
       "type": "string"
     },
-    "cover": {
-      "type": "media",
-      "multiple": false,
-      "required": false,
-      "allowedTypes": [
-        "images"
-      ]
-    },
     "audio": {
       "type": "media",
       "multiple": false,
-      "required": false,
+      "required": true,
       "allowedTypes": [
         "audios"
       ]
@@ -47,12 +39,12 @@
       "target": "api::artist.artist",
       "inversedBy": "tracks"
     },
-    "playsNumber": {
-      "type": "biginteger",
-      "default": "0",
-      "min": "0"
+    "playCount": {
+      "type": "integer",
+      "default": 0,
+      "min": 0
     },
-    "durationMs": {
+    "duration": {
       "type": "float"
     }
   }

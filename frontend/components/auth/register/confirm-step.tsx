@@ -3,7 +3,6 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { signIn } from 'next-auth/react';
-
 import { useForm } from 'react-hook-form';
 import type { z } from 'zod';
 
@@ -27,7 +26,7 @@ export function ConfirmStep({ className }: RegisterFormProps) {
   const router = useRouter();
   const searchParams = useSearchParams();
   const [register, { loading }] = useRegisterMutation();
-  const { registerState, setValue } = useRegister();
+  const { setValue, values } = useRegister();
   const form = useForm<FormData>({
     resolver: zodResolver(userRegisterConfirmSchema)
   });
@@ -38,16 +37,16 @@ export function ConfirmStep({ className }: RegisterFormProps) {
     await register({
       variables: {
         input: {
-          ...registerState,
+          ...values,
           ...formData,
-          ...{ username: `${registerState?.email.split('@')[0]}_${Math.floor(Math.random() * 1000)}` }
+          ...{ username: `${values?.email.split('@')[0]}_${Math.floor(Math.random() * 1000)}` }
         }
       }
     });
 
     const signInResult = await signIn('credentials', {
-      email: registerState?.email?.toLowerCase(),
-      password: registerState.password,
+      email: values?.email?.toLowerCase(),
+      password: values.password,
       redirect: false,
       callbackUrl: searchParams?.get('from') || getPublicUrl.home()
     });

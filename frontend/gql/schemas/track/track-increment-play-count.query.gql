@@ -1,0 +1,5 @@
+query TrackIncrementPlayCount($trackId: ID!) {
+  trackIncrementPlayCount(trackId: $trackId) {
+    playCount
+  }
+}

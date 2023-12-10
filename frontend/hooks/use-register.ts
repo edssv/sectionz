@@ -16,25 +16,24 @@ export type UserRegisterForms = z.infer<
 >;
 
 type State = {
-  registerState: UserRegisterForms;
+  values: UserRegisterForms;
   step: number;
 };
 
 type Actions = {
-  setValue: (data: Partial<State['registerState']>) => void;
+  setValue: (data: Partial<State['values']>) => void;
   setStep: (step: number) => void;
   reset: () => void;
 };
 
 const initialState: State = {
-  registerState: {} as UserRegisterForms,
+  values: {} as UserRegisterForms,
   step: 0
 };
 
 export const useRegister = create<State & Actions>((set) => ({
   ...initialState,
-  setValue: (data: Partial<State['registerState']>) =>
-    set((state) => ({ registerState: { ...state.registerState, ...data } })),
+  setValue: (data: Partial<State['values']>) => set((state) => ({ values: { ...state.registerState, ...data } })),
   setStep: (step: number) => set({ step }),
   reset: () => {
     set(initialState);

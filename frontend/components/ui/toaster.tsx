@@ -2,12 +2,9 @@
 
 import { Toast, ToastClose, ToastDescription, ToastProvider, ToastTitle, ToastViewport } from '@/components/ui/toast';
 import { useToast } from '@/components/ui/use-toast';
-import { usePlayer } from '@/hooks/use-player';
-import { cn } from '@/lib/utils';
 
 export function Toaster() {
   const { toasts } = useToast();
-  const player = usePlayer();
 
   return (
     <ToastProvider>

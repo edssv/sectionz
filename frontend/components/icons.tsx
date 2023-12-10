@@ -42,7 +42,10 @@ import {
   BellIcon,
   ShieldIcon,
   Tv2Icon,
-  AlbumIcon
+  AlbumIcon,
+  Shuffle,
+  Repeat,
+  Repeat1
 } from 'lucide-react';
 import type { LucideProps } from 'lucide-react';
 
@@ -76,8 +79,11 @@ export const Icons = {
   playCircle: PlayCircleIcon,
   playlists: ListMusicIcon,
   post: FileTextIcon,
+  repeat: Repeat,
+  repeatOne: Repeat1,
   search: SearchIcon,
   settings: Settings,
+  shuffle: Shuffle,
   share: Share2Icon,
   shieldCheck: ShieldIcon,
   songs: Music2Icon,

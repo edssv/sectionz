@@ -31,7 +31,7 @@ fragment Album on AlbumEntity {
       }
     }
     albumType
-    durationSec
+    duration
     releaseDate
   }
 }

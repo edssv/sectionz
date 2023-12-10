@@ -11,7 +11,7 @@ import { Input } from '@/components/ui/input';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { toast } from '@/components/ui/use-toast';
-import type { UpdateUserProfileInput } from '@/gql/types';
+import type { MeFragment } from '@/gql/types';
 import { useUpdateUserProfileMutation } from '@/gql/types';
 import { cn, formatDate } from '@/lib/utils';
 import { updateUserProfileFormSchema } from '@/lib/validations/account';
@@ -19,7 +19,7 @@ import { updateUserProfileFormSchema } from '@/lib/validations/account';
 import { Icons } from '../icons';
 
 interface ProfileFormProps {
-  data: UpdateUserProfileInput;
+  data: Pick<MeFragment, 'profileName' | 'dob' | 'gender'>;
 }
 
 type UpdateUserProfileValues = z.infer<typeof updateUserProfileFormSchema>;
@@ -31,7 +31,7 @@ export function ProfileForm({ data }: ProfileFormProps) {
     mode: 'onTouched',
     resolver: zodResolver(updateUserProfileFormSchema),
     defaultValues: {
-      profile_name: data.profile_name,
+      profileName: data.profileName,
       gender: data.gender,
       dob: new Date(data.dob)
     }
@@ -52,7 +52,7 @@ export function ProfileForm({ data }: ProfileFormProps) {
       <form className='space-y-8' onSubmit={form.handleSubmit(onSubmit)}>
         <FormField
           control={form.control}
-          name='profile_name'
+          name='profileName'
           render={({ field }) => (
             <FormItem>
               <FormLabel>Имя профиля</FormLabel>

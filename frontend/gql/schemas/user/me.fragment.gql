@@ -1,0 +1,14 @@
+fragment Me on UsersPermissionsMe {
+  id
+  username
+  email
+  profileName
+  dob
+  gender
+  marketingEmails
+  communicationEmails
+  socialEmails
+  image {
+    url
+  }
+}

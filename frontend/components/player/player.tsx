@@ -1,28 +1,32 @@
 'use client';
 
-import { useGetTrackById } from '@/hooks/use-get-track-by-id';
-import { useLoadTrackUrl } from '@/hooks/use-load-track-url';
-import { usePlayer } from '@/hooks/use-player';
+import { useState } from 'react';
 
-import { PlayerContent } from './player-content';
+import usePlayingTrack from '@/hooks/use-playing-track';
+
+import { LeftControls } from './left-controls';
+import { MiddleControls } from './middle-controls';
+import { ProgressBar } from './progress-bar';
+import { RightControls } from './right-controls';
 
 export function Player() {
-  const player = usePlayer();
-  const { track } = useGetTrackById(player.activeId!);
+  const trackPlaying = usePlayingTrack();
+  const [showVolume, setShowVolume] = useState(false);
 
-  const trackUrl = useLoadTrackUrl(track!);
-
-  if (!track || !trackUrl || !player.activeId) {
+  if (!trackPlaying) {
     return null;
   }
 
-  const handleMouseLeave = () => {
-    player.setIsShownVolumeController(false);
-  };
-
   return (
-    <div className='fixed bottom-0 z-50 w-full' onMouseLeave={handleMouseLeave}>
-      <PlayerContent key={trackUrl} track={track} trackUrl={trackUrl} />
+    <div className='fixed bottom-0 z-50 w-full' onMouseLeave={() => setShowVolume(false)}>
+      <div className='group h-full'>
+        <ProgressBar trackPlaying={trackPlaying} />
+        <div className='flex h-player items-center justify-between bg-secondary px-6'>
+          <LeftControls trackPlaying={trackPlaying} />
+          <MiddleControls trackPlaying={trackPlaying} />
+          <RightControls setShowVolume={setShowVolume} showVolume={showVolume} />
+        </div>
+      </div>
     </div>
   );
 }
