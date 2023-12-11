@@ -14,7 +14,7 @@ export function PlayButton({ children, className, isPlaying, variant, ...props }
 
   return (
     <button className={cn(buttonVariants({ variant }), className)} {...props}>
-      <PlayIcon className={cn('h-4 w-4', { 'mr-2': !!children })} />
+      <PlayIcon className={cn('h-[0.8rem]', { 'mr-2': !!children })} />
       {children}
     </button>
   );

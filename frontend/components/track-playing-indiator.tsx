@@ -11,13 +11,13 @@ import { Button } from './ui/button';
 const getIcon = (state: PlayerStatus, hovered: boolean) => {
   if (state === PlayerStatus.PLAY) {
     if (hovered) {
-      return <Icons.pause className='h-4 w-4' name='pause' />;
+      return <Icons.pause className='h-[0.8rem]' name='pause' />;
     }
 
     const defaultBar = 'h-3 w-0.5 items-baseline bg-primary';
 
     return (
-      <div className='flex h-3 w-2 items-end justify-between gap-[1px]'>
+      <div className='flex h-3 items-end justify-between gap-[1px]'>
         <div className={cn('animate-bar', defaultBar)} />
         <div className={cn('animate-bar delay-300', defaultBar)} />
         <div className={cn('animate-bar delay-150', defaultBar)} />
@@ -25,10 +25,10 @@ const getIcon = (state: PlayerStatus, hovered: boolean) => {
     );
   }
 
-  return <Icons.play className='h-4 w-4' name='play' />;
+  return <Icons.play className='h-[0.8rem]' name='play' />;
 };
 
-export default function TrackPlayingIndiator({ className, ...props }: ButtonProps) {
+export default function TrackPlayingIndiator({ ...props }: ButtonProps) {
   const [hovered, setHovered] = useState(false);
   const { playerStatus } = usePlayerStore();
   const playerAPI = usePlayerAPI();
@@ -37,7 +37,6 @@ export default function TrackPlayingIndiator({ className, ...props }: ButtonProp
 
   return (
     <Button
-      className={cn('h-8 w-8 rounded-full p-0', className)}
       size='icon'
       tabIndex={0}
       variant='link'

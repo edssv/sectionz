@@ -1351,6 +1351,8 @@ export type GetAlbumQueryVariables = Exact<{
 
 export type GetAlbumQuery = { readonly __typename?: 'Query', readonly album: { readonly __typename?: 'AlbumEntityResponse', readonly data: { readonly __typename?: 'AlbumEntity', readonly id: number, readonly attributes: { readonly __typename?: 'Album', readonly name: string, readonly genre: string, readonly albumType: Enum_Album_Albumtype, readonly duration: number, readonly releaseDate: any, readonly cover: { readonly __typename?: 'UploadFileEntityResponse', readonly data: { readonly __typename?: 'UploadFileEntity', readonly attributes: { readonly __typename?: 'UploadFile', readonly url: string } } }, readonly tracks: { readonly __typename?: 'TrackRelationResponseCollection', readonly data: ReadonlyArray<{ readonly __typename?: 'TrackEntity', readonly id: number, readonly attributes: { readonly __typename?: 'Track', readonly name: string, readonly duration: number, readonly playCount: number, readonly audio: { readonly __typename?: 'UploadFileEntityResponse', readonly data: { readonly __typename?: 'UploadFileEntity', readonly attributes: { readonly __typename?: 'UploadFile', readonly name: string, readonly url: string } } }, readonly album: { readonly __typename?: 'AlbumEntityResponse', readonly data: { readonly __typename?: 'AlbumEntity', readonly id: number, readonly attributes: { readonly __typename?: 'Album', readonly name: string, readonly releaseDate: any, readonly cover: { readonly __typename?: 'UploadFileEntityResponse', readonly data: { readonly __typename?: 'UploadFileEntity', readonly attributes: { readonly __typename?: 'UploadFile', readonly url: string } } } } } }, readonly artist: { readonly __typename?: 'ArtistEntityResponse', readonly data: { readonly __typename?: 'ArtistEntity', readonly id: number, readonly attributes: { readonly __typename?: 'Artist', readonly name: string } } } } }> }, readonly artist: { readonly __typename?: 'ArtistEntityResponse', readonly data: { readonly __typename?: 'ArtistEntity', readonly id: number, readonly attributes: { readonly __typename?: 'Artist', readonly name: string, readonly image: { readonly __typename?: 'UploadFileEntityResponse', readonly data: { readonly __typename?: 'UploadFileEntity', readonly attributes: { readonly __typename?: 'UploadFile', readonly url: string } } } } } } } } } };
 
+export type ArtistFragment = { readonly __typename?: 'ArtistEntity', readonly id: number, readonly attributes: { readonly __typename?: 'Artist', readonly name: string } };
+
 export type ChangePasswordMutationVariables = Exact<{
   currentPassword: Scalars['String']['input'];
   password: Scalars['String']['input'];
@@ -1525,6 +1527,14 @@ export const AlbumFragmentDoc = gql`
   }
 }
     ${TrackFragmentDoc}`;
+export const ArtistFragmentDoc = gql`
+    fragment Artist on ArtistEntity {
+  id
+  attributes {
+    name
+  }
+}
+    `;
 export const MeFragmentDoc = gql`
     fragment Me on UsersPermissionsMe {
   id

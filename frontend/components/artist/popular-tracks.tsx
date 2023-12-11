@@ -3,7 +3,7 @@
 import { Table, TableBody } from '@/components/ui/table';
 import type { Track as ITrack } from '@/lib/types/strapi-track';
 
-import { Track } from '../track';
+import { Track } from '../track-list-item';
 import { Button } from '../ui/button';
 
 interface PopularTracksProps {

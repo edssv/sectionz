@@ -1,0 +1,6 @@
+fragment Artist on ArtistEntity {
+  id
+  attributes {
+    name
+  }
+}

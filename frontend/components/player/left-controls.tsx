@@ -7,6 +7,7 @@ import { parseDuration } from '@/lib/utils';
 import usePlayerStore, { usePlayerAPI } from '@/stores/use-player-store';
 
 import { Icons } from '../icons';
+import { Button } from '../ui/button';
 import { TypographyMuted } from '../ui/typography-muted';
 
 interface LeftControlsProps {
@@ -18,31 +19,25 @@ export function LeftControls({ trackPlaying }: LeftControlsProps) {
   const playerStatus = usePlayerStore((state) => state.playerStatus);
   const elapsed = usePlayingTrackCurrentTime();
 
-  const Icon = playerStatus === PlayerStatus.PLAY ? Icons.playerPause : Icons.playerPlay;
+  const Icon = playerStatus === PlayerStatus.PLAY ? Icons.pause : Icons.play;
 
   return (
     <div className='-ml-2 flex h-full items-center justify-center gap-3'>
-      <button
-        className='flex h-10 w-10 cursor-pointer select-none items-center justify-center opacity-80 hover:opacity-100'
-        title='Перемотка назад'
-        onClick={playerAPI.previous}
-      >
+      <Button className='h-10 w-10' size='icon' title='Перемотка назад' variant='ghost' onClick={playerAPI.previous}>
         <Icons.trackPrevious className='h-4 w-4' />
-      </button>
-      <button
-        className='flex h-14 w-14 cursor-pointer select-none items-center justify-center opacity-80 hover:opacity-100'
+      </Button>
+      <Button
+        className='h-14 w-14'
+        size='icon'
         title={playerStatus === PlayerStatus.PLAY ? 'Пауза' : 'Играть'}
+        variant='ghost'
         onClick={playerAPI.playPause}
       >
         <Icon className='h-6 w-6' />
-      </button>
-      <button
-        className='flex h-10 w-10 cursor-pointer select-none items-center justify-center opacity-80 hover:opacity-100'
-        title='Вперед'
-        onClick={playerAPI.next}
-      >
+      </Button>
+      <Button className='h-10 w-10' size='icon' title='Вперед' variant='ghost' onClick={playerAPI.next}>
         <Icons.trackNext className='h-4 w-4' />
-      </button>
+      </Button>
       <TypographyMuted className='text-xs'>
         {parseDuration(elapsed)} / {parseDuration(trackPlaying.attributes.duration)}
       </TypographyMuted>

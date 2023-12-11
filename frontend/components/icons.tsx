@@ -45,7 +45,8 @@ import {
   AlbumIcon,
   Shuffle,
   Repeat,
-  Repeat1
+  Repeat1,
+  ListOrdered
 } from 'lucide-react';
 import type { LucideProps } from 'lucide-react';
 
@@ -73,12 +74,11 @@ export const Icons = {
   mic: Mic2Icon,
   moon: MoonIcon,
   page: FileIcon,
-  pause: PauseIcon,
   pinTop: PinTopIcon,
-  play: PlayIcon,
   playCircle: PlayCircleIcon,
   playlists: ListMusicIcon,
   post: FileTextIcon,
+  queue: ListOrdered,
   repeat: Repeat,
   repeatOne: Repeat1,
   search: SearchIcon,
@@ -142,7 +142,7 @@ export const Icons = {
       </defs>
     </svg>
   ),
-  playerPlay: ({ ...props }: LucideProps) => (
+  play: ({ ...props }: LucideProps) => (
     <svg fill='currentColor' viewBox='0 0 16 16' xmlns='http://www.w3.org/2000/svg' {...props}>
       <g clipPath='url(#clip0_0_1018)'>
         <path
@@ -157,7 +157,7 @@ export const Icons = {
       </defs>
     </svg>
   ),
-  playerPause: ({ ...props }: LucideProps) => (
+  pause: ({ ...props }: LucideProps) => (
     <svg fill='currentColor' viewBox='0 0 16 16' xmlns='http://www.w3.org/2000/svg' {...props}>
       <g clipPath='url(#clip0_0_1746)'>
         <path

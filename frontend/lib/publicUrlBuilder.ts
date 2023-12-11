@@ -14,9 +14,7 @@ export const getPublicUrl = {
   login() {
     return '/login';
   },
-  register() {
-    return '/register';
-  },
+
   passwordReset() {
     return '/password-reset';
   },
@@ -25,6 +23,12 @@ export const getPublicUrl = {
   },
   profile(id: number | string) {
     return `/user/${id}`;
+  },
+  queue() {
+    return '/queue';
+  },
+  register() {
+    return '/register';
   },
   terms() {
     return '/terms';

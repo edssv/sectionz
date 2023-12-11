@@ -3,14 +3,13 @@
 import { useCallback } from 'react';
 
 import { Icons } from '@/components/icons';
-import { Table, TableBody, TableCaption, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import type { GetAlbumQuery } from '@/gql/types';
 import usePlayingTrackID from '@/hooks/use-playing-track-id';
 import { PlayerStatus } from '@/lib/types/types';
-import { formatDate, parseAlbumDuration, plural } from '@/lib/utils';
 import usePlayerStore, { usePlayerAPI } from '@/stores/use-player-store';
 
-import { Track } from '../track';
+import { TrackList, TrackListBody, TrackListCell, TrackListHead, TrackListHeader, TrackListRow } from '../track-list';
+import { TrackListItem } from '../track-list-item';
 
 type AlbumControlsData = GetAlbumQuery['album']['data'];
 
@@ -33,27 +32,20 @@ export function AlbumTrackList({ data }: AlbumPageListProps) {
   );
 
   return (
-    <Table>
-      <TableCaption className='mt-10 text-left md:pl-3'>
-        <p>{formatDate(data.attributes.releaseDate)}</p>
-        <span>
-          {`${tracks.length} ${plural(tracks.length, ['трек', 'трека', 'треков', 'треков'])},
-          ${parseAlbumDuration(data.attributes.duration)}`}
-        </span>
-      </TableCaption>
-      <TableHeader>
-        <TableRow>
-          <TableHead className='md:w-[32px]'>#</TableHead>
-          <TableHead className='w-1/3'>Название</TableHead>
-          <TableHead className='w-1/3 text-right'>Прослушивания</TableHead>
-          <TableHead className='flex items-center justify-end'>
+    <TrackList aria-colcount={4}>
+      <TrackListHeader>
+        <TrackListRow>
+          <TrackListHead className='text-base'>#</TrackListHead>
+          <TrackListHead className='justify-start'>Название</TrackListHead>
+          <TrackListHead>Прослушивания</TrackListHead>
+          <TrackListHead>
             <Icons.clock />
-          </TableHead>
-        </TableRow>
-      </TableHeader>
-      <TableBody>
+          </TrackListHead>
+        </TrackListRow>
+      </TrackListHeader>
+      <TrackListBody>
         {tracks.map((track, index) => (
-          <Track
+          <TrackListItem
             key={track.id}
             hideCover
             index={index}
@@ -61,9 +53,13 @@ export function AlbumTrackList({ data }: AlbumPageListProps) {
             isPlaying={playerStatus === PlayerStatus.PLAY}
             track={track}
             onClick={startPlayback}
-          />
+          >
+            <TrackListCell>
+              {track.attributes.playCount <= 100 ? 'менее 100' : track.attributes.playCount}
+            </TrackListCell>
+          </TrackListItem>
         ))}
-      </TableBody>
-    </Table>
+      </TrackListBody>
+    </TrackList>
   );
 }

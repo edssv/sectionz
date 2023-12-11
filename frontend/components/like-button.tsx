@@ -26,7 +26,12 @@ export function LikeButton({ className, isLike, setLike, size, variant, ...props
   };
 
   return (
-    <button className={cn(buttonVariants({ variant, size }), className)} onClick={handleClick} {...props}>
+    <button
+      className={cn(buttonVariants({ variant, size }), className)}
+      title={isLike ? 'Удалить из библиотеки' : 'Добавить в библиотеку'}
+      onClick={handleClick}
+      {...props}
+    >
       <Icon className='h-4 w-4' />
     </button>
   );
