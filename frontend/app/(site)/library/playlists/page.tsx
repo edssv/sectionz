@@ -1,10 +1,9 @@
 import { PlaylistEmptyPlaceholder } from '@/components/library/playlist-empty-placeholder';
-import { TypographyH2 } from '@/components/ui/typography-h2';
 
 export default function AlbumsPage() {
   return (
     <div className='space-y-4'>
-      <TypographyH2>Плейлисты</TypographyH2>
+      <h1 className='heading text-2xl'>Плейлисты</h1>
       <PlaylistEmptyPlaceholder />
     </div>
   );

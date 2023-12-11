@@ -1,16 +1,12 @@
 'use client';
 
-import { useRouter } from 'next/navigation';
-
 import { navConfig } from '@/config/nav';
 import { cn } from '@/lib/utils';
 
 import type { Playlist } from '../../lib/data/playlists';
-import { Icons } from '../icons';
 import { SiteBrand } from '../site-brand';
 import { Button } from '../ui/button';
 import { ScrollArea } from '../ui/scroll-area';
-import { TypographyH4 } from '../ui/typography-h4';
 
 import { SidebarNav } from './sidebar-nav';
 
@@ -26,7 +22,7 @@ export function Sidebar({ className, playlists }: SidebarProps) {
         {navConfig.sidebarNav.map((sidebarNavPart) =>
           sidebarNavPart.title === 'Плейлисты' ? (
             <div key={sidebarNavPart.title} className='py-2'>
-              <TypographyH4 className='relative px-7'>{sidebarNavPart.title}</TypographyH4>
+              <span className='heading relative px-7 text-lg'>{sidebarNavPart.title}</span>
               <ScrollArea className='h-[300px] px-1'>
                 <div className='space-y-1 p-2'>
                   {playlists?.map((playlist, i) => (
@@ -55,7 +51,7 @@ export function Sidebar({ className, playlists }: SidebarProps) {
             </div>
           ) : (
             <div key={sidebarNavPart.title} className='px-3 py-2'>
-              <TypographyH4 className='mb-2 px-4'>{sidebarNavPart.title}</TypographyH4>{' '}
+              <span className='heading mb-2 inline-block px-4 text-lg'>{sidebarNavPart.title}</span>{' '}
               <SidebarNav items={sidebarNavPart.items} />
             </div>
           )

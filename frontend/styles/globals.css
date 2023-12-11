@@ -81,6 +81,10 @@
 }
 
 @layer components {
+  .heading {
+    @apply scroll-m-20 font-bold tracking-tight;
+  }
+
   .dot-separator {
     display: inline-block;
     width: 2px;

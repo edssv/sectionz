@@ -6,7 +6,7 @@ export default function SettingsDisplayPage() {
   return (
     <div className='space-y-6'>
       <div>
-        <h3 className='text-lg font-medium'>Дисплей</h3>
+        <h2 className='heading text-xl'>Дисплей</h2>
         <TypographyMuted>
           Включайте и отключайте элементы, чтобы контролировать то, что отображается в приложении.
         </TypographyMuted>

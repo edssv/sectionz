@@ -19,11 +19,11 @@ export default async function SettingsAccountPage() {
   if (!data.me) {
     return notFound();
   }
-  console.log(data.me);
+
   return (
     <div className='space-y-6'>
       <div>
-        <h3 className='text-lg font-medium'>Профиль</h3>
+        <h2 className='heading text-xl'>Профиль</h2>
         <TypographyMuted>Именно так другие будут видеть вас на сайте.</TypographyMuted>
       </div>
       <Separator />

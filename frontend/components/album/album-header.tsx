@@ -7,7 +7,6 @@ import { Enum_Album_Albumtype, type GetAlbumQuery } from '@/gql/types';
 import { getPublicUrl } from '@/lib/publicUrlBuilder';
 import { absoluteUrlStrapi, parseAlbumDuration } from '@/lib/utils';
 
-import { TypographyH1 } from '../ui/typography-h1';
 import { TypographyMuted } from '../ui/typography-muted';
 
 type AlbumHeaderData = GetAlbumQuery['album']['data'];
@@ -35,7 +34,7 @@ export function AlbumHeader({ data }: AlbumPageHeaderProps) {
           {' '}
           {data.attributes?.albumType === Enum_Album_Albumtype.Album ? 'Альбом' : 'Сингл'}
         </span>
-        <TypographyH1 className='mb-2 mt-4 md:mb-16'>{data.attributes.name}</TypographyH1>
+        <h1 className='heading mb-2 mt-4 text-4xl md:mb-16 md:text-5xl'>{data.attributes.name}</h1>
         <div className='flex items-center gap-[1px] text-sm'>
           <div className='flex items-center gap-1'>
             <Image

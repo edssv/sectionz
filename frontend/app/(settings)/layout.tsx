@@ -5,7 +5,6 @@ import { SidebarNav } from '@/components/sidebar/sidebar-nav';
 import { SiteBrand } from '@/components/site-brand';
 import { SiteHeader } from '@/components/site-header';
 import { ScrollArea, ScrollBar } from '@/components/ui/scroll-area';
-import { TypographyH4 } from '@/components/ui/typography-h4';
 import { navConfig } from '@/config/nav';
 import { getCurrentUser } from '@/lib/session';
 import { cn } from '@/lib/utils';
@@ -32,7 +31,7 @@ export default async function SettingsLayout({ children }: SettingsLayoutProps) 
           <div className='space-y-4 pb-4'>
             <SiteBrand className='mb-8 mt-3 px-6' />
             <div className='px-3 py-2'>
-              <TypographyH4 className='mb-4 px-4'>Настройки</TypographyH4>{' '}
+              <h1 className='heading mb-2 px-4 text-lg'>Настройки</h1>{' '}
               <SidebarNav items={navConfig.settingsSidebarNav} />
             </div>
           </div>

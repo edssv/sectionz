@@ -3,10 +3,6 @@
 import { notFound } from 'next/navigation';
 
 import { QueueTrackList } from '@/components/queue/queue-track-list';
-import { TypographyH2 } from '@/components/ui/typography-h2';
-import { TypographyH3 } from '@/components/ui/typography-h3';
-import { UserHeader } from '@/components/user/header';
-import { UserService } from '@/services/user/user.service';
 
 export default function QueuePage() {
   const playerData = localStorage.getItem('player');
@@ -17,8 +13,8 @@ export default function QueuePage() {
   const queue = [];
 
   return (
-    <div className=''>
-      <TypographyH3>Очередь</TypographyH3>
+    <div className='space-y-8'>
+      <h1 className='heading text-2xl'>Очередь</h1>
       <QueueTrackList data={queueList} />
     </div>
   );

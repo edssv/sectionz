@@ -23,7 +23,7 @@ export default async function SettingsNotificationsPage() {
   return (
     <div className='space-y-6'>
       <div>
-        <h3 className='text-lg font-medium'>Уведомления</h3>
+        <h2 className='heading text-xl'>Уведомления</h2>
         <TypographyMuted>Настройте способ получения уведомлений.</TypographyMuted>
       </div>
       <Separator />
