@@ -1,0 +1,27 @@
+query Artist($id: ID!) {
+  artist(id: $id) {
+    data {
+      id
+      attributes {
+        name
+        albums {
+          data {
+            ...Album
+          }
+        }
+        tracks {
+          data {
+            ...Track
+          }
+        }
+        image {
+          data {
+            attributes {
+              url
+            }
+          }
+        }
+      }
+    }
+  }
+}
