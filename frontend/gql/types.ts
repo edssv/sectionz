@@ -1353,6 +1353,13 @@ export type GetAlbumQuery = { readonly __typename?: 'Query', readonly album: { r
 
 export type ArtistFragment = { readonly __typename?: 'ArtistEntity', readonly id: number, readonly attributes: { readonly __typename?: 'Artist', readonly name: string } };
 
+export type ArtistQueryVariables = Exact<{
+  id: Scalars['ID']['input'];
+}>;
+
+
+export type ArtistQuery = { readonly __typename?: 'Query', readonly artist: { readonly __typename?: 'ArtistEntityResponse', readonly data: { readonly __typename?: 'ArtistEntity', readonly id: number, readonly attributes: { readonly __typename?: 'Artist', readonly name: string, readonly albums: { readonly __typename?: 'AlbumRelationResponseCollection', readonly data: ReadonlyArray<{ readonly __typename?: 'AlbumEntity', readonly id: number, readonly attributes: { readonly __typename?: 'Album', readonly name: string, readonly genre: string, readonly albumType: Enum_Album_Albumtype, readonly duration: number, readonly releaseDate: any, readonly cover: { readonly __typename?: 'UploadFileEntityResponse', readonly data: { readonly __typename?: 'UploadFileEntity', readonly attributes: { readonly __typename?: 'UploadFile', readonly url: string } } }, readonly tracks: { readonly __typename?: 'TrackRelationResponseCollection', readonly data: ReadonlyArray<{ readonly __typename?: 'TrackEntity', readonly id: number, readonly attributes: { readonly __typename?: 'Track', readonly name: string, readonly duration: number, readonly playCount: number, readonly audio: { readonly __typename?: 'UploadFileEntityResponse', readonly data: { readonly __typename?: 'UploadFileEntity', readonly attributes: { readonly __typename?: 'UploadFile', readonly name: string, readonly url: string } } }, readonly album: { readonly __typename?: 'AlbumEntityResponse', readonly data: { readonly __typename?: 'AlbumEntity', readonly id: number, readonly attributes: { readonly __typename?: 'Album', readonly name: string, readonly releaseDate: any, readonly cover: { readonly __typename?: 'UploadFileEntityResponse', readonly data: { readonly __typename?: 'UploadFileEntity', readonly attributes: { readonly __typename?: 'UploadFile', readonly url: string } } } } } }, readonly artist: { readonly __typename?: 'ArtistEntityResponse', readonly data: { readonly __typename?: 'ArtistEntity', readonly id: number, readonly attributes: { readonly __typename?: 'Artist', readonly name: string } } } } }> }, readonly artist: { readonly __typename?: 'ArtistEntityResponse', readonly data: { readonly __typename?: 'ArtistEntity', readonly id: number, readonly attributes: { readonly __typename?: 'Artist', readonly name: string, readonly image: { readonly __typename?: 'UploadFileEntityResponse', readonly data: { readonly __typename?: 'UploadFileEntity', readonly attributes: { readonly __typename?: 'UploadFile', readonly url: string } } } } } } } }> }, readonly tracks: { readonly __typename?: 'TrackRelationResponseCollection', readonly data: ReadonlyArray<{ readonly __typename?: 'TrackEntity', readonly id: number, readonly attributes: { readonly __typename?: 'Track', readonly name: string, readonly duration: number, readonly playCount: number, readonly audio: { readonly __typename?: 'UploadFileEntityResponse', readonly data: { readonly __typename?: 'UploadFileEntity', readonly attributes: { readonly __typename?: 'UploadFile', readonly name: string, readonly url: string } } }, readonly album: { readonly __typename?: 'AlbumEntityResponse', readonly data: { readonly __typename?: 'AlbumEntity', readonly id: number, readonly attributes: { readonly __typename?: 'Album', readonly name: string, readonly releaseDate: any, readonly cover: { readonly __typename?: 'UploadFileEntityResponse', readonly data: { readonly __typename?: 'UploadFileEntity', readonly attributes: { readonly __typename?: 'UploadFile', readonly url: string } } } } } }, readonly artist: { readonly __typename?: 'ArtistEntityResponse', readonly data: { readonly __typename?: 'ArtistEntity', readonly id: number, readonly attributes: { readonly __typename?: 'Artist', readonly name: string } } } } }> }, readonly image: { readonly __typename?: 'UploadFileEntityResponse', readonly data: { readonly __typename?: 'UploadFileEntity', readonly attributes: { readonly __typename?: 'UploadFile', readonly url: string } } } } } } };
+
 export type ChangePasswordMutationVariables = Exact<{
   currentPassword: Scalars['String']['input'];
   password: Scalars['String']['input'];
@@ -1650,6 +1657,69 @@ export type GetAlbumQueryHookResult = ReturnType<typeof useGetAlbumQuery>;
 export type GetAlbumLazyQueryHookResult = ReturnType<typeof useGetAlbumLazyQuery>;
 export type GetAlbumSuspenseQueryHookResult = ReturnType<typeof useGetAlbumSuspenseQuery>;
 export type GetAlbumQueryResult = Apollo.QueryResult<GetAlbumQuery, GetAlbumQueryVariables>;
+export const ArtistDocument = gql`
+    query Artist($id: ID!) {
+  artist(id: $id) {
+    data {
+      id
+      attributes {
+        name
+        albums {
+          data {
+            ...Album
+          }
+        }
+        tracks {
+          data {
+            ...Track
+          }
+        }
+        image {
+          data {
+            attributes {
+              url
+            }
+          }
+        }
+      }
+    }
+  }
+}
+    ${AlbumFragmentDoc}
+${TrackFragmentDoc}`;
+
+/**
+ * __useArtistQuery__
+ *
+ * To run a query within a React component, call `useArtistQuery` and pass it any options that fit your needs.
+ * When your component renders, `useArtistQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useArtistQuery({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useArtistQuery(baseOptions: Apollo.QueryHookOptions<ArtistQuery, ArtistQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<ArtistQuery, ArtistQueryVariables>(ArtistDocument, options);
+      }
+export function useArtistLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<ArtistQuery, ArtistQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<ArtistQuery, ArtistQueryVariables>(ArtistDocument, options);
+        }
+export function useArtistSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<ArtistQuery, ArtistQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<ArtistQuery, ArtistQueryVariables>(ArtistDocument, options);
+        }
+export type ArtistQueryHookResult = ReturnType<typeof useArtistQuery>;
+export type ArtistLazyQueryHookResult = ReturnType<typeof useArtistLazyQuery>;
+export type ArtistSuspenseQueryHookResult = ReturnType<typeof useArtistSuspenseQuery>;
+export type ArtistQueryResult = Apollo.QueryResult<ArtistQuery, ArtistQueryVariables>;
 export const ChangePasswordDocument = gql`
     mutation ChangePassword($currentPassword: String!, $password: String!, $passwordConfirmation: String!) {
   changePassword(
