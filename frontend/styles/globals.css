@@ -99,24 +99,43 @@
 }
 
 @layer utilities {
+  .ellipsis-one-line {
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    display: -webkit-box;
+    white-space: unset;
+    word-break: break-all;
+    overflow: hidden;
+  }
 }
 
 .rdp-vhidden {
   @apply hidden;
 }
 
-[aria-colcount='5'] .track-list-row {
-  grid-template-columns:
-    [index] 16px [first] minmax(120px, var(--col1, 6fr)) [var1] minmax(120px, var(--col2, 4fr)) [var2] minmax(
-      120px,
-      var(--col3, 3fr)
-    )
-    [last] minmax(120px, var(--col4, 1fr));
+.track-list-cols-1 .track-list-row {
+  grid-template-columns: [index] 16px [first] minmax(120px, 4fr) [last] minmax(120px, 1fr);
+
+  @screen lg {
+    grid-template-columns: [index] 16px [first] minmax(120px, var(--col1, 4fr)) [var1] minmax(120px, var(--col2, 2fr)) [last] minmax(
+        120px,
+        var(--col3, 1fr)
+      );
+  }
 }
 
-[aria-colcount='4'] .track-list-row {
+.track-list-cols-2 .track-list-row {
   grid-template-columns: [index] 16px [first] minmax(120px, var(--col1, 4fr)) [var1] minmax(120px, var(--col2, 2fr)) [last] minmax(
       120px,
       var(--col3, 1fr)
     );
+
+  @screen lg {
+    grid-template-columns:
+      [index] 16px [first] minmax(120px, var(--col1, 6fr)) [var1] minmax(120px, var(--col2, 4fr)) [var2] minmax(
+        120px,
+        var(--col3, 3fr)
+      )
+      [last] minmax(120px, var(--col4, 1fr));
+  }
 }

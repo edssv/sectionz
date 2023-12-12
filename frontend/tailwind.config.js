@@ -9,10 +9,12 @@ module.exports = {
         padding: {
           DEFAULT: '1.5rem',
           sm: '1.5rem',
-          md: '2rem'
+          lg: '2rem'
         },
         screens: {
           ...theme('screens'),
+          sm: '100%',
+          md: '100%',
           '2xl': '1680px'
         }
       };

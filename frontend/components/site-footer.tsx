@@ -9,7 +9,7 @@ import { TypographyMuted } from './ui/typography-muted';
 
 export function SiteFooter({ className }: React.HTMLAttributes<HTMLElement>) {
   return (
-    <footer className={cn(className, 'h-[var(--footer-height)] border-t')}>
+    <footer className={cn(className, 'hidden h-[var(--footer-height)] border-t lg:block')}>
       <div className='container flex h-full flex-col items-center justify-between gap-4 md:flex-row'>
         <div className='flex h-full flex-col items-center gap-4 md:flex-row md:gap-2'>
           <Image

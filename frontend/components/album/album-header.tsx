@@ -17,8 +17,8 @@ interface AlbumPageHeaderProps {
 
 export function AlbumHeader({ data }: AlbumPageHeaderProps) {
   return (
-    <div className='flex flex-col items-center gap-3 md:flex-row md:items-end md:gap-8'>
-      <div className='h-64 w-64'>
+    <div className='flex flex-col items-center gap-6 lg:flex-row lg:items-end lg:gap-8'>
+      <div className='h-60 w-60 lg:h-64 lg:w-64'>
         <Image
           priority
           alt='Обложка'
@@ -29,14 +29,13 @@ export function AlbumHeader({ data }: AlbumPageHeaderProps) {
           width={280}
         />
       </div>
-      <div className='flex w-full flex-col md:w-auto'>
-        <span className='hidden text-sm md:inline-block'>
-          {' '}
+      <div className='flex w-full flex-col lg:w-auto'>
+        <span className='hidden text-sm lg:inline-block'>
           {data.attributes?.albumType === Enum_Album_Albumtype.Album ? 'Альбом' : 'Сингл'}
         </span>
-        <h1 className='heading mb-2 mt-4 text-4xl md:mb-16 md:text-5xl'>{data.attributes.name}</h1>
-        <div className='flex items-center gap-[1px] text-sm'>
-          <div className='flex items-center gap-1'>
+        <h1 className='heading mb-2 text-3xl lg:mb-16 lg:mt-4 lg:text-5xl'>{data.attributes.name}</h1>
+        <div className='flex flex-col gap-[1px] gap-y-2 text-sm lg:flex-row lg:items-center'>
+          <div className='flex items-center gap-2 lg:gap-1'>
             <Image
               alt={data.attributes.artist.data.attributes.name}
               className='h-[28px] rounded-full object-cover'
@@ -45,15 +44,19 @@ export function AlbumHeader({ data }: AlbumPageHeaderProps) {
               src={absoluteUrlStrapi(data.attributes.artist.data.attributes.image.data.attributes.url)}
               width={28}
             />
-            <Link className='font-semibold' href={getPublicUrl.artist(data.attributes.artist.data.id)}>
+            <Link className='lg:font-semibold' href={getPublicUrl.artist(data.attributes.artist.data.id)}>
               {data.attributes.artist.data.attributes.name}
             </Link>
           </div>
-          <span className='dot-separator'>&nbsp;</span>
-          <span>{data.attributes.genre}</span>
-          <span className='dot-separator'>&nbsp;</span>
-          <span className='mr-[2px]'>{data.attributes.tracks.data.length} треков,</span>
-          <TypographyMuted>{parseAlbumDuration(data.attributes.duration)}</TypographyMuted>
+          <div className='flex items-center'>
+            <TypographyMuted>
+              <span className='dot-separator hidden lg:inline-block'>.</span>
+              <span>{data.attributes.genre}</span>
+              <span className='dot-separator'>.</span>
+              <span className='mr-[2px]'>{data.attributes.tracks.data.length} треков,</span>
+              {parseAlbumDuration(data.attributes.duration)}
+            </TypographyMuted>
+          </div>
         </div>
       </div>
     </div>

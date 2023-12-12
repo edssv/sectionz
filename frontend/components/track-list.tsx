@@ -30,7 +30,7 @@ const TrackListRow = React.forwardRef<HTMLDivElement, React.HTMLAttributes<HTMLD
     <div
       ref={ref}
       className={cn(
-        'track-list-row grid w-full items-center gap-4 border-b px-4 transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted [&_div:last-child]:justify-end',
+        'track-list-row grid w-full items-center gap-4 border-b transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted lg:px-4 [&_div:last-child]:justify-end',
         className
       )}
       {...props}

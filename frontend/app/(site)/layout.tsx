@@ -17,7 +17,7 @@ export default async function Layout({ children }: MarketingLayoutProps) {
     <div className='min-h-full overflow-hidden'>
       <div className='fixed top-0 flex h-full w-full'>
         <Sidebar
-          className='hidden w-full max-w-[var(--sidebar-nav-width)] border-r md:block'
+          className='hidden w-full max-w-[var(--sidebar-nav-width)] border-r lg:block'
           playlists={[
             'Recently Added',
             'Recently Played',
@@ -38,7 +38,9 @@ export default async function Layout({ children }: MarketingLayoutProps) {
           className={cn('mt-[var(--header-nav-height)] h-auto w-full overflow-y-auto overflow-x-hidden')}
           id='main_outer'
         >
-          <main className='container min-h-main-height w-full flex-grow justify-between py-10 '>{children}</main>
+          <main className='container min-h-main-height w-full flex-grow justify-between py-6 pb-10 lg:py-10'>
+            {children}
+          </main>
           <SiteFooter />
         </div>
         <Player />

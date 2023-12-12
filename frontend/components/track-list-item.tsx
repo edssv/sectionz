@@ -56,22 +56,22 @@ export function TrackListItem({
       </TrackListCell>
       <TrackListCell className='justify-start'>
         {!hideCover && (
-          <div className='mr-3 h-10 w-10'>
-            <Image
-              alt='cover'
-              className='h-full w-full rounded-sm object-cover'
-              height={40}
-              sizes='10vw'
-              src={absoluteUrlStrapi(track.attributes.album.data.attributes.cover.data.attributes.url)}
-              width={40}
-            />
-          </div>
+          <Image
+            alt='cover'
+            className='mr-3 rounded-sm object-cover object-center'
+            height={40}
+            sizes='10vw'
+            src={absoluteUrlStrapi(track.attributes.album.data.attributes.cover.data.attributes.url)}
+            width={40}
+          />
         )}
         <div>
-          <div className={cn('text-foreground', { 'text-primary': isCurrentTrack })}>{track.attributes.name}</div>
+          <div className={cn('ellipsis-one-line text-foreground', { 'text-primary': isCurrentTrack })}>
+            {track.attributes.name}
+          </div>
           {!hideArtist && (
             <Link
-              className='text-muted-foreground hover:underline'
+              className='ellipsis-one-line text-muted-foreground hover:underline'
               href={getPublicUrl.artist(track.attributes.artist.data.id)}
             >
               {track.attributes.artist.data.attributes.name}

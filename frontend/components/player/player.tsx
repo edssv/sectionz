@@ -18,7 +18,7 @@ export function Player() {
   }
 
   return (
-    <div className='fixed bottom-0 z-50 w-full' onMouseLeave={() => setShowVolume(false)}>
+    <div className='fixed bottom-0 z-50 hidden w-full lg:block' onMouseLeave={() => setShowVolume(false)}>
       <div className='group h-full'>
         <ProgressBar trackPlaying={trackPlaying} />
         <div className='flex h-player items-center justify-between bg-secondary px-6'>

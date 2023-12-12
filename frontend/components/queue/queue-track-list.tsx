@@ -29,7 +29,7 @@ export function QueueTrackList({ data }: QueuePageListProps) {
   );
 
   return (
-    <TrackList aria-colcount={4}>
+    <TrackList className='track-list-cols-1'>
       <TrackListBody>
         {data.map((track, index) => (
           <TrackListItem
@@ -40,8 +40,7 @@ export function QueueTrackList({ data }: QueuePageListProps) {
             track={track}
             onClick={startPlayback}
           >
-            {' '}
-            <TrackListCell>
+            <TrackListCell className='hidden lg:flex'>
               <Link className='hover:underline' href={getPublicUrl.album(track.attributes.album.data.id)}>
                 {track.attributes.album.data.attributes.name}
               </Link>

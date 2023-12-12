@@ -32,12 +32,12 @@ export function AlbumTrackList({ data }: AlbumPageListProps) {
   );
 
   return (
-    <TrackList aria-colcount={4}>
+    <TrackList className='track-list-cols-1'>
       <TrackListHeader>
         <TrackListRow>
           <TrackListHead className='text-base'>#</TrackListHead>
           <TrackListHead className='justify-start'>Название</TrackListHead>
-          <TrackListHead>Прослушивания</TrackListHead>
+          <TrackListHead className='hidden lg:flex'>Прослушивания</TrackListHead>
           <TrackListHead>
             <Icons.clock />
           </TrackListHead>
@@ -54,7 +54,7 @@ export function AlbumTrackList({ data }: AlbumPageListProps) {
             track={track}
             onClick={startPlayback}
           >
-            <TrackListCell>
+            <TrackListCell className='hidden lg:flex'>
               {track.attributes.playCount <= 100 ? 'менее 100' : track.attributes.playCount}
             </TrackListCell>
           </TrackListItem>

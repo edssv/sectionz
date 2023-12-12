@@ -15,7 +15,7 @@ interface SiteHeaderProps {
 
 export function SiteHeader({ user }: SiteHeaderProps) {
   return (
-    <header className='fixed right-0 top-0 z-50 flex h-16 w-full items-center border-b bg-background md:w-[calc(100%-var(--sidebar-nav-width))]'>
+    <header className='fixed right-0 top-0 z-50 flex h-16 w-full items-center border-b bg-background lg:w-[calc(100%-var(--sidebar-nav-width))]'>
       <div className='flex w-full items-center justify-between gap-6 !px-6 '>
         <div className='relative hidden w-full md:block'>
           <Icons.search className='absolute left-3 top-[1px] h-4 w-4 shrink-0 translate-y-1/2 text-muted-foreground' />{' '}

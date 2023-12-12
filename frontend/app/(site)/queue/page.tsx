@@ -13,7 +13,7 @@ export default function QueuePage() {
   const queue = [];
 
   return (
-    <div className='space-y-8'>
+    <div className='space-y-6 lg:space-y-8'>
       <h1 className='heading text-2xl'>Очередь</h1>
       <QueueTrackList data={queueList} />
     </div>

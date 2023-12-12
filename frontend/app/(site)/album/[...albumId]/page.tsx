@@ -31,9 +31,9 @@ export default async function AlbumPage({ params }: AlbumPageProps) {
   const album = await getAlbumFromParams(params);
 
   return (
-    <div className='space-y-8 md:space-y-12'>
+    <div className='space-y-6 lg:space-y-8'>
       <AlbumHeader data={album} />
-      <div className='space-y-8'>
+      <div className='space-y-6 lg:space-y-8'>
         <AlbumControls data={album} />
         <AlbumTrackList data={album} />
       </div>
