@@ -7,9 +7,11 @@ import type { TrackFragment } from '@/gql/types';
 import { getPublicUrl } from '@/lib/publicUrlBuilder';
 import { absoluteUrlStrapi, cn, parseDuration } from '@/lib/utils';
 
+import { Icons } from './icons';
 import { LikeButton } from './like-button';
 import { TrackListCell, TrackListRow } from './track-list';
 import TrackPlayButton from './track-play-button';
+import { Button } from './ui/button';
 
 interface TrackProps {
   children: React.ReactNode;
@@ -43,22 +45,20 @@ export function TrackListItem({
           }}
           onClick={() => onClick(track.id)}
         />
-        {(!isCurrentTrack || !isPlaying) && (
-          <div
-            className={cn('group-hover:hidden', {
-              'text-primary': isCurrentTrack
-            })}
-          >
-            {' '}
-            {index + 1}
-          </div>
-        )}
+        <div
+          className={cn('group-hover:hidden', {
+            'text-primary': isCurrentTrack,
+            hidden: isPlaying && isCurrentTrack
+          })}
+        >
+          {index + 1}
+        </div>
       </TrackListCell>
       <TrackListCell className='justify-start'>
         {!hideCover && (
           <Image
             alt='cover'
-            className='mr-3 rounded-sm object-cover object-center'
+            className='mr-3 min-w-[40px] rounded-sm object-cover object-center'
             height={40}
             sizes='10vw'
             src={absoluteUrlStrapi(track.attributes.album.data.attributes.cover.data.attributes.url)}
@@ -80,7 +80,12 @@ export function TrackListItem({
         </div>
       </TrackListCell>
       {children}
-      <TrackListCell>
+      <TrackListCell className='lg:hidden'>
+        <Button size='icon' variant='link'>
+          <Icons.dotsHorizontal />
+        </Button>
+      </TrackListCell>
+      <TrackListCell className='hidden lg:flex'>
         <LikeButton
           isLike
           className={cn('hidden text-muted-foreground hover:text-primary group-hover:block', { 'text-primary': false })}

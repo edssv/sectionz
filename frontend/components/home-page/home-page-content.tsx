@@ -12,7 +12,6 @@ interface HomePageContentProps {
 }
 
 export default function HomePageContent({ data }: HomePageContentProps) {
-  console.log('data ===>>>>>', data);
   return (
     <div className='grid w-full lg:grid-cols-5'>
       <div className='col-span-3 lg:col-span-5'>

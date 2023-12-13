@@ -6,7 +6,6 @@
 import { PlusCircledIcon } from '@radix-ui/react-icons';
 import Image from 'next/image';
 import Link from 'next/link';
-import { useCallback } from 'react';
 
 import {
   ContextMenu,
@@ -21,8 +20,7 @@ import {
 import type { AlbumFragment } from '@/gql/types';
 import { getPublicUrl } from '@/lib/publicUrlBuilder';
 import { cn } from '@/lib/utils';
-import AlbumsAPI from '@/stores/albums-api';
-import { usePlayerAPI } from '@/stores/use-player-store';
+import LibraryApi from '@/stores/library-api';
 
 import { playlists } from '../lib/data/playlists';
 
@@ -57,8 +55,7 @@ export function AlbumArtwork({
               src={coverUrl}
               width={width}
               className={cn(
-                'h-auto w-auto object-cover transition-all group-hover:brightness-75 group-hover:saturate-100',
-                aspectRatio === 'portrait' ? 'aspect-[3/4]' : 'aspect-square'
+                'h-auto w-auto object-cover transition-all group-hover:brightness-75 group-hover:saturate-100'
               )}
             />
           </Link>
@@ -67,7 +64,7 @@ export function AlbumArtwork({
               className='absolute bottom-3 right-3 z-10 h-12 w-12 rounded-full'
               isPlaying={false}
               size='icon'
-              onClick={() => AlbumsAPI.play(album.id)}
+              onClick={() => LibraryApi.Album.play(album.id)}
             />
             {/* <ButtonIcon
               className='absolute right-2 top-2 h-10 w-10 rounded-full'
