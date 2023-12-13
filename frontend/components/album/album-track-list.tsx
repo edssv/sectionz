@@ -3,7 +3,7 @@
 import { useCallback } from 'react';
 
 import { Icons } from '@/components/icons';
-import type { GetAlbumQuery } from '@/gql/types';
+import type { TrackFragment } from '@/gql/types';
 import usePlayingTrackID from '@/hooks/use-playing-track-id';
 import { PlayerStatus } from '@/lib/types/types';
 import usePlayerStore, { usePlayerAPI } from '@/stores/use-player-store';
@@ -11,10 +11,8 @@ import usePlayerStore, { usePlayerAPI } from '@/stores/use-player-store';
 import { TrackList, TrackListBody, TrackListCell, TrackListHead, TrackListHeader, TrackListRow } from '../track-list';
 import { TrackListItem } from '../track-list-item';
 
-type AlbumControlsData = GetAlbumQuery['album']['data'];
-
 interface AlbumPageListProps {
-  data: AlbumControlsData;
+  data: { tracks: TrackFragment[] };
 }
 
 export function AlbumTrackList({ data }: AlbumPageListProps) {
@@ -22,13 +20,11 @@ export function AlbumTrackList({ data }: AlbumPageListProps) {
   const trackPlayingID = usePlayingTrackID();
   const { playerStatus } = usePlayerStore();
 
-  const tracks = data.attributes.tracks.data;
-
   const startPlayback = useCallback(
     (trackID: number) => {
-      playerAPI.start(tracks, trackID);
+      playerAPI.start(data.tracks, trackID);
     },
-    [tracks, playerAPI]
+    [data.tracks, playerAPI]
   );
 
   return (
@@ -44,7 +40,7 @@ export function AlbumTrackList({ data }: AlbumPageListProps) {
         </TrackListRow>
       </TrackListHeader>
       <TrackListBody>
-        {tracks.map((track, index) => (
+        {data.tracks.map((track, index) => (
           <TrackListItem
             key={track.id}
             hideCover

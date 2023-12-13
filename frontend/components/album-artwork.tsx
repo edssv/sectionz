@@ -21,6 +21,7 @@ import {
 import type { AlbumFragment } from '@/gql/types';
 import { getPublicUrl } from '@/lib/publicUrlBuilder';
 import { cn } from '@/lib/utils';
+import AlbumsAPI from '@/stores/albums-api';
 import { usePlayerAPI } from '@/stores/use-player-store';
 
 import { playlists } from '../lib/data/playlists';
@@ -45,15 +46,6 @@ export function AlbumArtwork({
   width,
   ...props
 }: AlbumArtworkProps) {
-  const playerAPI = usePlayerAPI();
-
-  const startPlayback = useCallback(
-    (trackID?: string) => {
-      playerAPI.start(album.attributes.tracks.data, trackID);
-    },
-    [album, playerAPI]
-  );
-
   return (
     <div className={cn('space-y-3', className)} {...props}>
       <ContextMenu>
@@ -75,7 +67,7 @@ export function AlbumArtwork({
               className='absolute bottom-3 right-3 z-10 h-12 w-12 rounded-full'
               isPlaying={false}
               size='icon'
-              onClick={() => startPlayback()}
+              onClick={() => AlbumsAPI.play(album.id)}
             />
             {/* <ButtonIcon
               className='absolute right-2 top-2 h-10 w-10 rounded-full'
