@@ -1,11 +1,12 @@
 import { notFound } from 'next/navigation';
 
-import { Artist } from '@/components/artist';
-import { ArtistControls } from '@/components/artist/controls';
-import { ArtistHeader } from '@/components/artist/header';
-import { TypographyH3 } from '@/components/ui/typography-h3';
-import { artistConfig } from '@/config/artist';
-import { ArtistService } from '@/services/artist/artist.service';
+import client from '@/apollo/apollo-client';
+import { ArtistControls } from '@/components/artist/artist-controls';
+import { ArtistHeader } from '@/components/artist/artist-header';
+import { ArtistMusic } from '@/components/artist/artist-music';
+import { ArtistPopularTracks } from '@/components/artist/artist-popular-tracks';
+import type { ArtistQuery, ArtistQueryVariables } from '@/gql/types';
+import { ArtistDocument } from '@/gql/types';
 
 interface ArtistPageProps {
   params: {
@@ -15,9 +16,12 @@ interface ArtistPageProps {
 
 async function getArtistFromParams(params: ArtistPageProps['params']) {
   const artistId = Number(params?.artistId);
-  const { data } = await ArtistService.getArtist(artistId);
+  const { data } = await client.query<ArtistQuery, ArtistQueryVariables>({
+    query: ArtistDocument,
+    variables: { id: artistId }
+  });
 
-  if (!data) {
+  if (!data?.artist) {
     return notFound();
   }
 
@@ -25,24 +29,38 @@ async function getArtistFromParams(params: ArtistPageProps['params']) {
 }
 
 export default async function ArtistPage({ params }: ArtistPageProps) {
-  const artist = await getArtistFromParams(params);
+  const { artist, popularTracks } = await getArtistFromParams(params);
 
   return (
-    <div className='-my-10 flex flex-col'>
+    <div className='-mt-6 flex flex-col space-y-8 lg:-mt-10 lg:space-y-12'>
       <div className='flex flex-col gap-4'>
-        <ArtistHeader artist={artist} />
-        <ArtistControls artist={artist} />
+        <ArtistHeader
+          data={{
+            artist: {
+              id: artist.data.id,
+              name: artist.data.attributes.name,
+              image: { url: artist.data.attributes.image.data.attributes.url }
+            }
+          }}
+        />
+        {/* <ArtistControls
+          data={{
+            artist: {
+              id: artist.data.id,
+              name: artist.data.attributes.name
+            }
+          }}
+        /> */}
       </div>
-      <div className='space-y-12 py-12'>
-        {artistConfig.sections.map((section) => {
-          const Component = Artist[section.component];
-          return (
-            <div key={section.title}>
-              <TypographyH3 className='mb-4'>{section.title}</TypographyH3>
-              <Component albums={artist.attributes.albums.data} tracks={artist.attributes.tracks.data} />
-            </div>
-          );
-        })}
+      <div className='space-y-8 lg:space-y-12'>
+        <div>
+          <h2 className='typo-h2 mb-2 lg:mb-4'>Популярные треки</h2>
+          <ArtistPopularTracks data={{ tracks: popularTracks.data }} />
+        </div>
+        <div>
+          <h2 className='typo-h2 mb-4'>Музыка</h2>
+          <ArtistMusic data={{ albums: artist.data.attributes.albums.data }} />
+        </div>
       </div>
     </div>
   );

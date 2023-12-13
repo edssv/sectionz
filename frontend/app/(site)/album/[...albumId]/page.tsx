@@ -4,8 +4,8 @@ import client from '@/apollo/apollo-client';
 import { AlbumControls } from '@/components/album/album-controls';
 import { AlbumHeader } from '@/components/album/album-header';
 import { AlbumTrackList } from '@/components/album/album-track-list';
-import type { GetAlbumQuery, GetAlbumQueryVariables } from '@/gql/types';
-import { GetAlbumDocument } from '@/gql/types';
+import type { AlbumQuery, AlbumQueryVariables } from '@/gql/types';
+import { AlbumDocument } from '@/gql/types';
 
 interface AlbumPageProps {
   params: {
@@ -15,8 +15,8 @@ interface AlbumPageProps {
 
 async function getAlbumFromParams(params: AlbumPageProps['params']) {
   const albumId = Number(params?.albumId);
-  const { data } = await client.query<GetAlbumQuery, GetAlbumQueryVariables>({
-    query: GetAlbumDocument,
+  const { data } = await client.query<AlbumQuery, AlbumQueryVariables>({
+    query: AlbumDocument,
     variables: { id: albumId }
   });
 
@@ -34,8 +34,8 @@ export default async function AlbumPage({ params }: AlbumPageProps) {
     <div className='space-y-6 lg:space-y-8'>
       <AlbumHeader data={album} />
       <div className='space-y-6 lg:space-y-8'>
-        <AlbumControls data={album} />
-        <AlbumTrackList data={album} />
+        <AlbumControls data={{ album: { id: album.id } }} />
+        <AlbumTrackList data={{ tracks: album.attributes.tracks.data }} />
       </div>
     </div>
   );
