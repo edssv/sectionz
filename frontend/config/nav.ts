@@ -14,7 +14,7 @@ export const navConfig: NavConfig = {
   ],
   sidebarNav: [
     {
-      title: 'Discover',
+      title: 'Меню',
       items: [
         {
           title: 'Главная',
