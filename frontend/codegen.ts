@@ -14,8 +14,7 @@ const config: CodegenConfig = {
       config: {
         avoidOptionals: true,
         maybeValue: 'T',
-        immutableTypes: true,
-        withResultType: true,
+
         scalars: { ID: 'number' }
       }
     }
