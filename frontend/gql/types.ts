@@ -21,18 +21,18 @@ export type Scalars = {
 };
 
 export type Album = {
-  readonly __typename?: 'Album';
-  readonly albumType: Enum_Album_Albumtype;
-  readonly artist: Maybe<ArtistEntityResponse>;
-  readonly cover: UploadFileEntityResponse;
-  readonly createdAt: Maybe<Scalars['DateTime']['output']>;
-  readonly duration: Scalars['Float']['output'];
-  readonly genre: Maybe<Scalars['String']['output']>;
-  readonly name: Scalars['String']['output'];
-  readonly publishedAt: Maybe<Scalars['DateTime']['output']>;
-  readonly releaseDate: Scalars['DateTime']['output'];
-  readonly tracks: Maybe<TrackRelationResponseCollection>;
-  readonly updatedAt: Maybe<Scalars['DateTime']['output']>;
+  __typename?: 'Album';
+  albumType: Enum_Album_Albumtype;
+  artist: Maybe<ArtistEntityResponse>;
+  cover: UploadFileEntityResponse;
+  createdAt: Maybe<Scalars['DateTime']['output']>;
+  duration: Scalars['Float']['output'];
+  genre: Maybe<Scalars['String']['output']>;
+  name: Scalars['String']['output'];
+  publishedAt: Maybe<Scalars['DateTime']['output']>;
+  releaseDate: Scalars['DateTime']['output'];
+  tracks: Maybe<TrackRelationResponseCollection>;
+  updatedAt: Maybe<Scalars['DateTime']['output']>;
 };
 
 
@@ -40,69 +40,69 @@ export type AlbumTracksArgs = {
   filters: InputMaybe<TrackFiltersInput>;
   pagination?: InputMaybe<PaginationArg>;
   publicationState?: InputMaybe<PublicationState>;
-  sort?: InputMaybe<ReadonlyArray<InputMaybe<Scalars['String']['input']>>>;
+  sort?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
 };
 
 export type AlbumEntity = {
-  readonly __typename?: 'AlbumEntity';
-  readonly attributes: Maybe<Album>;
-  readonly id: Maybe<Scalars['ID']['output']>;
+  __typename?: 'AlbumEntity';
+  attributes: Maybe<Album>;
+  id: Maybe<Scalars['ID']['output']>;
 };
 
 export type AlbumEntityResponse = {
-  readonly __typename?: 'AlbumEntityResponse';
-  readonly data: Maybe<AlbumEntity>;
+  __typename?: 'AlbumEntityResponse';
+  data: Maybe<AlbumEntity>;
 };
 
 export type AlbumEntityResponseCollection = {
-  readonly __typename?: 'AlbumEntityResponseCollection';
-  readonly data: ReadonlyArray<AlbumEntity>;
-  readonly meta: ResponseCollectionMeta;
+  __typename?: 'AlbumEntityResponseCollection';
+  data: Array<AlbumEntity>;
+  meta: ResponseCollectionMeta;
 };
 
 export type AlbumFiltersInput = {
-  readonly albumType: InputMaybe<StringFilterInput>;
-  readonly and: InputMaybe<ReadonlyArray<InputMaybe<AlbumFiltersInput>>>;
-  readonly artist: InputMaybe<ArtistFiltersInput>;
-  readonly createdAt: InputMaybe<DateTimeFilterInput>;
-  readonly duration: InputMaybe<FloatFilterInput>;
-  readonly genre: InputMaybe<StringFilterInput>;
-  readonly id: InputMaybe<IdFilterInput>;
-  readonly name: InputMaybe<StringFilterInput>;
-  readonly not: InputMaybe<AlbumFiltersInput>;
-  readonly or: InputMaybe<ReadonlyArray<InputMaybe<AlbumFiltersInput>>>;
-  readonly publishedAt: InputMaybe<DateTimeFilterInput>;
-  readonly releaseDate: InputMaybe<DateTimeFilterInput>;
-  readonly tracks: InputMaybe<TrackFiltersInput>;
-  readonly updatedAt: InputMaybe<DateTimeFilterInput>;
+  albumType: InputMaybe<StringFilterInput>;
+  and: InputMaybe<Array<InputMaybe<AlbumFiltersInput>>>;
+  artist: InputMaybe<ArtistFiltersInput>;
+  createdAt: InputMaybe<DateTimeFilterInput>;
+  duration: InputMaybe<FloatFilterInput>;
+  genre: InputMaybe<StringFilterInput>;
+  id: InputMaybe<IdFilterInput>;
+  name: InputMaybe<StringFilterInput>;
+  not: InputMaybe<AlbumFiltersInput>;
+  or: InputMaybe<Array<InputMaybe<AlbumFiltersInput>>>;
+  publishedAt: InputMaybe<DateTimeFilterInput>;
+  releaseDate: InputMaybe<DateTimeFilterInput>;
+  tracks: InputMaybe<TrackFiltersInput>;
+  updatedAt: InputMaybe<DateTimeFilterInput>;
 };
 
 export type AlbumInput = {
-  readonly albumType: InputMaybe<Enum_Album_Albumtype>;
-  readonly artist: InputMaybe<Scalars['ID']['input']>;
-  readonly cover: InputMaybe<Scalars['ID']['input']>;
-  readonly duration: InputMaybe<Scalars['Float']['input']>;
-  readonly genre: InputMaybe<Scalars['String']['input']>;
-  readonly name: InputMaybe<Scalars['String']['input']>;
-  readonly publishedAt: InputMaybe<Scalars['DateTime']['input']>;
-  readonly releaseDate: InputMaybe<Scalars['DateTime']['input']>;
-  readonly tracks: InputMaybe<ReadonlyArray<InputMaybe<Scalars['ID']['input']>>>;
+  albumType: InputMaybe<Enum_Album_Albumtype>;
+  artist: InputMaybe<Scalars['ID']['input']>;
+  cover: InputMaybe<Scalars['ID']['input']>;
+  duration: InputMaybe<Scalars['Float']['input']>;
+  genre: InputMaybe<Scalars['String']['input']>;
+  name: InputMaybe<Scalars['String']['input']>;
+  publishedAt: InputMaybe<Scalars['DateTime']['input']>;
+  releaseDate: InputMaybe<Scalars['DateTime']['input']>;
+  tracks: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
 };
 
 export type AlbumRelationResponseCollection = {
-  readonly __typename?: 'AlbumRelationResponseCollection';
-  readonly data: ReadonlyArray<AlbumEntity>;
+  __typename?: 'AlbumRelationResponseCollection';
+  data: Array<AlbumEntity>;
 };
 
 export type Artist = {
-  readonly __typename?: 'Artist';
-  readonly albums: Maybe<AlbumRelationResponseCollection>;
-  readonly createdAt: Maybe<Scalars['DateTime']['output']>;
-  readonly image: Maybe<UploadFileEntityResponse>;
-  readonly name: Scalars['String']['output'];
-  readonly publishedAt: Maybe<Scalars['DateTime']['output']>;
-  readonly tracks: Maybe<TrackRelationResponseCollection>;
-  readonly updatedAt: Maybe<Scalars['DateTime']['output']>;
+  __typename?: 'Artist';
+  albums: Maybe<AlbumRelationResponseCollection>;
+  createdAt: Maybe<Scalars['DateTime']['output']>;
+  image: Maybe<UploadFileEntityResponse>;
+  name: Scalars['String']['output'];
+  publishedAt: Maybe<Scalars['DateTime']['output']>;
+  tracks: Maybe<TrackRelationResponseCollection>;
+  updatedAt: Maybe<Scalars['DateTime']['output']>;
 };
 
 
@@ -110,7 +110,7 @@ export type ArtistAlbumsArgs = {
   filters: InputMaybe<AlbumFiltersInput>;
   pagination?: InputMaybe<PaginationArg>;
   publicationState?: InputMaybe<PublicationState>;
-  sort?: InputMaybe<ReadonlyArray<InputMaybe<Scalars['String']['input']>>>;
+  sort?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
 };
 
 
@@ -118,95 +118,95 @@ export type ArtistTracksArgs = {
   filters: InputMaybe<TrackFiltersInput>;
   pagination?: InputMaybe<PaginationArg>;
   publicationState?: InputMaybe<PublicationState>;
-  sort?: InputMaybe<ReadonlyArray<InputMaybe<Scalars['String']['input']>>>;
+  sort?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
 };
 
 export type ArtistEntity = {
-  readonly __typename?: 'ArtistEntity';
-  readonly attributes: Maybe<Artist>;
-  readonly id: Maybe<Scalars['ID']['output']>;
+  __typename?: 'ArtistEntity';
+  attributes: Maybe<Artist>;
+  id: Maybe<Scalars['ID']['output']>;
 };
 
 export type ArtistEntityResponse = {
-  readonly __typename?: 'ArtistEntityResponse';
-  readonly data: Maybe<ArtistEntity>;
+  __typename?: 'ArtistEntityResponse';
+  data: Maybe<ArtistEntity>;
 };
 
 export type ArtistEntityResponseCollection = {
-  readonly __typename?: 'ArtistEntityResponseCollection';
-  readonly data: ReadonlyArray<ArtistEntity>;
-  readonly meta: ResponseCollectionMeta;
+  __typename?: 'ArtistEntityResponseCollection';
+  data: Array<ArtistEntity>;
+  meta: ResponseCollectionMeta;
 };
 
 export type ArtistFiltersInput = {
-  readonly albums: InputMaybe<AlbumFiltersInput>;
-  readonly and: InputMaybe<ReadonlyArray<InputMaybe<ArtistFiltersInput>>>;
-  readonly createdAt: InputMaybe<DateTimeFilterInput>;
-  readonly id: InputMaybe<IdFilterInput>;
-  readonly name: InputMaybe<StringFilterInput>;
-  readonly not: InputMaybe<ArtistFiltersInput>;
-  readonly or: InputMaybe<ReadonlyArray<InputMaybe<ArtistFiltersInput>>>;
-  readonly publishedAt: InputMaybe<DateTimeFilterInput>;
-  readonly tracks: InputMaybe<TrackFiltersInput>;
-  readonly updatedAt: InputMaybe<DateTimeFilterInput>;
+  albums: InputMaybe<AlbumFiltersInput>;
+  and: InputMaybe<Array<InputMaybe<ArtistFiltersInput>>>;
+  createdAt: InputMaybe<DateTimeFilterInput>;
+  id: InputMaybe<IdFilterInput>;
+  name: InputMaybe<StringFilterInput>;
+  not: InputMaybe<ArtistFiltersInput>;
+  or: InputMaybe<Array<InputMaybe<ArtistFiltersInput>>>;
+  publishedAt: InputMaybe<DateTimeFilterInput>;
+  tracks: InputMaybe<TrackFiltersInput>;
+  updatedAt: InputMaybe<DateTimeFilterInput>;
 };
 
 export type ArtistInput = {
-  readonly albums: InputMaybe<ReadonlyArray<InputMaybe<Scalars['ID']['input']>>>;
-  readonly image: InputMaybe<Scalars['ID']['input']>;
-  readonly name: InputMaybe<Scalars['String']['input']>;
-  readonly publishedAt: InputMaybe<Scalars['DateTime']['input']>;
-  readonly tracks: InputMaybe<ReadonlyArray<InputMaybe<Scalars['ID']['input']>>>;
+  albums: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
+  image: InputMaybe<Scalars['ID']['input']>;
+  name: InputMaybe<Scalars['String']['input']>;
+  publishedAt: InputMaybe<Scalars['DateTime']['input']>;
+  tracks: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
 };
 
 export type BooleanFilterInput = {
-  readonly and: InputMaybe<ReadonlyArray<InputMaybe<Scalars['Boolean']['input']>>>;
-  readonly between: InputMaybe<ReadonlyArray<InputMaybe<Scalars['Boolean']['input']>>>;
-  readonly contains: InputMaybe<Scalars['Boolean']['input']>;
-  readonly containsi: InputMaybe<Scalars['Boolean']['input']>;
-  readonly endsWith: InputMaybe<Scalars['Boolean']['input']>;
-  readonly eq: InputMaybe<Scalars['Boolean']['input']>;
-  readonly eqi: InputMaybe<Scalars['Boolean']['input']>;
-  readonly gt: InputMaybe<Scalars['Boolean']['input']>;
-  readonly gte: InputMaybe<Scalars['Boolean']['input']>;
-  readonly in: InputMaybe<ReadonlyArray<InputMaybe<Scalars['Boolean']['input']>>>;
-  readonly lt: InputMaybe<Scalars['Boolean']['input']>;
-  readonly lte: InputMaybe<Scalars['Boolean']['input']>;
-  readonly ne: InputMaybe<Scalars['Boolean']['input']>;
-  readonly nei: InputMaybe<Scalars['Boolean']['input']>;
-  readonly not: InputMaybe<BooleanFilterInput>;
-  readonly notContains: InputMaybe<Scalars['Boolean']['input']>;
-  readonly notContainsi: InputMaybe<Scalars['Boolean']['input']>;
-  readonly notIn: InputMaybe<ReadonlyArray<InputMaybe<Scalars['Boolean']['input']>>>;
-  readonly notNull: InputMaybe<Scalars['Boolean']['input']>;
-  readonly null: InputMaybe<Scalars['Boolean']['input']>;
-  readonly or: InputMaybe<ReadonlyArray<InputMaybe<Scalars['Boolean']['input']>>>;
-  readonly startsWith: InputMaybe<Scalars['Boolean']['input']>;
+  and: InputMaybe<Array<InputMaybe<Scalars['Boolean']['input']>>>;
+  between: InputMaybe<Array<InputMaybe<Scalars['Boolean']['input']>>>;
+  contains: InputMaybe<Scalars['Boolean']['input']>;
+  containsi: InputMaybe<Scalars['Boolean']['input']>;
+  endsWith: InputMaybe<Scalars['Boolean']['input']>;
+  eq: InputMaybe<Scalars['Boolean']['input']>;
+  eqi: InputMaybe<Scalars['Boolean']['input']>;
+  gt: InputMaybe<Scalars['Boolean']['input']>;
+  gte: InputMaybe<Scalars['Boolean']['input']>;
+  in: InputMaybe<Array<InputMaybe<Scalars['Boolean']['input']>>>;
+  lt: InputMaybe<Scalars['Boolean']['input']>;
+  lte: InputMaybe<Scalars['Boolean']['input']>;
+  ne: InputMaybe<Scalars['Boolean']['input']>;
+  nei: InputMaybe<Scalars['Boolean']['input']>;
+  not: InputMaybe<BooleanFilterInput>;
+  notContains: InputMaybe<Scalars['Boolean']['input']>;
+  notContainsi: InputMaybe<Scalars['Boolean']['input']>;
+  notIn: InputMaybe<Array<InputMaybe<Scalars['Boolean']['input']>>>;
+  notNull: InputMaybe<Scalars['Boolean']['input']>;
+  null: InputMaybe<Scalars['Boolean']['input']>;
+  or: InputMaybe<Array<InputMaybe<Scalars['Boolean']['input']>>>;
+  startsWith: InputMaybe<Scalars['Boolean']['input']>;
 };
 
 export type DateTimeFilterInput = {
-  readonly and: InputMaybe<ReadonlyArray<InputMaybe<Scalars['DateTime']['input']>>>;
-  readonly between: InputMaybe<ReadonlyArray<InputMaybe<Scalars['DateTime']['input']>>>;
-  readonly contains: InputMaybe<Scalars['DateTime']['input']>;
-  readonly containsi: InputMaybe<Scalars['DateTime']['input']>;
-  readonly endsWith: InputMaybe<Scalars['DateTime']['input']>;
-  readonly eq: InputMaybe<Scalars['DateTime']['input']>;
-  readonly eqi: InputMaybe<Scalars['DateTime']['input']>;
-  readonly gt: InputMaybe<Scalars['DateTime']['input']>;
-  readonly gte: InputMaybe<Scalars['DateTime']['input']>;
-  readonly in: InputMaybe<ReadonlyArray<InputMaybe<Scalars['DateTime']['input']>>>;
-  readonly lt: InputMaybe<Scalars['DateTime']['input']>;
-  readonly lte: InputMaybe<Scalars['DateTime']['input']>;
-  readonly ne: InputMaybe<Scalars['DateTime']['input']>;
-  readonly nei: InputMaybe<Scalars['DateTime']['input']>;
-  readonly not: InputMaybe<DateTimeFilterInput>;
-  readonly notContains: InputMaybe<Scalars['DateTime']['input']>;
-  readonly notContainsi: InputMaybe<Scalars['DateTime']['input']>;
-  readonly notIn: InputMaybe<ReadonlyArray<InputMaybe<Scalars['DateTime']['input']>>>;
-  readonly notNull: InputMaybe<Scalars['Boolean']['input']>;
-  readonly null: InputMaybe<Scalars['Boolean']['input']>;
-  readonly or: InputMaybe<ReadonlyArray<InputMaybe<Scalars['DateTime']['input']>>>;
-  readonly startsWith: InputMaybe<Scalars['DateTime']['input']>;
+  and: InputMaybe<Array<InputMaybe<Scalars['DateTime']['input']>>>;
+  between: InputMaybe<Array<InputMaybe<Scalars['DateTime']['input']>>>;
+  contains: InputMaybe<Scalars['DateTime']['input']>;
+  containsi: InputMaybe<Scalars['DateTime']['input']>;
+  endsWith: InputMaybe<Scalars['DateTime']['input']>;
+  eq: InputMaybe<Scalars['DateTime']['input']>;
+  eqi: InputMaybe<Scalars['DateTime']['input']>;
+  gt: InputMaybe<Scalars['DateTime']['input']>;
+  gte: InputMaybe<Scalars['DateTime']['input']>;
+  in: InputMaybe<Array<InputMaybe<Scalars['DateTime']['input']>>>;
+  lt: InputMaybe<Scalars['DateTime']['input']>;
+  lte: InputMaybe<Scalars['DateTime']['input']>;
+  ne: InputMaybe<Scalars['DateTime']['input']>;
+  nei: InputMaybe<Scalars['DateTime']['input']>;
+  not: InputMaybe<DateTimeFilterInput>;
+  notContains: InputMaybe<Scalars['DateTime']['input']>;
+  notContainsi: InputMaybe<Scalars['DateTime']['input']>;
+  notIn: InputMaybe<Array<InputMaybe<Scalars['DateTime']['input']>>>;
+  notNull: InputMaybe<Scalars['Boolean']['input']>;
+  null: InputMaybe<Scalars['Boolean']['input']>;
+  or: InputMaybe<Array<InputMaybe<Scalars['DateTime']['input']>>>;
+  startsWith: InputMaybe<Scalars['DateTime']['input']>;
 };
 
 export enum Enum_Album_Albumtype {
@@ -222,239 +222,239 @@ export enum Enum_Userspermissionsuser_Gender {
 }
 
 export type FileInfoInput = {
-  readonly alternativeText: InputMaybe<Scalars['String']['input']>;
-  readonly caption: InputMaybe<Scalars['String']['input']>;
-  readonly name: InputMaybe<Scalars['String']['input']>;
+  alternativeText: InputMaybe<Scalars['String']['input']>;
+  caption: InputMaybe<Scalars['String']['input']>;
+  name: InputMaybe<Scalars['String']['input']>;
 };
 
 export type FloatFilterInput = {
-  readonly and: InputMaybe<ReadonlyArray<InputMaybe<Scalars['Float']['input']>>>;
-  readonly between: InputMaybe<ReadonlyArray<InputMaybe<Scalars['Float']['input']>>>;
-  readonly contains: InputMaybe<Scalars['Float']['input']>;
-  readonly containsi: InputMaybe<Scalars['Float']['input']>;
-  readonly endsWith: InputMaybe<Scalars['Float']['input']>;
-  readonly eq: InputMaybe<Scalars['Float']['input']>;
-  readonly eqi: InputMaybe<Scalars['Float']['input']>;
-  readonly gt: InputMaybe<Scalars['Float']['input']>;
-  readonly gte: InputMaybe<Scalars['Float']['input']>;
-  readonly in: InputMaybe<ReadonlyArray<InputMaybe<Scalars['Float']['input']>>>;
-  readonly lt: InputMaybe<Scalars['Float']['input']>;
-  readonly lte: InputMaybe<Scalars['Float']['input']>;
-  readonly ne: InputMaybe<Scalars['Float']['input']>;
-  readonly nei: InputMaybe<Scalars['Float']['input']>;
-  readonly not: InputMaybe<FloatFilterInput>;
-  readonly notContains: InputMaybe<Scalars['Float']['input']>;
-  readonly notContainsi: InputMaybe<Scalars['Float']['input']>;
-  readonly notIn: InputMaybe<ReadonlyArray<InputMaybe<Scalars['Float']['input']>>>;
-  readonly notNull: InputMaybe<Scalars['Boolean']['input']>;
-  readonly null: InputMaybe<Scalars['Boolean']['input']>;
-  readonly or: InputMaybe<ReadonlyArray<InputMaybe<Scalars['Float']['input']>>>;
-  readonly startsWith: InputMaybe<Scalars['Float']['input']>;
+  and: InputMaybe<Array<InputMaybe<Scalars['Float']['input']>>>;
+  between: InputMaybe<Array<InputMaybe<Scalars['Float']['input']>>>;
+  contains: InputMaybe<Scalars['Float']['input']>;
+  containsi: InputMaybe<Scalars['Float']['input']>;
+  endsWith: InputMaybe<Scalars['Float']['input']>;
+  eq: InputMaybe<Scalars['Float']['input']>;
+  eqi: InputMaybe<Scalars['Float']['input']>;
+  gt: InputMaybe<Scalars['Float']['input']>;
+  gte: InputMaybe<Scalars['Float']['input']>;
+  in: InputMaybe<Array<InputMaybe<Scalars['Float']['input']>>>;
+  lt: InputMaybe<Scalars['Float']['input']>;
+  lte: InputMaybe<Scalars['Float']['input']>;
+  ne: InputMaybe<Scalars['Float']['input']>;
+  nei: InputMaybe<Scalars['Float']['input']>;
+  not: InputMaybe<FloatFilterInput>;
+  notContains: InputMaybe<Scalars['Float']['input']>;
+  notContainsi: InputMaybe<Scalars['Float']['input']>;
+  notIn: InputMaybe<Array<InputMaybe<Scalars['Float']['input']>>>;
+  notNull: InputMaybe<Scalars['Boolean']['input']>;
+  null: InputMaybe<Scalars['Boolean']['input']>;
+  or: InputMaybe<Array<InputMaybe<Scalars['Float']['input']>>>;
+  startsWith: InputMaybe<Scalars['Float']['input']>;
 };
 
 export type GenericMorph = Album | Artist | I18NLocale | Like | Track | UploadFile | UploadFolder | UsersPermissionsPermission | UsersPermissionsRole | UsersPermissionsUser;
 
 export type I18NLocale = {
-  readonly __typename?: 'I18NLocale';
-  readonly code: Maybe<Scalars['String']['output']>;
-  readonly createdAt: Maybe<Scalars['DateTime']['output']>;
-  readonly name: Maybe<Scalars['String']['output']>;
-  readonly updatedAt: Maybe<Scalars['DateTime']['output']>;
+  __typename?: 'I18NLocale';
+  code: Maybe<Scalars['String']['output']>;
+  createdAt: Maybe<Scalars['DateTime']['output']>;
+  name: Maybe<Scalars['String']['output']>;
+  updatedAt: Maybe<Scalars['DateTime']['output']>;
 };
 
 export type I18NLocaleEntity = {
-  readonly __typename?: 'I18NLocaleEntity';
-  readonly attributes: Maybe<I18NLocale>;
-  readonly id: Maybe<Scalars['ID']['output']>;
+  __typename?: 'I18NLocaleEntity';
+  attributes: Maybe<I18NLocale>;
+  id: Maybe<Scalars['ID']['output']>;
 };
 
 export type I18NLocaleEntityResponse = {
-  readonly __typename?: 'I18NLocaleEntityResponse';
-  readonly data: Maybe<I18NLocaleEntity>;
+  __typename?: 'I18NLocaleEntityResponse';
+  data: Maybe<I18NLocaleEntity>;
 };
 
 export type I18NLocaleEntityResponseCollection = {
-  readonly __typename?: 'I18NLocaleEntityResponseCollection';
-  readonly data: ReadonlyArray<I18NLocaleEntity>;
-  readonly meta: ResponseCollectionMeta;
+  __typename?: 'I18NLocaleEntityResponseCollection';
+  data: Array<I18NLocaleEntity>;
+  meta: ResponseCollectionMeta;
 };
 
 export type I18NLocaleFiltersInput = {
-  readonly and: InputMaybe<ReadonlyArray<InputMaybe<I18NLocaleFiltersInput>>>;
-  readonly code: InputMaybe<StringFilterInput>;
-  readonly createdAt: InputMaybe<DateTimeFilterInput>;
-  readonly id: InputMaybe<IdFilterInput>;
-  readonly name: InputMaybe<StringFilterInput>;
-  readonly not: InputMaybe<I18NLocaleFiltersInput>;
-  readonly or: InputMaybe<ReadonlyArray<InputMaybe<I18NLocaleFiltersInput>>>;
-  readonly updatedAt: InputMaybe<DateTimeFilterInput>;
+  and: InputMaybe<Array<InputMaybe<I18NLocaleFiltersInput>>>;
+  code: InputMaybe<StringFilterInput>;
+  createdAt: InputMaybe<DateTimeFilterInput>;
+  id: InputMaybe<IdFilterInput>;
+  name: InputMaybe<StringFilterInput>;
+  not: InputMaybe<I18NLocaleFiltersInput>;
+  or: InputMaybe<Array<InputMaybe<I18NLocaleFiltersInput>>>;
+  updatedAt: InputMaybe<DateTimeFilterInput>;
 };
 
 export type IdFilterInput = {
-  readonly and: InputMaybe<ReadonlyArray<InputMaybe<Scalars['ID']['input']>>>;
-  readonly between: InputMaybe<ReadonlyArray<InputMaybe<Scalars['ID']['input']>>>;
-  readonly contains: InputMaybe<Scalars['ID']['input']>;
-  readonly containsi: InputMaybe<Scalars['ID']['input']>;
-  readonly endsWith: InputMaybe<Scalars['ID']['input']>;
-  readonly eq: InputMaybe<Scalars['ID']['input']>;
-  readonly eqi: InputMaybe<Scalars['ID']['input']>;
-  readonly gt: InputMaybe<Scalars['ID']['input']>;
-  readonly gte: InputMaybe<Scalars['ID']['input']>;
-  readonly in: InputMaybe<ReadonlyArray<InputMaybe<Scalars['ID']['input']>>>;
-  readonly lt: InputMaybe<Scalars['ID']['input']>;
-  readonly lte: InputMaybe<Scalars['ID']['input']>;
-  readonly ne: InputMaybe<Scalars['ID']['input']>;
-  readonly nei: InputMaybe<Scalars['ID']['input']>;
-  readonly not: InputMaybe<IdFilterInput>;
-  readonly notContains: InputMaybe<Scalars['ID']['input']>;
-  readonly notContainsi: InputMaybe<Scalars['ID']['input']>;
-  readonly notIn: InputMaybe<ReadonlyArray<InputMaybe<Scalars['ID']['input']>>>;
-  readonly notNull: InputMaybe<Scalars['Boolean']['input']>;
-  readonly null: InputMaybe<Scalars['Boolean']['input']>;
-  readonly or: InputMaybe<ReadonlyArray<InputMaybe<Scalars['ID']['input']>>>;
-  readonly startsWith: InputMaybe<Scalars['ID']['input']>;
+  and: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
+  between: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
+  contains: InputMaybe<Scalars['ID']['input']>;
+  containsi: InputMaybe<Scalars['ID']['input']>;
+  endsWith: InputMaybe<Scalars['ID']['input']>;
+  eq: InputMaybe<Scalars['ID']['input']>;
+  eqi: InputMaybe<Scalars['ID']['input']>;
+  gt: InputMaybe<Scalars['ID']['input']>;
+  gte: InputMaybe<Scalars['ID']['input']>;
+  in: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
+  lt: InputMaybe<Scalars['ID']['input']>;
+  lte: InputMaybe<Scalars['ID']['input']>;
+  ne: InputMaybe<Scalars['ID']['input']>;
+  nei: InputMaybe<Scalars['ID']['input']>;
+  not: InputMaybe<IdFilterInput>;
+  notContains: InputMaybe<Scalars['ID']['input']>;
+  notContainsi: InputMaybe<Scalars['ID']['input']>;
+  notIn: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
+  notNull: InputMaybe<Scalars['Boolean']['input']>;
+  null: InputMaybe<Scalars['Boolean']['input']>;
+  or: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
+  startsWith: InputMaybe<Scalars['ID']['input']>;
 };
 
 export type IntFilterInput = {
-  readonly and: InputMaybe<ReadonlyArray<InputMaybe<Scalars['Int']['input']>>>;
-  readonly between: InputMaybe<ReadonlyArray<InputMaybe<Scalars['Int']['input']>>>;
-  readonly contains: InputMaybe<Scalars['Int']['input']>;
-  readonly containsi: InputMaybe<Scalars['Int']['input']>;
-  readonly endsWith: InputMaybe<Scalars['Int']['input']>;
-  readonly eq: InputMaybe<Scalars['Int']['input']>;
-  readonly eqi: InputMaybe<Scalars['Int']['input']>;
-  readonly gt: InputMaybe<Scalars['Int']['input']>;
-  readonly gte: InputMaybe<Scalars['Int']['input']>;
-  readonly in: InputMaybe<ReadonlyArray<InputMaybe<Scalars['Int']['input']>>>;
-  readonly lt: InputMaybe<Scalars['Int']['input']>;
-  readonly lte: InputMaybe<Scalars['Int']['input']>;
-  readonly ne: InputMaybe<Scalars['Int']['input']>;
-  readonly nei: InputMaybe<Scalars['Int']['input']>;
-  readonly not: InputMaybe<IntFilterInput>;
-  readonly notContains: InputMaybe<Scalars['Int']['input']>;
-  readonly notContainsi: InputMaybe<Scalars['Int']['input']>;
-  readonly notIn: InputMaybe<ReadonlyArray<InputMaybe<Scalars['Int']['input']>>>;
-  readonly notNull: InputMaybe<Scalars['Boolean']['input']>;
-  readonly null: InputMaybe<Scalars['Boolean']['input']>;
-  readonly or: InputMaybe<ReadonlyArray<InputMaybe<Scalars['Int']['input']>>>;
-  readonly startsWith: InputMaybe<Scalars['Int']['input']>;
+  and: InputMaybe<Array<InputMaybe<Scalars['Int']['input']>>>;
+  between: InputMaybe<Array<InputMaybe<Scalars['Int']['input']>>>;
+  contains: InputMaybe<Scalars['Int']['input']>;
+  containsi: InputMaybe<Scalars['Int']['input']>;
+  endsWith: InputMaybe<Scalars['Int']['input']>;
+  eq: InputMaybe<Scalars['Int']['input']>;
+  eqi: InputMaybe<Scalars['Int']['input']>;
+  gt: InputMaybe<Scalars['Int']['input']>;
+  gte: InputMaybe<Scalars['Int']['input']>;
+  in: InputMaybe<Array<InputMaybe<Scalars['Int']['input']>>>;
+  lt: InputMaybe<Scalars['Int']['input']>;
+  lte: InputMaybe<Scalars['Int']['input']>;
+  ne: InputMaybe<Scalars['Int']['input']>;
+  nei: InputMaybe<Scalars['Int']['input']>;
+  not: InputMaybe<IntFilterInput>;
+  notContains: InputMaybe<Scalars['Int']['input']>;
+  notContainsi: InputMaybe<Scalars['Int']['input']>;
+  notIn: InputMaybe<Array<InputMaybe<Scalars['Int']['input']>>>;
+  notNull: InputMaybe<Scalars['Boolean']['input']>;
+  null: InputMaybe<Scalars['Boolean']['input']>;
+  or: InputMaybe<Array<InputMaybe<Scalars['Int']['input']>>>;
+  startsWith: InputMaybe<Scalars['Int']['input']>;
 };
 
 export type JsonFilterInput = {
-  readonly and: InputMaybe<ReadonlyArray<InputMaybe<Scalars['JSON']['input']>>>;
-  readonly between: InputMaybe<ReadonlyArray<InputMaybe<Scalars['JSON']['input']>>>;
-  readonly contains: InputMaybe<Scalars['JSON']['input']>;
-  readonly containsi: InputMaybe<Scalars['JSON']['input']>;
-  readonly endsWith: InputMaybe<Scalars['JSON']['input']>;
-  readonly eq: InputMaybe<Scalars['JSON']['input']>;
-  readonly eqi: InputMaybe<Scalars['JSON']['input']>;
-  readonly gt: InputMaybe<Scalars['JSON']['input']>;
-  readonly gte: InputMaybe<Scalars['JSON']['input']>;
-  readonly in: InputMaybe<ReadonlyArray<InputMaybe<Scalars['JSON']['input']>>>;
-  readonly lt: InputMaybe<Scalars['JSON']['input']>;
-  readonly lte: InputMaybe<Scalars['JSON']['input']>;
-  readonly ne: InputMaybe<Scalars['JSON']['input']>;
-  readonly nei: InputMaybe<Scalars['JSON']['input']>;
-  readonly not: InputMaybe<JsonFilterInput>;
-  readonly notContains: InputMaybe<Scalars['JSON']['input']>;
-  readonly notContainsi: InputMaybe<Scalars['JSON']['input']>;
-  readonly notIn: InputMaybe<ReadonlyArray<InputMaybe<Scalars['JSON']['input']>>>;
-  readonly notNull: InputMaybe<Scalars['Boolean']['input']>;
-  readonly null: InputMaybe<Scalars['Boolean']['input']>;
-  readonly or: InputMaybe<ReadonlyArray<InputMaybe<Scalars['JSON']['input']>>>;
-  readonly startsWith: InputMaybe<Scalars['JSON']['input']>;
+  and: InputMaybe<Array<InputMaybe<Scalars['JSON']['input']>>>;
+  between: InputMaybe<Array<InputMaybe<Scalars['JSON']['input']>>>;
+  contains: InputMaybe<Scalars['JSON']['input']>;
+  containsi: InputMaybe<Scalars['JSON']['input']>;
+  endsWith: InputMaybe<Scalars['JSON']['input']>;
+  eq: InputMaybe<Scalars['JSON']['input']>;
+  eqi: InputMaybe<Scalars['JSON']['input']>;
+  gt: InputMaybe<Scalars['JSON']['input']>;
+  gte: InputMaybe<Scalars['JSON']['input']>;
+  in: InputMaybe<Array<InputMaybe<Scalars['JSON']['input']>>>;
+  lt: InputMaybe<Scalars['JSON']['input']>;
+  lte: InputMaybe<Scalars['JSON']['input']>;
+  ne: InputMaybe<Scalars['JSON']['input']>;
+  nei: InputMaybe<Scalars['JSON']['input']>;
+  not: InputMaybe<JsonFilterInput>;
+  notContains: InputMaybe<Scalars['JSON']['input']>;
+  notContainsi: InputMaybe<Scalars['JSON']['input']>;
+  notIn: InputMaybe<Array<InputMaybe<Scalars['JSON']['input']>>>;
+  notNull: InputMaybe<Scalars['Boolean']['input']>;
+  null: InputMaybe<Scalars['Boolean']['input']>;
+  or: InputMaybe<Array<InputMaybe<Scalars['JSON']['input']>>>;
+  startsWith: InputMaybe<Scalars['JSON']['input']>;
 };
 
 export type Like = {
-  readonly __typename?: 'Like';
-  readonly createdAt: Maybe<Scalars['DateTime']['output']>;
-  readonly track: Maybe<TrackEntityResponse>;
-  readonly updatedAt: Maybe<Scalars['DateTime']['output']>;
-  readonly user: Maybe<UsersPermissionsUserEntityResponse>;
+  __typename?: 'Like';
+  createdAt: Maybe<Scalars['DateTime']['output']>;
+  track: Maybe<TrackEntityResponse>;
+  updatedAt: Maybe<Scalars['DateTime']['output']>;
+  user: Maybe<UsersPermissionsUserEntityResponse>;
 };
 
 export type LikeEntity = {
-  readonly __typename?: 'LikeEntity';
-  readonly attributes: Maybe<Like>;
-  readonly id: Maybe<Scalars['ID']['output']>;
+  __typename?: 'LikeEntity';
+  attributes: Maybe<Like>;
+  id: Maybe<Scalars['ID']['output']>;
 };
 
 export type LikeEntityResponse = {
-  readonly __typename?: 'LikeEntityResponse';
-  readonly data: Maybe<LikeEntity>;
+  __typename?: 'LikeEntityResponse';
+  data: Maybe<LikeEntity>;
 };
 
 export type LikeEntityResponseCollection = {
-  readonly __typename?: 'LikeEntityResponseCollection';
-  readonly data: ReadonlyArray<LikeEntity>;
-  readonly meta: ResponseCollectionMeta;
+  __typename?: 'LikeEntityResponseCollection';
+  data: Array<LikeEntity>;
+  meta: ResponseCollectionMeta;
 };
 
 export type LikeFiltersInput = {
-  readonly and: InputMaybe<ReadonlyArray<InputMaybe<LikeFiltersInput>>>;
-  readonly createdAt: InputMaybe<DateTimeFilterInput>;
-  readonly id: InputMaybe<IdFilterInput>;
-  readonly not: InputMaybe<LikeFiltersInput>;
-  readonly or: InputMaybe<ReadonlyArray<InputMaybe<LikeFiltersInput>>>;
-  readonly track: InputMaybe<TrackFiltersInput>;
-  readonly updatedAt: InputMaybe<DateTimeFilterInput>;
-  readonly user: InputMaybe<UsersPermissionsUserFiltersInput>;
+  and: InputMaybe<Array<InputMaybe<LikeFiltersInput>>>;
+  createdAt: InputMaybe<DateTimeFilterInput>;
+  id: InputMaybe<IdFilterInput>;
+  not: InputMaybe<LikeFiltersInput>;
+  or: InputMaybe<Array<InputMaybe<LikeFiltersInput>>>;
+  track: InputMaybe<TrackFiltersInput>;
+  updatedAt: InputMaybe<DateTimeFilterInput>;
+  user: InputMaybe<UsersPermissionsUserFiltersInput>;
 };
 
 export type LikeInput = {
-  readonly track: InputMaybe<Scalars['ID']['input']>;
-  readonly user: InputMaybe<Scalars['ID']['input']>;
+  track: InputMaybe<Scalars['ID']['input']>;
+  user: InputMaybe<Scalars['ID']['input']>;
 };
 
 export type Mutation = {
-  readonly __typename?: 'Mutation';
+  __typename?: 'Mutation';
   /** Change user password. Confirm with the current password. */
-  readonly changePassword: Maybe<UsersPermissionsLoginPayload>;
-  readonly createAlbum: Maybe<AlbumEntityResponse>;
-  readonly createArtist: Maybe<ArtistEntityResponse>;
-  readonly createLike: Maybe<LikeEntityResponse>;
-  readonly createTrack: Maybe<TrackEntityResponse>;
-  readonly createUploadFile: Maybe<UploadFileEntityResponse>;
-  readonly createUploadFolder: Maybe<UploadFolderEntityResponse>;
+  changePassword: Maybe<UsersPermissionsLoginPayload>;
+  createAlbum: Maybe<AlbumEntityResponse>;
+  createArtist: Maybe<ArtistEntityResponse>;
+  createLike: Maybe<LikeEntityResponse>;
+  createTrack: Maybe<TrackEntityResponse>;
+  createUploadFile: Maybe<UploadFileEntityResponse>;
+  createUploadFolder: Maybe<UploadFolderEntityResponse>;
   /** Create a new role */
-  readonly createUsersPermissionsRole: Maybe<UsersPermissionsCreateRolePayload>;
+  createUsersPermissionsRole: Maybe<UsersPermissionsCreateRolePayload>;
   /** Create a new user */
-  readonly createUsersPermissionsUser: UsersPermissionsUserEntityResponse;
-  readonly deleteAlbum: Maybe<AlbumEntityResponse>;
-  readonly deleteArtist: Maybe<ArtistEntityResponse>;
-  readonly deleteLike: Maybe<LikeEntityResponse>;
-  readonly deleteTrack: Maybe<TrackEntityResponse>;
-  readonly deleteUploadFile: Maybe<UploadFileEntityResponse>;
-  readonly deleteUploadFolder: Maybe<UploadFolderEntityResponse>;
+  createUsersPermissionsUser: UsersPermissionsUserEntityResponse;
+  deleteAlbum: Maybe<AlbumEntityResponse>;
+  deleteArtist: Maybe<ArtistEntityResponse>;
+  deleteLike: Maybe<LikeEntityResponse>;
+  deleteTrack: Maybe<TrackEntityResponse>;
+  deleteUploadFile: Maybe<UploadFileEntityResponse>;
+  deleteUploadFolder: Maybe<UploadFolderEntityResponse>;
   /** Delete an existing role */
-  readonly deleteUsersPermissionsRole: Maybe<UsersPermissionsDeleteRolePayload>;
+  deleteUsersPermissionsRole: Maybe<UsersPermissionsDeleteRolePayload>;
   /** Delete an existing user */
-  readonly deleteUsersPermissionsUser: UsersPermissionsUserEntityResponse;
+  deleteUsersPermissionsUser: UsersPermissionsUserEntityResponse;
   /** Confirm an email users email address */
-  readonly emailConfirmation: Maybe<UsersPermissionsLoginPayload>;
+  emailConfirmation: Maybe<UsersPermissionsLoginPayload>;
   /** Request a reset password token */
-  readonly forgotPassword: Maybe<UsersPermissionsPasswordPayload>;
-  readonly login: UsersPermissionsLoginPayload;
-  readonly multipleUpload: ReadonlyArray<Maybe<UploadFileEntityResponse>>;
+  forgotPassword: Maybe<UsersPermissionsPasswordPayload>;
+  login: UsersPermissionsLoginPayload;
+  multipleUpload: Array<Maybe<UploadFileEntityResponse>>;
   /** Register a user */
-  readonly register: UsersPermissionsLoginPayload;
-  readonly removeFile: Maybe<UploadFileEntityResponse>;
+  register: UsersPermissionsLoginPayload;
+  removeFile: Maybe<UploadFileEntityResponse>;
   /** Reset user password. Confirm with a code (resetToken from forgotPassword) */
-  readonly resetPassword: Maybe<UsersPermissionsLoginPayload>;
-  readonly updateAlbum: Maybe<AlbumEntityResponse>;
-  readonly updateArtist: Maybe<ArtistEntityResponse>;
-  readonly updateFileInfo: UploadFileEntityResponse;
-  readonly updateLike: Maybe<LikeEntityResponse>;
-  readonly updateTrack: Maybe<TrackEntityResponse>;
-  readonly updateUploadFile: Maybe<UploadFileEntityResponse>;
-  readonly updateUploadFolder: Maybe<UploadFolderEntityResponse>;
-  readonly updateUserNotifications: UsersPermissionsUserEntityResponse;
-  readonly updateUserProfile: UsersPermissionsUserEntityResponse;
+  resetPassword: Maybe<UsersPermissionsLoginPayload>;
+  updateAlbum: Maybe<AlbumEntityResponse>;
+  updateArtist: Maybe<ArtistEntityResponse>;
+  updateFileInfo: UploadFileEntityResponse;
+  updateLike: Maybe<LikeEntityResponse>;
+  updateTrack: Maybe<TrackEntityResponse>;
+  updateUploadFile: Maybe<UploadFileEntityResponse>;
+  updateUploadFolder: Maybe<UploadFolderEntityResponse>;
+  updateUserNotifications: UsersPermissionsUserEntityResponse;
+  updateUserProfile: UsersPermissionsUserEntityResponse;
   /** Update an existing role */
-  readonly updateUsersPermissionsRole: Maybe<UsersPermissionsUpdateRolePayload>;
+  updateUsersPermissionsRole: Maybe<UsersPermissionsUpdateRolePayload>;
   /** Update an existing user */
-  readonly updateUsersPermissionsUser: UsersPermissionsUserEntityResponse;
-  readonly upload: UploadFileEntityResponse;
+  updateUsersPermissionsUser: UsersPermissionsUserEntityResponse;
+  upload: UploadFileEntityResponse;
 };
 
 
@@ -562,7 +562,7 @@ export type MutationLoginArgs = {
 
 export type MutationMultipleUploadArgs = {
   field: InputMaybe<Scalars['String']['input']>;
-  files: ReadonlyArray<InputMaybe<Scalars['Upload']['input']>>;
+  files: Array<InputMaybe<Scalars['Upload']['input']>>;
   ref: InputMaybe<Scalars['String']['input']>;
   refId: InputMaybe<Scalars['ID']['input']>;
 };
@@ -658,18 +658,18 @@ export type MutationUploadArgs = {
 };
 
 export type Pagination = {
-  readonly __typename?: 'Pagination';
-  readonly page: Scalars['Int']['output'];
-  readonly pageCount: Scalars['Int']['output'];
-  readonly pageSize: Scalars['Int']['output'];
-  readonly total: Scalars['Int']['output'];
+  __typename?: 'Pagination';
+  page: Scalars['Int']['output'];
+  pageCount: Scalars['Int']['output'];
+  pageSize: Scalars['Int']['output'];
+  total: Scalars['Int']['output'];
 };
 
 export type PaginationArg = {
-  readonly limit: InputMaybe<Scalars['Int']['input']>;
-  readonly page: InputMaybe<Scalars['Int']['input']>;
-  readonly pageSize: InputMaybe<Scalars['Int']['input']>;
-  readonly start: InputMaybe<Scalars['Int']['input']>;
+  limit: InputMaybe<Scalars['Int']['input']>;
+  page: InputMaybe<Scalars['Int']['input']>;
+  pageSize: InputMaybe<Scalars['Int']['input']>;
+  start: InputMaybe<Scalars['Int']['input']>;
 };
 
 export enum PublicationState {
@@ -678,28 +678,28 @@ export enum PublicationState {
 }
 
 export type Query = {
-  readonly __typename?: 'Query';
-  readonly album: Maybe<AlbumEntityResponse>;
-  readonly albums: Maybe<AlbumEntityResponseCollection>;
-  readonly artist: Maybe<ArtistEntityResponse>;
-  readonly artists: Maybe<ArtistEntityResponseCollection>;
-  readonly emailAvailable: Maybe<Scalars['Boolean']['output']>;
-  readonly i18NLocale: Maybe<I18NLocaleEntityResponse>;
-  readonly i18NLocales: Maybe<I18NLocaleEntityResponseCollection>;
-  readonly like: Maybe<LikeEntityResponse>;
-  readonly likes: Maybe<LikeEntityResponseCollection>;
-  readonly me: Maybe<UsersPermissionsMe>;
-  readonly track: Maybe<TrackEntityResponse>;
-  readonly trackIncrementPlayCount: TrackIncrementPlayCountResponse;
-  readonly tracks: Maybe<TrackEntityResponseCollection>;
-  readonly uploadFile: Maybe<UploadFileEntityResponse>;
-  readonly uploadFiles: Maybe<UploadFileEntityResponseCollection>;
-  readonly uploadFolder: Maybe<UploadFolderEntityResponse>;
-  readonly uploadFolders: Maybe<UploadFolderEntityResponseCollection>;
-  readonly usersPermissionsRole: Maybe<UsersPermissionsRoleEntityResponse>;
-  readonly usersPermissionsRoles: Maybe<UsersPermissionsRoleEntityResponseCollection>;
-  readonly usersPermissionsUser: Maybe<UsersPermissionsUserEntityResponse>;
-  readonly usersPermissionsUsers: Maybe<UsersPermissionsUserEntityResponseCollection>;
+  __typename?: 'Query';
+  album: Maybe<AlbumEntityResponse>;
+  albums: Maybe<AlbumEntityResponseCollection>;
+  artist: Maybe<ArtistEntityResponse>;
+  artists: Maybe<ArtistEntityResponseCollection>;
+  emailAvailable: Maybe<Scalars['Boolean']['output']>;
+  i18NLocale: Maybe<I18NLocaleEntityResponse>;
+  i18NLocales: Maybe<I18NLocaleEntityResponseCollection>;
+  like: Maybe<LikeEntityResponse>;
+  likes: Maybe<LikeEntityResponseCollection>;
+  me: Maybe<UsersPermissionsMe>;
+  track: Maybe<TrackEntityResponse>;
+  trackIncrementPlayCount: TrackIncrementPlayCountResponse;
+  tracks: Maybe<TrackEntityResponseCollection>;
+  uploadFile: Maybe<UploadFileEntityResponse>;
+  uploadFiles: Maybe<UploadFileEntityResponseCollection>;
+  uploadFolder: Maybe<UploadFolderEntityResponse>;
+  uploadFolders: Maybe<UploadFolderEntityResponseCollection>;
+  usersPermissionsRole: Maybe<UsersPermissionsRoleEntityResponse>;
+  usersPermissionsRoles: Maybe<UsersPermissionsRoleEntityResponseCollection>;
+  usersPermissionsUser: Maybe<UsersPermissionsUserEntityResponse>;
+  usersPermissionsUsers: Maybe<UsersPermissionsUserEntityResponseCollection>;
 };
 
 
@@ -712,7 +712,7 @@ export type QueryAlbumsArgs = {
   filters: InputMaybe<AlbumFiltersInput>;
   pagination?: InputMaybe<PaginationArg>;
   publicationState?: InputMaybe<PublicationState>;
-  sort?: InputMaybe<ReadonlyArray<InputMaybe<Scalars['String']['input']>>>;
+  sort?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
 };
 
 
@@ -725,7 +725,7 @@ export type QueryArtistsArgs = {
   filters: InputMaybe<ArtistFiltersInput>;
   pagination?: InputMaybe<PaginationArg>;
   publicationState?: InputMaybe<PublicationState>;
-  sort?: InputMaybe<ReadonlyArray<InputMaybe<Scalars['String']['input']>>>;
+  sort?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
 };
 
 
@@ -742,7 +742,7 @@ export type QueryI18NLocaleArgs = {
 export type QueryI18NLocalesArgs = {
   filters: InputMaybe<I18NLocaleFiltersInput>;
   pagination?: InputMaybe<PaginationArg>;
-  sort?: InputMaybe<ReadonlyArray<InputMaybe<Scalars['String']['input']>>>;
+  sort?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
 };
 
 
@@ -754,7 +754,7 @@ export type QueryLikeArgs = {
 export type QueryLikesArgs = {
   filters: InputMaybe<LikeFiltersInput>;
   pagination?: InputMaybe<PaginationArg>;
-  sort?: InputMaybe<ReadonlyArray<InputMaybe<Scalars['String']['input']>>>;
+  sort?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
 };
 
 
@@ -772,7 +772,7 @@ export type QueryTracksArgs = {
   filters: InputMaybe<TrackFiltersInput>;
   pagination?: InputMaybe<PaginationArg>;
   publicationState?: InputMaybe<PublicationState>;
-  sort?: InputMaybe<ReadonlyArray<InputMaybe<Scalars['String']['input']>>>;
+  sort?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
 };
 
 
@@ -784,7 +784,7 @@ export type QueryUploadFileArgs = {
 export type QueryUploadFilesArgs = {
   filters: InputMaybe<UploadFileFiltersInput>;
   pagination?: InputMaybe<PaginationArg>;
-  sort?: InputMaybe<ReadonlyArray<InputMaybe<Scalars['String']['input']>>>;
+  sort?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
 };
 
 
@@ -796,7 +796,7 @@ export type QueryUploadFolderArgs = {
 export type QueryUploadFoldersArgs = {
   filters: InputMaybe<UploadFolderFiltersInput>;
   pagination?: InputMaybe<PaginationArg>;
-  sort?: InputMaybe<ReadonlyArray<InputMaybe<Scalars['String']['input']>>>;
+  sort?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
 };
 
 
@@ -808,7 +808,7 @@ export type QueryUsersPermissionsRoleArgs = {
 export type QueryUsersPermissionsRolesArgs = {
   filters: InputMaybe<UsersPermissionsRoleFiltersInput>;
   pagination?: InputMaybe<PaginationArg>;
-  sort?: InputMaybe<ReadonlyArray<InputMaybe<Scalars['String']['input']>>>;
+  sort?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
 };
 
 
@@ -820,545 +820,552 @@ export type QueryUsersPermissionsUserArgs = {
 export type QueryUsersPermissionsUsersArgs = {
   filters: InputMaybe<UsersPermissionsUserFiltersInput>;
   pagination?: InputMaybe<PaginationArg>;
-  sort?: InputMaybe<ReadonlyArray<InputMaybe<Scalars['String']['input']>>>;
+  sort?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
 };
 
 export type ResponseCollectionMeta = {
-  readonly __typename?: 'ResponseCollectionMeta';
-  readonly pagination: Pagination;
+  __typename?: 'ResponseCollectionMeta';
+  pagination: Pagination;
 };
 
 export type StringFilterInput = {
-  readonly and: InputMaybe<ReadonlyArray<InputMaybe<Scalars['String']['input']>>>;
-  readonly between: InputMaybe<ReadonlyArray<InputMaybe<Scalars['String']['input']>>>;
-  readonly contains: InputMaybe<Scalars['String']['input']>;
-  readonly containsi: InputMaybe<Scalars['String']['input']>;
-  readonly endsWith: InputMaybe<Scalars['String']['input']>;
-  readonly eq: InputMaybe<Scalars['String']['input']>;
-  readonly eqi: InputMaybe<Scalars['String']['input']>;
-  readonly gt: InputMaybe<Scalars['String']['input']>;
-  readonly gte: InputMaybe<Scalars['String']['input']>;
-  readonly in: InputMaybe<ReadonlyArray<InputMaybe<Scalars['String']['input']>>>;
-  readonly lt: InputMaybe<Scalars['String']['input']>;
-  readonly lte: InputMaybe<Scalars['String']['input']>;
-  readonly ne: InputMaybe<Scalars['String']['input']>;
-  readonly nei: InputMaybe<Scalars['String']['input']>;
-  readonly not: InputMaybe<StringFilterInput>;
-  readonly notContains: InputMaybe<Scalars['String']['input']>;
-  readonly notContainsi: InputMaybe<Scalars['String']['input']>;
-  readonly notIn: InputMaybe<ReadonlyArray<InputMaybe<Scalars['String']['input']>>>;
-  readonly notNull: InputMaybe<Scalars['Boolean']['input']>;
-  readonly null: InputMaybe<Scalars['Boolean']['input']>;
-  readonly or: InputMaybe<ReadonlyArray<InputMaybe<Scalars['String']['input']>>>;
-  readonly startsWith: InputMaybe<Scalars['String']['input']>;
+  and: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  between: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  contains: InputMaybe<Scalars['String']['input']>;
+  containsi: InputMaybe<Scalars['String']['input']>;
+  endsWith: InputMaybe<Scalars['String']['input']>;
+  eq: InputMaybe<Scalars['String']['input']>;
+  eqi: InputMaybe<Scalars['String']['input']>;
+  gt: InputMaybe<Scalars['String']['input']>;
+  gte: InputMaybe<Scalars['String']['input']>;
+  in: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  lt: InputMaybe<Scalars['String']['input']>;
+  lte: InputMaybe<Scalars['String']['input']>;
+  ne: InputMaybe<Scalars['String']['input']>;
+  nei: InputMaybe<Scalars['String']['input']>;
+  not: InputMaybe<StringFilterInput>;
+  notContains: InputMaybe<Scalars['String']['input']>;
+  notContainsi: InputMaybe<Scalars['String']['input']>;
+  notIn: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  notNull: InputMaybe<Scalars['Boolean']['input']>;
+  null: InputMaybe<Scalars['Boolean']['input']>;
+  or: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  startsWith: InputMaybe<Scalars['String']['input']>;
 };
 
 export type Track = {
-  readonly __typename?: 'Track';
-  readonly album: Maybe<AlbumEntityResponse>;
-  readonly artist: Maybe<ArtistEntityResponse>;
-  readonly audio: UploadFileEntityResponse;
-  readonly createdAt: Maybe<Scalars['DateTime']['output']>;
-  readonly duration: Maybe<Scalars['Float']['output']>;
-  readonly genre: Maybe<Scalars['String']['output']>;
-  readonly name: Scalars['String']['output'];
-  readonly playCount: Maybe<Scalars['Int']['output']>;
-  readonly publishedAt: Maybe<Scalars['DateTime']['output']>;
-  readonly updatedAt: Maybe<Scalars['DateTime']['output']>;
+  __typename?: 'Track';
+  album: Maybe<AlbumEntityResponse>;
+  artist: Maybe<ArtistEntityResponse>;
+  audio: UploadFileEntityResponse;
+  createdAt: Maybe<Scalars['DateTime']['output']>;
+  duration: Maybe<Scalars['Float']['output']>;
+  genre: Maybe<Scalars['String']['output']>;
+  name: Scalars['String']['output'];
+  playCount: Maybe<Scalars['Int']['output']>;
+  publishedAt: Maybe<Scalars['DateTime']['output']>;
+  updatedAt: Maybe<Scalars['DateTime']['output']>;
 };
 
 export type TrackEntity = {
-  readonly __typename?: 'TrackEntity';
-  readonly attributes: Maybe<Track>;
-  readonly id: Maybe<Scalars['ID']['output']>;
+  __typename?: 'TrackEntity';
+  attributes: Maybe<Track>;
+  id: Maybe<Scalars['ID']['output']>;
 };
 
 export type TrackEntityResponse = {
-  readonly __typename?: 'TrackEntityResponse';
-  readonly data: Maybe<TrackEntity>;
+  __typename?: 'TrackEntityResponse';
+  data: Maybe<TrackEntity>;
 };
 
 export type TrackEntityResponseCollection = {
-  readonly __typename?: 'TrackEntityResponseCollection';
-  readonly data: ReadonlyArray<TrackEntity>;
-  readonly meta: ResponseCollectionMeta;
+  __typename?: 'TrackEntityResponseCollection';
+  data: Array<TrackEntity>;
+  meta: ResponseCollectionMeta;
 };
 
 export type TrackFiltersInput = {
-  readonly album: InputMaybe<AlbumFiltersInput>;
-  readonly and: InputMaybe<ReadonlyArray<InputMaybe<TrackFiltersInput>>>;
-  readonly artist: InputMaybe<ArtistFiltersInput>;
-  readonly createdAt: InputMaybe<DateTimeFilterInput>;
-  readonly duration: InputMaybe<FloatFilterInput>;
-  readonly genre: InputMaybe<StringFilterInput>;
-  readonly id: InputMaybe<IdFilterInput>;
-  readonly name: InputMaybe<StringFilterInput>;
-  readonly not: InputMaybe<TrackFiltersInput>;
-  readonly or: InputMaybe<ReadonlyArray<InputMaybe<TrackFiltersInput>>>;
-  readonly playCount: InputMaybe<IntFilterInput>;
-  readonly publishedAt: InputMaybe<DateTimeFilterInput>;
-  readonly updatedAt: InputMaybe<DateTimeFilterInput>;
+  album: InputMaybe<AlbumFiltersInput>;
+  and: InputMaybe<Array<InputMaybe<TrackFiltersInput>>>;
+  artist: InputMaybe<ArtistFiltersInput>;
+  createdAt: InputMaybe<DateTimeFilterInput>;
+  duration: InputMaybe<FloatFilterInput>;
+  genre: InputMaybe<StringFilterInput>;
+  id: InputMaybe<IdFilterInput>;
+  name: InputMaybe<StringFilterInput>;
+  not: InputMaybe<TrackFiltersInput>;
+  or: InputMaybe<Array<InputMaybe<TrackFiltersInput>>>;
+  playCount: InputMaybe<IntFilterInput>;
+  publishedAt: InputMaybe<DateTimeFilterInput>;
+  updatedAt: InputMaybe<DateTimeFilterInput>;
 };
 
 export type TrackIncrementPlayCountResponse = {
-  readonly __typename?: 'TrackIncrementPlayCountResponse';
-  readonly playCount: Scalars['Int']['output'];
+  __typename?: 'TrackIncrementPlayCountResponse';
+  playCount: Scalars['Int']['output'];
 };
 
 export type TrackInput = {
-  readonly album: InputMaybe<Scalars['ID']['input']>;
-  readonly artist: InputMaybe<Scalars['ID']['input']>;
-  readonly audio: InputMaybe<Scalars['ID']['input']>;
-  readonly duration: InputMaybe<Scalars['Float']['input']>;
-  readonly genre: InputMaybe<Scalars['String']['input']>;
-  readonly name: InputMaybe<Scalars['String']['input']>;
-  readonly playCount: InputMaybe<Scalars['Int']['input']>;
-  readonly publishedAt: InputMaybe<Scalars['DateTime']['input']>;
+  album: InputMaybe<Scalars['ID']['input']>;
+  artist: InputMaybe<Scalars['ID']['input']>;
+  audio: InputMaybe<Scalars['ID']['input']>;
+  duration: InputMaybe<Scalars['Float']['input']>;
+  genre: InputMaybe<Scalars['String']['input']>;
+  name: InputMaybe<Scalars['String']['input']>;
+  playCount: InputMaybe<Scalars['Int']['input']>;
+  publishedAt: InputMaybe<Scalars['DateTime']['input']>;
 };
 
 export type TrackRelationResponseCollection = {
-  readonly __typename?: 'TrackRelationResponseCollection';
-  readonly data: ReadonlyArray<TrackEntity>;
+  __typename?: 'TrackRelationResponseCollection';
+  data: Array<TrackEntity>;
 };
 
 export type UpdateUserNotificationsInput = {
-  readonly communicationEmails: InputMaybe<Scalars['Boolean']['input']>;
-  readonly marketingEmails: InputMaybe<Scalars['Boolean']['input']>;
-  readonly socialEmails: InputMaybe<Scalars['Boolean']['input']>;
+  communicationEmails: InputMaybe<Scalars['Boolean']['input']>;
+  marketingEmails: InputMaybe<Scalars['Boolean']['input']>;
+  socialEmails: InputMaybe<Scalars['Boolean']['input']>;
 };
 
 export type UpdateUserProfileInput = {
-  readonly dob: InputMaybe<Scalars['DateTime']['input']>;
-  readonly gender: InputMaybe<Enum_Userspermissionsuser_Gender>;
-  readonly profileName: InputMaybe<Scalars['String']['input']>;
+  dob: InputMaybe<Scalars['DateTime']['input']>;
+  gender: InputMaybe<Enum_Userspermissionsuser_Gender>;
+  profileName: InputMaybe<Scalars['String']['input']>;
 };
 
 export type UploadFile = {
-  readonly __typename?: 'UploadFile';
-  readonly alternativeText: Maybe<Scalars['String']['output']>;
-  readonly caption: Maybe<Scalars['String']['output']>;
-  readonly createdAt: Maybe<Scalars['DateTime']['output']>;
-  readonly ext: Maybe<Scalars['String']['output']>;
-  readonly formats: Maybe<Scalars['JSON']['output']>;
-  readonly hash: Scalars['String']['output'];
-  readonly height: Maybe<Scalars['Int']['output']>;
-  readonly mime: Scalars['String']['output'];
-  readonly name: Scalars['String']['output'];
-  readonly previewUrl: Maybe<Scalars['String']['output']>;
-  readonly provider: Scalars['String']['output'];
-  readonly provider_metadata: Maybe<Scalars['JSON']['output']>;
-  readonly related: Maybe<ReadonlyArray<Maybe<GenericMorph>>>;
-  readonly size: Scalars['Float']['output'];
-  readonly updatedAt: Maybe<Scalars['DateTime']['output']>;
-  readonly url: Scalars['String']['output'];
-  readonly width: Maybe<Scalars['Int']['output']>;
+  __typename?: 'UploadFile';
+  alternativeText: Maybe<Scalars['String']['output']>;
+  caption: Maybe<Scalars['String']['output']>;
+  createdAt: Maybe<Scalars['DateTime']['output']>;
+  ext: Maybe<Scalars['String']['output']>;
+  formats: Maybe<Scalars['JSON']['output']>;
+  hash: Scalars['String']['output'];
+  height: Maybe<Scalars['Int']['output']>;
+  mime: Scalars['String']['output'];
+  name: Scalars['String']['output'];
+  previewUrl: Maybe<Scalars['String']['output']>;
+  provider: Scalars['String']['output'];
+  provider_metadata: Maybe<Scalars['JSON']['output']>;
+  related: Maybe<Array<Maybe<GenericMorph>>>;
+  size: Scalars['Float']['output'];
+  updatedAt: Maybe<Scalars['DateTime']['output']>;
+  url: Scalars['String']['output'];
+  width: Maybe<Scalars['Int']['output']>;
 };
 
 export type UploadFileEntity = {
-  readonly __typename?: 'UploadFileEntity';
-  readonly attributes: Maybe<UploadFile>;
-  readonly id: Maybe<Scalars['ID']['output']>;
+  __typename?: 'UploadFileEntity';
+  attributes: Maybe<UploadFile>;
+  id: Maybe<Scalars['ID']['output']>;
 };
 
 export type UploadFileEntityResponse = {
-  readonly __typename?: 'UploadFileEntityResponse';
-  readonly data: Maybe<UploadFileEntity>;
+  __typename?: 'UploadFileEntityResponse';
+  data: Maybe<UploadFileEntity>;
 };
 
 export type UploadFileEntityResponseCollection = {
-  readonly __typename?: 'UploadFileEntityResponseCollection';
-  readonly data: ReadonlyArray<UploadFileEntity>;
-  readonly meta: ResponseCollectionMeta;
+  __typename?: 'UploadFileEntityResponseCollection';
+  data: Array<UploadFileEntity>;
+  meta: ResponseCollectionMeta;
 };
 
 export type UploadFileFiltersInput = {
-  readonly alternativeText: InputMaybe<StringFilterInput>;
-  readonly and: InputMaybe<ReadonlyArray<InputMaybe<UploadFileFiltersInput>>>;
-  readonly caption: InputMaybe<StringFilterInput>;
-  readonly createdAt: InputMaybe<DateTimeFilterInput>;
-  readonly ext: InputMaybe<StringFilterInput>;
-  readonly folder: InputMaybe<UploadFolderFiltersInput>;
-  readonly folderPath: InputMaybe<StringFilterInput>;
-  readonly formats: InputMaybe<JsonFilterInput>;
-  readonly hash: InputMaybe<StringFilterInput>;
-  readonly height: InputMaybe<IntFilterInput>;
-  readonly id: InputMaybe<IdFilterInput>;
-  readonly mime: InputMaybe<StringFilterInput>;
-  readonly name: InputMaybe<StringFilterInput>;
-  readonly not: InputMaybe<UploadFileFiltersInput>;
-  readonly or: InputMaybe<ReadonlyArray<InputMaybe<UploadFileFiltersInput>>>;
-  readonly previewUrl: InputMaybe<StringFilterInput>;
-  readonly provider: InputMaybe<StringFilterInput>;
-  readonly provider_metadata: InputMaybe<JsonFilterInput>;
-  readonly size: InputMaybe<FloatFilterInput>;
-  readonly updatedAt: InputMaybe<DateTimeFilterInput>;
-  readonly url: InputMaybe<StringFilterInput>;
-  readonly width: InputMaybe<IntFilterInput>;
+  alternativeText: InputMaybe<StringFilterInput>;
+  and: InputMaybe<Array<InputMaybe<UploadFileFiltersInput>>>;
+  caption: InputMaybe<StringFilterInput>;
+  createdAt: InputMaybe<DateTimeFilterInput>;
+  ext: InputMaybe<StringFilterInput>;
+  folder: InputMaybe<UploadFolderFiltersInput>;
+  folderPath: InputMaybe<StringFilterInput>;
+  formats: InputMaybe<JsonFilterInput>;
+  hash: InputMaybe<StringFilterInput>;
+  height: InputMaybe<IntFilterInput>;
+  id: InputMaybe<IdFilterInput>;
+  mime: InputMaybe<StringFilterInput>;
+  name: InputMaybe<StringFilterInput>;
+  not: InputMaybe<UploadFileFiltersInput>;
+  or: InputMaybe<Array<InputMaybe<UploadFileFiltersInput>>>;
+  previewUrl: InputMaybe<StringFilterInput>;
+  provider: InputMaybe<StringFilterInput>;
+  provider_metadata: InputMaybe<JsonFilterInput>;
+  size: InputMaybe<FloatFilterInput>;
+  updatedAt: InputMaybe<DateTimeFilterInput>;
+  url: InputMaybe<StringFilterInput>;
+  width: InputMaybe<IntFilterInput>;
 };
 
 export type UploadFileInput = {
-  readonly alternativeText: InputMaybe<Scalars['String']['input']>;
-  readonly caption: InputMaybe<Scalars['String']['input']>;
-  readonly ext: InputMaybe<Scalars['String']['input']>;
-  readonly folder: InputMaybe<Scalars['ID']['input']>;
-  readonly folderPath: InputMaybe<Scalars['String']['input']>;
-  readonly formats: InputMaybe<Scalars['JSON']['input']>;
-  readonly hash: InputMaybe<Scalars['String']['input']>;
-  readonly height: InputMaybe<Scalars['Int']['input']>;
-  readonly mime: InputMaybe<Scalars['String']['input']>;
-  readonly name: InputMaybe<Scalars['String']['input']>;
-  readonly previewUrl: InputMaybe<Scalars['String']['input']>;
-  readonly provider: InputMaybe<Scalars['String']['input']>;
-  readonly provider_metadata: InputMaybe<Scalars['JSON']['input']>;
-  readonly size: InputMaybe<Scalars['Float']['input']>;
-  readonly url: InputMaybe<Scalars['String']['input']>;
-  readonly width: InputMaybe<Scalars['Int']['input']>;
+  alternativeText: InputMaybe<Scalars['String']['input']>;
+  caption: InputMaybe<Scalars['String']['input']>;
+  ext: InputMaybe<Scalars['String']['input']>;
+  folder: InputMaybe<Scalars['ID']['input']>;
+  folderPath: InputMaybe<Scalars['String']['input']>;
+  formats: InputMaybe<Scalars['JSON']['input']>;
+  hash: InputMaybe<Scalars['String']['input']>;
+  height: InputMaybe<Scalars['Int']['input']>;
+  mime: InputMaybe<Scalars['String']['input']>;
+  name: InputMaybe<Scalars['String']['input']>;
+  previewUrl: InputMaybe<Scalars['String']['input']>;
+  provider: InputMaybe<Scalars['String']['input']>;
+  provider_metadata: InputMaybe<Scalars['JSON']['input']>;
+  size: InputMaybe<Scalars['Float']['input']>;
+  url: InputMaybe<Scalars['String']['input']>;
+  width: InputMaybe<Scalars['Int']['input']>;
 };
 
 export type UploadFileRelationResponseCollection = {
-  readonly __typename?: 'UploadFileRelationResponseCollection';
-  readonly data: ReadonlyArray<UploadFileEntity>;
+  __typename?: 'UploadFileRelationResponseCollection';
+  data: Array<UploadFileEntity>;
 };
 
 export type UploadFolder = {
-  readonly __typename?: 'UploadFolder';
-  readonly children: Maybe<UploadFolderRelationResponseCollection>;
-  readonly createdAt: Maybe<Scalars['DateTime']['output']>;
-  readonly files: Maybe<UploadFileRelationResponseCollection>;
-  readonly name: Scalars['String']['output'];
-  readonly parent: Maybe<UploadFolderEntityResponse>;
-  readonly path: Scalars['String']['output'];
-  readonly pathId: Scalars['Int']['output'];
-  readonly updatedAt: Maybe<Scalars['DateTime']['output']>;
+  __typename?: 'UploadFolder';
+  children: Maybe<UploadFolderRelationResponseCollection>;
+  createdAt: Maybe<Scalars['DateTime']['output']>;
+  files: Maybe<UploadFileRelationResponseCollection>;
+  name: Scalars['String']['output'];
+  parent: Maybe<UploadFolderEntityResponse>;
+  path: Scalars['String']['output'];
+  pathId: Scalars['Int']['output'];
+  updatedAt: Maybe<Scalars['DateTime']['output']>;
 };
 
 
 export type UploadFolderChildrenArgs = {
   filters: InputMaybe<UploadFolderFiltersInput>;
   pagination?: InputMaybe<PaginationArg>;
-  sort?: InputMaybe<ReadonlyArray<InputMaybe<Scalars['String']['input']>>>;
+  sort?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
 };
 
 
 export type UploadFolderFilesArgs = {
   filters: InputMaybe<UploadFileFiltersInput>;
   pagination?: InputMaybe<PaginationArg>;
-  sort?: InputMaybe<ReadonlyArray<InputMaybe<Scalars['String']['input']>>>;
+  sort?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
 };
 
 export type UploadFolderEntity = {
-  readonly __typename?: 'UploadFolderEntity';
-  readonly attributes: Maybe<UploadFolder>;
-  readonly id: Maybe<Scalars['ID']['output']>;
+  __typename?: 'UploadFolderEntity';
+  attributes: Maybe<UploadFolder>;
+  id: Maybe<Scalars['ID']['output']>;
 };
 
 export type UploadFolderEntityResponse = {
-  readonly __typename?: 'UploadFolderEntityResponse';
-  readonly data: Maybe<UploadFolderEntity>;
+  __typename?: 'UploadFolderEntityResponse';
+  data: Maybe<UploadFolderEntity>;
 };
 
 export type UploadFolderEntityResponseCollection = {
-  readonly __typename?: 'UploadFolderEntityResponseCollection';
-  readonly data: ReadonlyArray<UploadFolderEntity>;
-  readonly meta: ResponseCollectionMeta;
+  __typename?: 'UploadFolderEntityResponseCollection';
+  data: Array<UploadFolderEntity>;
+  meta: ResponseCollectionMeta;
 };
 
 export type UploadFolderFiltersInput = {
-  readonly and: InputMaybe<ReadonlyArray<InputMaybe<UploadFolderFiltersInput>>>;
-  readonly children: InputMaybe<UploadFolderFiltersInput>;
-  readonly createdAt: InputMaybe<DateTimeFilterInput>;
-  readonly files: InputMaybe<UploadFileFiltersInput>;
-  readonly id: InputMaybe<IdFilterInput>;
-  readonly name: InputMaybe<StringFilterInput>;
-  readonly not: InputMaybe<UploadFolderFiltersInput>;
-  readonly or: InputMaybe<ReadonlyArray<InputMaybe<UploadFolderFiltersInput>>>;
-  readonly parent: InputMaybe<UploadFolderFiltersInput>;
-  readonly path: InputMaybe<StringFilterInput>;
-  readonly pathId: InputMaybe<IntFilterInput>;
-  readonly updatedAt: InputMaybe<DateTimeFilterInput>;
+  and: InputMaybe<Array<InputMaybe<UploadFolderFiltersInput>>>;
+  children: InputMaybe<UploadFolderFiltersInput>;
+  createdAt: InputMaybe<DateTimeFilterInput>;
+  files: InputMaybe<UploadFileFiltersInput>;
+  id: InputMaybe<IdFilterInput>;
+  name: InputMaybe<StringFilterInput>;
+  not: InputMaybe<UploadFolderFiltersInput>;
+  or: InputMaybe<Array<InputMaybe<UploadFolderFiltersInput>>>;
+  parent: InputMaybe<UploadFolderFiltersInput>;
+  path: InputMaybe<StringFilterInput>;
+  pathId: InputMaybe<IntFilterInput>;
+  updatedAt: InputMaybe<DateTimeFilterInput>;
 };
 
 export type UploadFolderInput = {
-  readonly children: InputMaybe<ReadonlyArray<InputMaybe<Scalars['ID']['input']>>>;
-  readonly files: InputMaybe<ReadonlyArray<InputMaybe<Scalars['ID']['input']>>>;
-  readonly name: InputMaybe<Scalars['String']['input']>;
-  readonly parent: InputMaybe<Scalars['ID']['input']>;
-  readonly path: InputMaybe<Scalars['String']['input']>;
-  readonly pathId: InputMaybe<Scalars['Int']['input']>;
+  children: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
+  files: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
+  name: InputMaybe<Scalars['String']['input']>;
+  parent: InputMaybe<Scalars['ID']['input']>;
+  path: InputMaybe<Scalars['String']['input']>;
+  pathId: InputMaybe<Scalars['Int']['input']>;
 };
 
 export type UploadFolderRelationResponseCollection = {
-  readonly __typename?: 'UploadFolderRelationResponseCollection';
-  readonly data: ReadonlyArray<UploadFolderEntity>;
+  __typename?: 'UploadFolderRelationResponseCollection';
+  data: Array<UploadFolderEntity>;
 };
 
 export type UsersPermissionsCreateRolePayload = {
-  readonly __typename?: 'UsersPermissionsCreateRolePayload';
-  readonly ok: Scalars['Boolean']['output'];
+  __typename?: 'UsersPermissionsCreateRolePayload';
+  ok: Scalars['Boolean']['output'];
 };
 
 export type UsersPermissionsDeleteRolePayload = {
-  readonly __typename?: 'UsersPermissionsDeleteRolePayload';
-  readonly ok: Scalars['Boolean']['output'];
+  __typename?: 'UsersPermissionsDeleteRolePayload';
+  ok: Scalars['Boolean']['output'];
 };
 
 export type UsersPermissionsLoginInput = {
-  readonly identifier: Scalars['String']['input'];
-  readonly password: Scalars['String']['input'];
-  readonly provider: Scalars['String']['input'];
+  identifier: Scalars['String']['input'];
+  password: Scalars['String']['input'];
+  provider: Scalars['String']['input'];
 };
 
 export type UsersPermissionsLoginPayload = {
-  readonly __typename?: 'UsersPermissionsLoginPayload';
-  readonly jwt: Maybe<Scalars['String']['output']>;
-  readonly user: UsersPermissionsMe;
+  __typename?: 'UsersPermissionsLoginPayload';
+  jwt: Maybe<Scalars['String']['output']>;
+  user: UsersPermissionsMe;
 };
 
 export type UsersPermissionsMe = {
-  readonly __typename?: 'UsersPermissionsMe';
-  readonly blocked: Maybe<Scalars['Boolean']['output']>;
-  readonly communicationEmails: Scalars['Boolean']['output'];
-  readonly confirmed: Maybe<Scalars['Boolean']['output']>;
-  readonly dob: Maybe<Scalars['DateTime']['output']>;
-  readonly email: Scalars['String']['output'];
-  readonly gender: Maybe<Enum_Userspermissionsuser_Gender>;
-  readonly id: Scalars['ID']['output'];
-  readonly image: Maybe<UploadFile>;
-  readonly marketingEmails: Scalars['Boolean']['output'];
-  readonly profileName: Maybe<Scalars['String']['output']>;
-  readonly role: Maybe<UsersPermissionsMeRole>;
-  readonly socialEmails: Scalars['Boolean']['output'];
-  readonly username: Scalars['String']['output'];
+  __typename?: 'UsersPermissionsMe';
+  blocked: Maybe<Scalars['Boolean']['output']>;
+  communicationEmails: Scalars['Boolean']['output'];
+  confirmed: Maybe<Scalars['Boolean']['output']>;
+  dob: Maybe<Scalars['DateTime']['output']>;
+  email: Scalars['String']['output'];
+  gender: Maybe<Enum_Userspermissionsuser_Gender>;
+  id: Scalars['ID']['output'];
+  image: Maybe<UploadFile>;
+  marketingEmails: Scalars['Boolean']['output'];
+  profileName: Maybe<Scalars['String']['output']>;
+  role: Maybe<UsersPermissionsMeRole>;
+  socialEmails: Scalars['Boolean']['output'];
+  username: Scalars['String']['output'];
 };
 
 export type UsersPermissionsMeRole = {
-  readonly __typename?: 'UsersPermissionsMeRole';
-  readonly description: Maybe<Scalars['String']['output']>;
-  readonly id: Scalars['ID']['output'];
-  readonly name: Scalars['String']['output'];
-  readonly type: Maybe<Scalars['String']['output']>;
+  __typename?: 'UsersPermissionsMeRole';
+  description: Maybe<Scalars['String']['output']>;
+  id: Scalars['ID']['output'];
+  name: Scalars['String']['output'];
+  type: Maybe<Scalars['String']['output']>;
 };
 
 export type UsersPermissionsPasswordPayload = {
-  readonly __typename?: 'UsersPermissionsPasswordPayload';
-  readonly ok: Scalars['Boolean']['output'];
+  __typename?: 'UsersPermissionsPasswordPayload';
+  ok: Scalars['Boolean']['output'];
 };
 
 export type UsersPermissionsPermission = {
-  readonly __typename?: 'UsersPermissionsPermission';
-  readonly action: Scalars['String']['output'];
-  readonly createdAt: Maybe<Scalars['DateTime']['output']>;
-  readonly role: Maybe<UsersPermissionsRoleEntityResponse>;
-  readonly updatedAt: Maybe<Scalars['DateTime']['output']>;
+  __typename?: 'UsersPermissionsPermission';
+  action: Scalars['String']['output'];
+  createdAt: Maybe<Scalars['DateTime']['output']>;
+  role: Maybe<UsersPermissionsRoleEntityResponse>;
+  updatedAt: Maybe<Scalars['DateTime']['output']>;
 };
 
 export type UsersPermissionsPermissionEntity = {
-  readonly __typename?: 'UsersPermissionsPermissionEntity';
-  readonly attributes: Maybe<UsersPermissionsPermission>;
-  readonly id: Maybe<Scalars['ID']['output']>;
+  __typename?: 'UsersPermissionsPermissionEntity';
+  attributes: Maybe<UsersPermissionsPermission>;
+  id: Maybe<Scalars['ID']['output']>;
 };
 
 export type UsersPermissionsPermissionFiltersInput = {
-  readonly action: InputMaybe<StringFilterInput>;
-  readonly and: InputMaybe<ReadonlyArray<InputMaybe<UsersPermissionsPermissionFiltersInput>>>;
-  readonly createdAt: InputMaybe<DateTimeFilterInput>;
-  readonly id: InputMaybe<IdFilterInput>;
-  readonly not: InputMaybe<UsersPermissionsPermissionFiltersInput>;
-  readonly or: InputMaybe<ReadonlyArray<InputMaybe<UsersPermissionsPermissionFiltersInput>>>;
-  readonly role: InputMaybe<UsersPermissionsRoleFiltersInput>;
-  readonly updatedAt: InputMaybe<DateTimeFilterInput>;
+  action: InputMaybe<StringFilterInput>;
+  and: InputMaybe<Array<InputMaybe<UsersPermissionsPermissionFiltersInput>>>;
+  createdAt: InputMaybe<DateTimeFilterInput>;
+  id: InputMaybe<IdFilterInput>;
+  not: InputMaybe<UsersPermissionsPermissionFiltersInput>;
+  or: InputMaybe<Array<InputMaybe<UsersPermissionsPermissionFiltersInput>>>;
+  role: InputMaybe<UsersPermissionsRoleFiltersInput>;
+  updatedAt: InputMaybe<DateTimeFilterInput>;
 };
 
 export type UsersPermissionsPermissionRelationResponseCollection = {
-  readonly __typename?: 'UsersPermissionsPermissionRelationResponseCollection';
-  readonly data: ReadonlyArray<UsersPermissionsPermissionEntity>;
+  __typename?: 'UsersPermissionsPermissionRelationResponseCollection';
+  data: Array<UsersPermissionsPermissionEntity>;
 };
 
 export type UsersPermissionsRegisterInput = {
-  readonly dob: Scalars['DateTime']['input'];
-  readonly email: Scalars['String']['input'];
-  readonly gender: Enum_Userspermissionsuser_Gender;
-  readonly marketingEmails: InputMaybe<Scalars['Boolean']['input']>;
-  readonly password: Scalars['String']['input'];
-  readonly profileName: Scalars['String']['input'];
-  readonly username: Scalars['String']['input'];
+  dob: Scalars['DateTime']['input'];
+  email: Scalars['String']['input'];
+  gender: Enum_Userspermissionsuser_Gender;
+  marketingEmails: InputMaybe<Scalars['Boolean']['input']>;
+  password: Scalars['String']['input'];
+  profileName: Scalars['String']['input'];
+  username: Scalars['String']['input'];
 };
 
 export type UsersPermissionsRole = {
-  readonly __typename?: 'UsersPermissionsRole';
-  readonly createdAt: Maybe<Scalars['DateTime']['output']>;
-  readonly description: Maybe<Scalars['String']['output']>;
-  readonly name: Scalars['String']['output'];
-  readonly permissions: Maybe<UsersPermissionsPermissionRelationResponseCollection>;
-  readonly type: Maybe<Scalars['String']['output']>;
-  readonly updatedAt: Maybe<Scalars['DateTime']['output']>;
-  readonly users: Maybe<UsersPermissionsUserRelationResponseCollection>;
+  __typename?: 'UsersPermissionsRole';
+  createdAt: Maybe<Scalars['DateTime']['output']>;
+  description: Maybe<Scalars['String']['output']>;
+  name: Scalars['String']['output'];
+  permissions: Maybe<UsersPermissionsPermissionRelationResponseCollection>;
+  type: Maybe<Scalars['String']['output']>;
+  updatedAt: Maybe<Scalars['DateTime']['output']>;
+  users: Maybe<UsersPermissionsUserRelationResponseCollection>;
 };
 
 
 export type UsersPermissionsRolePermissionsArgs = {
   filters: InputMaybe<UsersPermissionsPermissionFiltersInput>;
   pagination?: InputMaybe<PaginationArg>;
-  sort?: InputMaybe<ReadonlyArray<InputMaybe<Scalars['String']['input']>>>;
+  sort?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
 };
 
 
 export type UsersPermissionsRoleUsersArgs = {
   filters: InputMaybe<UsersPermissionsUserFiltersInput>;
   pagination?: InputMaybe<PaginationArg>;
-  sort?: InputMaybe<ReadonlyArray<InputMaybe<Scalars['String']['input']>>>;
+  sort?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
 };
 
 export type UsersPermissionsRoleEntity = {
-  readonly __typename?: 'UsersPermissionsRoleEntity';
-  readonly attributes: Maybe<UsersPermissionsRole>;
-  readonly id: Maybe<Scalars['ID']['output']>;
+  __typename?: 'UsersPermissionsRoleEntity';
+  attributes: Maybe<UsersPermissionsRole>;
+  id: Maybe<Scalars['ID']['output']>;
 };
 
 export type UsersPermissionsRoleEntityResponse = {
-  readonly __typename?: 'UsersPermissionsRoleEntityResponse';
-  readonly data: Maybe<UsersPermissionsRoleEntity>;
+  __typename?: 'UsersPermissionsRoleEntityResponse';
+  data: Maybe<UsersPermissionsRoleEntity>;
 };
 
 export type UsersPermissionsRoleEntityResponseCollection = {
-  readonly __typename?: 'UsersPermissionsRoleEntityResponseCollection';
-  readonly data: ReadonlyArray<UsersPermissionsRoleEntity>;
-  readonly meta: ResponseCollectionMeta;
+  __typename?: 'UsersPermissionsRoleEntityResponseCollection';
+  data: Array<UsersPermissionsRoleEntity>;
+  meta: ResponseCollectionMeta;
 };
 
 export type UsersPermissionsRoleFiltersInput = {
-  readonly and: InputMaybe<ReadonlyArray<InputMaybe<UsersPermissionsRoleFiltersInput>>>;
-  readonly createdAt: InputMaybe<DateTimeFilterInput>;
-  readonly description: InputMaybe<StringFilterInput>;
-  readonly id: InputMaybe<IdFilterInput>;
-  readonly name: InputMaybe<StringFilterInput>;
-  readonly not: InputMaybe<UsersPermissionsRoleFiltersInput>;
-  readonly or: InputMaybe<ReadonlyArray<InputMaybe<UsersPermissionsRoleFiltersInput>>>;
-  readonly permissions: InputMaybe<UsersPermissionsPermissionFiltersInput>;
-  readonly type: InputMaybe<StringFilterInput>;
-  readonly updatedAt: InputMaybe<DateTimeFilterInput>;
-  readonly users: InputMaybe<UsersPermissionsUserFiltersInput>;
+  and: InputMaybe<Array<InputMaybe<UsersPermissionsRoleFiltersInput>>>;
+  createdAt: InputMaybe<DateTimeFilterInput>;
+  description: InputMaybe<StringFilterInput>;
+  id: InputMaybe<IdFilterInput>;
+  name: InputMaybe<StringFilterInput>;
+  not: InputMaybe<UsersPermissionsRoleFiltersInput>;
+  or: InputMaybe<Array<InputMaybe<UsersPermissionsRoleFiltersInput>>>;
+  permissions: InputMaybe<UsersPermissionsPermissionFiltersInput>;
+  type: InputMaybe<StringFilterInput>;
+  updatedAt: InputMaybe<DateTimeFilterInput>;
+  users: InputMaybe<UsersPermissionsUserFiltersInput>;
 };
 
 export type UsersPermissionsRoleInput = {
-  readonly description: InputMaybe<Scalars['String']['input']>;
-  readonly name: InputMaybe<Scalars['String']['input']>;
-  readonly permissions: InputMaybe<ReadonlyArray<InputMaybe<Scalars['ID']['input']>>>;
-  readonly type: InputMaybe<Scalars['String']['input']>;
-  readonly users: InputMaybe<ReadonlyArray<InputMaybe<Scalars['ID']['input']>>>;
+  description: InputMaybe<Scalars['String']['input']>;
+  name: InputMaybe<Scalars['String']['input']>;
+  permissions: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
+  type: InputMaybe<Scalars['String']['input']>;
+  users: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
 };
 
 export type UsersPermissionsUpdateRolePayload = {
-  readonly __typename?: 'UsersPermissionsUpdateRolePayload';
-  readonly ok: Scalars['Boolean']['output'];
+  __typename?: 'UsersPermissionsUpdateRolePayload';
+  ok: Scalars['Boolean']['output'];
 };
 
 export type UsersPermissionsUser = {
-  readonly __typename?: 'UsersPermissionsUser';
-  readonly blocked: Maybe<Scalars['Boolean']['output']>;
-  readonly communicationEmails: Maybe<Scalars['Boolean']['output']>;
-  readonly confirmed: Maybe<Scalars['Boolean']['output']>;
-  readonly createdAt: Maybe<Scalars['DateTime']['output']>;
-  readonly dob: Maybe<Scalars['DateTime']['output']>;
-  readonly email: Scalars['String']['output'];
-  readonly gender: Maybe<Enum_Userspermissionsuser_Gender>;
-  readonly image: Maybe<UploadFileEntityResponse>;
-  readonly marketingEmails: Maybe<Scalars['Boolean']['output']>;
-  readonly profileName: Scalars['String']['output'];
-  readonly provider: Maybe<Scalars['String']['output']>;
-  readonly role: Maybe<UsersPermissionsRoleEntityResponse>;
-  readonly socialEmails: Maybe<Scalars['Boolean']['output']>;
-  readonly updatedAt: Maybe<Scalars['DateTime']['output']>;
-  readonly username: Maybe<Scalars['String']['output']>;
+  __typename?: 'UsersPermissionsUser';
+  blocked: Maybe<Scalars['Boolean']['output']>;
+  communicationEmails: Maybe<Scalars['Boolean']['output']>;
+  confirmed: Maybe<Scalars['Boolean']['output']>;
+  createdAt: Maybe<Scalars['DateTime']['output']>;
+  dob: Maybe<Scalars['DateTime']['output']>;
+  email: Scalars['String']['output'];
+  gender: Maybe<Enum_Userspermissionsuser_Gender>;
+  image: Maybe<UploadFileEntityResponse>;
+  marketingEmails: Maybe<Scalars['Boolean']['output']>;
+  profileName: Scalars['String']['output'];
+  provider: Maybe<Scalars['String']['output']>;
+  role: Maybe<UsersPermissionsRoleEntityResponse>;
+  socialEmails: Maybe<Scalars['Boolean']['output']>;
+  updatedAt: Maybe<Scalars['DateTime']['output']>;
+  username: Maybe<Scalars['String']['output']>;
 };
 
 export type UsersPermissionsUserEntity = {
-  readonly __typename?: 'UsersPermissionsUserEntity';
-  readonly attributes: Maybe<UsersPermissionsUser>;
-  readonly id: Maybe<Scalars['ID']['output']>;
+  __typename?: 'UsersPermissionsUserEntity';
+  attributes: Maybe<UsersPermissionsUser>;
+  id: Maybe<Scalars['ID']['output']>;
 };
 
 export type UsersPermissionsUserEntityResponse = {
-  readonly __typename?: 'UsersPermissionsUserEntityResponse';
-  readonly data: Maybe<UsersPermissionsUserEntity>;
+  __typename?: 'UsersPermissionsUserEntityResponse';
+  data: Maybe<UsersPermissionsUserEntity>;
 };
 
 export type UsersPermissionsUserEntityResponseCollection = {
-  readonly __typename?: 'UsersPermissionsUserEntityResponseCollection';
-  readonly data: ReadonlyArray<UsersPermissionsUserEntity>;
-  readonly meta: ResponseCollectionMeta;
+  __typename?: 'UsersPermissionsUserEntityResponseCollection';
+  data: Array<UsersPermissionsUserEntity>;
+  meta: ResponseCollectionMeta;
 };
 
 export type UsersPermissionsUserFiltersInput = {
-  readonly and: InputMaybe<ReadonlyArray<InputMaybe<UsersPermissionsUserFiltersInput>>>;
-  readonly blocked: InputMaybe<BooleanFilterInput>;
-  readonly communicationEmails: InputMaybe<BooleanFilterInput>;
-  readonly confirmationToken: InputMaybe<StringFilterInput>;
-  readonly confirmed: InputMaybe<BooleanFilterInput>;
-  readonly createdAt: InputMaybe<DateTimeFilterInput>;
-  readonly dob: InputMaybe<DateTimeFilterInput>;
-  readonly email: InputMaybe<StringFilterInput>;
-  readonly gender: InputMaybe<StringFilterInput>;
-  readonly id: InputMaybe<IdFilterInput>;
-  readonly marketingEmails: InputMaybe<BooleanFilterInput>;
-  readonly not: InputMaybe<UsersPermissionsUserFiltersInput>;
-  readonly or: InputMaybe<ReadonlyArray<InputMaybe<UsersPermissionsUserFiltersInput>>>;
-  readonly password: InputMaybe<StringFilterInput>;
-  readonly profileName: InputMaybe<StringFilterInput>;
-  readonly provider: InputMaybe<StringFilterInput>;
-  readonly resetPasswordToken: InputMaybe<StringFilterInput>;
-  readonly role: InputMaybe<UsersPermissionsRoleFiltersInput>;
-  readonly socialEmails: InputMaybe<BooleanFilterInput>;
-  readonly updatedAt: InputMaybe<DateTimeFilterInput>;
-  readonly username: InputMaybe<StringFilterInput>;
+  and: InputMaybe<Array<InputMaybe<UsersPermissionsUserFiltersInput>>>;
+  blocked: InputMaybe<BooleanFilterInput>;
+  communicationEmails: InputMaybe<BooleanFilterInput>;
+  confirmationToken: InputMaybe<StringFilterInput>;
+  confirmed: InputMaybe<BooleanFilterInput>;
+  createdAt: InputMaybe<DateTimeFilterInput>;
+  dob: InputMaybe<DateTimeFilterInput>;
+  email: InputMaybe<StringFilterInput>;
+  gender: InputMaybe<StringFilterInput>;
+  id: InputMaybe<IdFilterInput>;
+  marketingEmails: InputMaybe<BooleanFilterInput>;
+  not: InputMaybe<UsersPermissionsUserFiltersInput>;
+  or: InputMaybe<Array<InputMaybe<UsersPermissionsUserFiltersInput>>>;
+  password: InputMaybe<StringFilterInput>;
+  profileName: InputMaybe<StringFilterInput>;
+  provider: InputMaybe<StringFilterInput>;
+  resetPasswordToken: InputMaybe<StringFilterInput>;
+  role: InputMaybe<UsersPermissionsRoleFiltersInput>;
+  socialEmails: InputMaybe<BooleanFilterInput>;
+  updatedAt: InputMaybe<DateTimeFilterInput>;
+  username: InputMaybe<StringFilterInput>;
 };
 
 export type UsersPermissionsUserInput = {
-  readonly blocked: InputMaybe<Scalars['Boolean']['input']>;
-  readonly communicationEmails: InputMaybe<Scalars['Boolean']['input']>;
-  readonly confirmationToken: InputMaybe<Scalars['String']['input']>;
-  readonly confirmed: InputMaybe<Scalars['Boolean']['input']>;
-  readonly dob: InputMaybe<Scalars['DateTime']['input']>;
-  readonly email: InputMaybe<Scalars['String']['input']>;
-  readonly gender: InputMaybe<Enum_Userspermissionsuser_Gender>;
-  readonly image: InputMaybe<Scalars['ID']['input']>;
-  readonly marketingEmails: InputMaybe<Scalars['Boolean']['input']>;
-  readonly password: InputMaybe<Scalars['String']['input']>;
-  readonly profileName: InputMaybe<Scalars['String']['input']>;
-  readonly provider: InputMaybe<Scalars['String']['input']>;
-  readonly resetPasswordToken: InputMaybe<Scalars['String']['input']>;
-  readonly role: InputMaybe<Scalars['ID']['input']>;
-  readonly socialEmails: InputMaybe<Scalars['Boolean']['input']>;
-  readonly username: InputMaybe<Scalars['String']['input']>;
+  blocked: InputMaybe<Scalars['Boolean']['input']>;
+  communicationEmails: InputMaybe<Scalars['Boolean']['input']>;
+  confirmationToken: InputMaybe<Scalars['String']['input']>;
+  confirmed: InputMaybe<Scalars['Boolean']['input']>;
+  dob: InputMaybe<Scalars['DateTime']['input']>;
+  email: InputMaybe<Scalars['String']['input']>;
+  gender: InputMaybe<Enum_Userspermissionsuser_Gender>;
+  image: InputMaybe<Scalars['ID']['input']>;
+  marketingEmails: InputMaybe<Scalars['Boolean']['input']>;
+  password: InputMaybe<Scalars['String']['input']>;
+  profileName: InputMaybe<Scalars['String']['input']>;
+  provider: InputMaybe<Scalars['String']['input']>;
+  resetPasswordToken: InputMaybe<Scalars['String']['input']>;
+  role: InputMaybe<Scalars['ID']['input']>;
+  socialEmails: InputMaybe<Scalars['Boolean']['input']>;
+  username: InputMaybe<Scalars['String']['input']>;
 };
 
 export type UsersPermissionsUserRelationResponseCollection = {
-  readonly __typename?: 'UsersPermissionsUserRelationResponseCollection';
-  readonly data: ReadonlyArray<UsersPermissionsUserEntity>;
+  __typename?: 'UsersPermissionsUserRelationResponseCollection';
+  data: Array<UsersPermissionsUserEntity>;
 };
 
 export type AlbumListQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type AlbumListQuery = { readonly __typename?: 'Query', readonly albums: { readonly __typename?: 'AlbumEntityResponseCollection', readonly data: ReadonlyArray<{ readonly __typename?: 'AlbumEntity', readonly id: number, readonly attributes: { readonly __typename?: 'Album', readonly name: string, readonly genre: string, readonly albumType: Enum_Album_Albumtype, readonly duration: number, readonly releaseDate: any, readonly cover: { readonly __typename?: 'UploadFileEntityResponse', readonly data: { readonly __typename?: 'UploadFileEntity', readonly attributes: { readonly __typename?: 'UploadFile', readonly url: string } } }, readonly tracks: { readonly __typename?: 'TrackRelationResponseCollection', readonly data: ReadonlyArray<{ readonly __typename?: 'TrackEntity', readonly id: number, readonly attributes: { readonly __typename?: 'Track', readonly name: string, readonly duration: number, readonly playCount: number, readonly audio: { readonly __typename?: 'UploadFileEntityResponse', readonly data: { readonly __typename?: 'UploadFileEntity', readonly attributes: { readonly __typename?: 'UploadFile', readonly name: string, readonly url: string } } }, readonly album: { readonly __typename?: 'AlbumEntityResponse', readonly data: { readonly __typename?: 'AlbumEntity', readonly id: number, readonly attributes: { readonly __typename?: 'Album', readonly name: string, readonly releaseDate: any, readonly cover: { readonly __typename?: 'UploadFileEntityResponse', readonly data: { readonly __typename?: 'UploadFileEntity', readonly attributes: { readonly __typename?: 'UploadFile', readonly url: string } } } } } }, readonly artist: { readonly __typename?: 'ArtistEntityResponse', readonly data: { readonly __typename?: 'ArtistEntity', readonly id: number, readonly attributes: { readonly __typename?: 'Artist', readonly name: string } } } } }> }, readonly artist: { readonly __typename?: 'ArtistEntityResponse', readonly data: { readonly __typename?: 'ArtistEntity', readonly id: number, readonly attributes: { readonly __typename?: 'Artist', readonly name: string, readonly image: { readonly __typename?: 'UploadFileEntityResponse', readonly data: { readonly __typename?: 'UploadFileEntity', readonly attributes: { readonly __typename?: 'UploadFile', readonly url: string } } } } } } } }> } };
+export type AlbumListQuery = { __typename?: 'Query', albums: { __typename?: 'AlbumEntityResponseCollection', data: Array<{ __typename?: 'AlbumEntity', id: number, attributes: { __typename?: 'Album', name: string, cover: { __typename?: 'UploadFileEntityResponse', data: { __typename?: 'UploadFileEntity', attributes: { __typename?: 'UploadFile', url: string } } }, artist: { __typename?: 'ArtistEntityResponse', data: { __typename?: 'ArtistEntity', id: number, attributes: { __typename?: 'Artist', name: string } } } } }> } };
 
-export type AlbumFragment = { readonly __typename?: 'AlbumEntity', readonly id: number, readonly attributes: { readonly __typename?: 'Album', readonly name: string, readonly genre: string, readonly albumType: Enum_Album_Albumtype, readonly duration: number, readonly releaseDate: any, readonly cover: { readonly __typename?: 'UploadFileEntityResponse', readonly data: { readonly __typename?: 'UploadFileEntity', readonly attributes: { readonly __typename?: 'UploadFile', readonly url: string } } }, readonly tracks: { readonly __typename?: 'TrackRelationResponseCollection', readonly data: ReadonlyArray<{ readonly __typename?: 'TrackEntity', readonly id: number, readonly attributes: { readonly __typename?: 'Track', readonly name: string, readonly duration: number, readonly playCount: number, readonly audio: { readonly __typename?: 'UploadFileEntityResponse', readonly data: { readonly __typename?: 'UploadFileEntity', readonly attributes: { readonly __typename?: 'UploadFile', readonly name: string, readonly url: string } } }, readonly album: { readonly __typename?: 'AlbumEntityResponse', readonly data: { readonly __typename?: 'AlbumEntity', readonly id: number, readonly attributes: { readonly __typename?: 'Album', readonly name: string, readonly releaseDate: any, readonly cover: { readonly __typename?: 'UploadFileEntityResponse', readonly data: { readonly __typename?: 'UploadFileEntity', readonly attributes: { readonly __typename?: 'UploadFile', readonly url: string } } } } } }, readonly artist: { readonly __typename?: 'ArtistEntityResponse', readonly data: { readonly __typename?: 'ArtistEntity', readonly id: number, readonly attributes: { readonly __typename?: 'Artist', readonly name: string } } } } }> }, readonly artist: { readonly __typename?: 'ArtistEntityResponse', readonly data: { readonly __typename?: 'ArtistEntity', readonly id: number, readonly attributes: { readonly __typename?: 'Artist', readonly name: string, readonly image: { readonly __typename?: 'UploadFileEntityResponse', readonly data: { readonly __typename?: 'UploadFileEntity', readonly attributes: { readonly __typename?: 'UploadFile', readonly url: string } } } } } } } };
+export type AlbumTrackListQueryVariables = Exact<{
+  albumId: Scalars['ID']['input'];
+}>;
 
-export type GetAlbumQueryVariables = Exact<{
+
+export type AlbumTrackListQuery = { __typename?: 'Query', album: { __typename?: 'AlbumEntityResponse', data: { __typename?: 'AlbumEntity', attributes: { __typename?: 'Album', tracks: { __typename?: 'TrackRelationResponseCollection', data: Array<{ __typename?: 'TrackEntity', id: number, attributes: { __typename?: 'Track', name: string, duration: number, playCount: number, audio: { __typename?: 'UploadFileEntityResponse', data: { __typename?: 'UploadFileEntity', attributes: { __typename?: 'UploadFile', name: string, url: string } } }, album: { __typename?: 'AlbumEntityResponse', data: { __typename?: 'AlbumEntity', id: number, attributes: { __typename?: 'Album', name: string, releaseDate: any, cover: { __typename?: 'UploadFileEntityResponse', data: { __typename?: 'UploadFileEntity', attributes: { __typename?: 'UploadFile', url: string } } } } } }, artist: { __typename?: 'ArtistEntityResponse', data: { __typename?: 'ArtistEntity', id: number, attributes: { __typename?: 'Artist', name: string } } } } }> } } } } };
+
+export type AlbumFragment = { __typename?: 'AlbumEntity', id: number, attributes: { __typename?: 'Album', name: string, genre: string, albumType: Enum_Album_Albumtype, duration: number, releaseDate: any, cover: { __typename?: 'UploadFileEntityResponse', data: { __typename?: 'UploadFileEntity', attributes: { __typename?: 'UploadFile', url: string } } }, tracks: { __typename?: 'TrackRelationResponseCollection', data: Array<{ __typename?: 'TrackEntity', id: number, attributes: { __typename?: 'Track', name: string, duration: number, playCount: number, audio: { __typename?: 'UploadFileEntityResponse', data: { __typename?: 'UploadFileEntity', attributes: { __typename?: 'UploadFile', name: string, url: string } } }, album: { __typename?: 'AlbumEntityResponse', data: { __typename?: 'AlbumEntity', id: number, attributes: { __typename?: 'Album', name: string, releaseDate: any, cover: { __typename?: 'UploadFileEntityResponse', data: { __typename?: 'UploadFileEntity', attributes: { __typename?: 'UploadFile', url: string } } } } } }, artist: { __typename?: 'ArtistEntityResponse', data: { __typename?: 'ArtistEntity', id: number, attributes: { __typename?: 'Artist', name: string } } } } }> }, artist: { __typename?: 'ArtistEntityResponse', data: { __typename?: 'ArtistEntity', id: number, attributes: { __typename?: 'Artist', name: string, image: { __typename?: 'UploadFileEntityResponse', data: { __typename?: 'UploadFileEntity', attributes: { __typename?: 'UploadFile', url: string } } } } } } } };
+
+export type AlbumQueryVariables = Exact<{
   id: Scalars['ID']['input'];
 }>;
 
 
-export type GetAlbumQuery = { readonly __typename?: 'Query', readonly album: { readonly __typename?: 'AlbumEntityResponse', readonly data: { readonly __typename?: 'AlbumEntity', readonly id: number, readonly attributes: { readonly __typename?: 'Album', readonly name: string, readonly genre: string, readonly albumType: Enum_Album_Albumtype, readonly duration: number, readonly releaseDate: any, readonly cover: { readonly __typename?: 'UploadFileEntityResponse', readonly data: { readonly __typename?: 'UploadFileEntity', readonly attributes: { readonly __typename?: 'UploadFile', readonly url: string } } }, readonly tracks: { readonly __typename?: 'TrackRelationResponseCollection', readonly data: ReadonlyArray<{ readonly __typename?: 'TrackEntity', readonly id: number, readonly attributes: { readonly __typename?: 'Track', readonly name: string, readonly duration: number, readonly playCount: number, readonly audio: { readonly __typename?: 'UploadFileEntityResponse', readonly data: { readonly __typename?: 'UploadFileEntity', readonly attributes: { readonly __typename?: 'UploadFile', readonly name: string, readonly url: string } } }, readonly album: { readonly __typename?: 'AlbumEntityResponse', readonly data: { readonly __typename?: 'AlbumEntity', readonly id: number, readonly attributes: { readonly __typename?: 'Album', readonly name: string, readonly releaseDate: any, readonly cover: { readonly __typename?: 'UploadFileEntityResponse', readonly data: { readonly __typename?: 'UploadFileEntity', readonly attributes: { readonly __typename?: 'UploadFile', readonly url: string } } } } } }, readonly artist: { readonly __typename?: 'ArtistEntityResponse', readonly data: { readonly __typename?: 'ArtistEntity', readonly id: number, readonly attributes: { readonly __typename?: 'Artist', readonly name: string } } } } }> }, readonly artist: { readonly __typename?: 'ArtistEntityResponse', readonly data: { readonly __typename?: 'ArtistEntity', readonly id: number, readonly attributes: { readonly __typename?: 'Artist', readonly name: string, readonly image: { readonly __typename?: 'UploadFileEntityResponse', readonly data: { readonly __typename?: 'UploadFileEntity', readonly attributes: { readonly __typename?: 'UploadFile', readonly url: string } } } } } } } } } };
+export type AlbumQuery = { __typename?: 'Query', album: { __typename?: 'AlbumEntityResponse', data: { __typename?: 'AlbumEntity', id: number, attributes: { __typename?: 'Album', name: string, genre: string, albumType: Enum_Album_Albumtype, duration: number, releaseDate: any, cover: { __typename?: 'UploadFileEntityResponse', data: { __typename?: 'UploadFileEntity', attributes: { __typename?: 'UploadFile', url: string } } }, tracks: { __typename?: 'TrackRelationResponseCollection', data: Array<{ __typename?: 'TrackEntity', id: number, attributes: { __typename?: 'Track', name: string, duration: number, playCount: number, audio: { __typename?: 'UploadFileEntityResponse', data: { __typename?: 'UploadFileEntity', attributes: { __typename?: 'UploadFile', name: string, url: string } } }, album: { __typename?: 'AlbumEntityResponse', data: { __typename?: 'AlbumEntity', id: number, attributes: { __typename?: 'Album', name: string, releaseDate: any, cover: { __typename?: 'UploadFileEntityResponse', data: { __typename?: 'UploadFileEntity', attributes: { __typename?: 'UploadFile', url: string } } } } } }, artist: { __typename?: 'ArtistEntityResponse', data: { __typename?: 'ArtistEntity', id: number, attributes: { __typename?: 'Artist', name: string } } } } }> }, artist: { __typename?: 'ArtistEntityResponse', data: { __typename?: 'ArtistEntity', id: number, attributes: { __typename?: 'Artist', name: string, image: { __typename?: 'UploadFileEntityResponse', data: { __typename?: 'UploadFileEntity', attributes: { __typename?: 'UploadFile', url: string } } } } } } } } } };
 
-export type ArtistFragment = { readonly __typename?: 'ArtistEntity', readonly id: number, readonly attributes: { readonly __typename?: 'Artist', readonly name: string } };
+export type ArtistFragment = { __typename?: 'ArtistEntity', id: number, attributes: { __typename?: 'Artist', name: string, albums: { __typename?: 'AlbumRelationResponseCollection', data: Array<{ __typename?: 'AlbumEntity', id: number, attributes: { __typename?: 'Album', name: string, genre: string, albumType: Enum_Album_Albumtype, duration: number, releaseDate: any, cover: { __typename?: 'UploadFileEntityResponse', data: { __typename?: 'UploadFileEntity', attributes: { __typename?: 'UploadFile', url: string } } }, tracks: { __typename?: 'TrackRelationResponseCollection', data: Array<{ __typename?: 'TrackEntity', id: number, attributes: { __typename?: 'Track', name: string, duration: number, playCount: number, audio: { __typename?: 'UploadFileEntityResponse', data: { __typename?: 'UploadFileEntity', attributes: { __typename?: 'UploadFile', name: string, url: string } } }, album: { __typename?: 'AlbumEntityResponse', data: { __typename?: 'AlbumEntity', id: number, attributes: { __typename?: 'Album', name: string, releaseDate: any, cover: { __typename?: 'UploadFileEntityResponse', data: { __typename?: 'UploadFileEntity', attributes: { __typename?: 'UploadFile', url: string } } } } } }, artist: { __typename?: 'ArtistEntityResponse', data: { __typename?: 'ArtistEntity', id: number, attributes: { __typename?: 'Artist', name: string } } } } }> }, artist: { __typename?: 'ArtistEntityResponse', data: { __typename?: 'ArtistEntity', id: number, attributes: { __typename?: 'Artist', name: string, image: { __typename?: 'UploadFileEntityResponse', data: { __typename?: 'UploadFileEntity', attributes: { __typename?: 'UploadFile', url: string } } } } } } } }> }, image: { __typename?: 'UploadFileEntityResponse', data: { __typename?: 'UploadFileEntity', attributes: { __typename?: 'UploadFile', url: string } } } } };
 
 export type ArtistQueryVariables = Exact<{
   id: Scalars['ID']['input'];
 }>;
 
 
-export type ArtistQuery = { readonly __typename?: 'Query', readonly artist: { readonly __typename?: 'ArtistEntityResponse', readonly data: { readonly __typename?: 'ArtistEntity', readonly id: number, readonly attributes: { readonly __typename?: 'Artist', readonly name: string, readonly albums: { readonly __typename?: 'AlbumRelationResponseCollection', readonly data: ReadonlyArray<{ readonly __typename?: 'AlbumEntity', readonly id: number, readonly attributes: { readonly __typename?: 'Album', readonly name: string, readonly genre: string, readonly albumType: Enum_Album_Albumtype, readonly duration: number, readonly releaseDate: any, readonly cover: { readonly __typename?: 'UploadFileEntityResponse', readonly data: { readonly __typename?: 'UploadFileEntity', readonly attributes: { readonly __typename?: 'UploadFile', readonly url: string } } }, readonly tracks: { readonly __typename?: 'TrackRelationResponseCollection', readonly data: ReadonlyArray<{ readonly __typename?: 'TrackEntity', readonly id: number, readonly attributes: { readonly __typename?: 'Track', readonly name: string, readonly duration: number, readonly playCount: number, readonly audio: { readonly __typename?: 'UploadFileEntityResponse', readonly data: { readonly __typename?: 'UploadFileEntity', readonly attributes: { readonly __typename?: 'UploadFile', readonly name: string, readonly url: string } } }, readonly album: { readonly __typename?: 'AlbumEntityResponse', readonly data: { readonly __typename?: 'AlbumEntity', readonly id: number, readonly attributes: { readonly __typename?: 'Album', readonly name: string, readonly releaseDate: any, readonly cover: { readonly __typename?: 'UploadFileEntityResponse', readonly data: { readonly __typename?: 'UploadFileEntity', readonly attributes: { readonly __typename?: 'UploadFile', readonly url: string } } } } } }, readonly artist: { readonly __typename?: 'ArtistEntityResponse', readonly data: { readonly __typename?: 'ArtistEntity', readonly id: number, readonly attributes: { readonly __typename?: 'Artist', readonly name: string } } } } }> }, readonly artist: { readonly __typename?: 'ArtistEntityResponse', readonly data: { readonly __typename?: 'ArtistEntity', readonly id: number, readonly attributes: { readonly __typename?: 'Artist', readonly name: string, readonly image: { readonly __typename?: 'UploadFileEntityResponse', readonly data: { readonly __typename?: 'UploadFileEntity', readonly attributes: { readonly __typename?: 'UploadFile', readonly url: string } } } } } } } }> }, readonly tracks: { readonly __typename?: 'TrackRelationResponseCollection', readonly data: ReadonlyArray<{ readonly __typename?: 'TrackEntity', readonly id: number, readonly attributes: { readonly __typename?: 'Track', readonly name: string, readonly duration: number, readonly playCount: number, readonly audio: { readonly __typename?: 'UploadFileEntityResponse', readonly data: { readonly __typename?: 'UploadFileEntity', readonly attributes: { readonly __typename?: 'UploadFile', readonly name: string, readonly url: string } } }, readonly album: { readonly __typename?: 'AlbumEntityResponse', readonly data: { readonly __typename?: 'AlbumEntity', readonly id: number, readonly attributes: { readonly __typename?: 'Album', readonly name: string, readonly releaseDate: any, readonly cover: { readonly __typename?: 'UploadFileEntityResponse', readonly data: { readonly __typename?: 'UploadFileEntity', readonly attributes: { readonly __typename?: 'UploadFile', readonly url: string } } } } } }, readonly artist: { readonly __typename?: 'ArtistEntityResponse', readonly data: { readonly __typename?: 'ArtistEntity', readonly id: number, readonly attributes: { readonly __typename?: 'Artist', readonly name: string } } } } }> }, readonly image: { readonly __typename?: 'UploadFileEntityResponse', readonly data: { readonly __typename?: 'UploadFileEntity', readonly attributes: { readonly __typename?: 'UploadFile', readonly url: string } } } } } } };
+export type ArtistQuery = { __typename?: 'Query', artist: { __typename?: 'ArtistEntityResponse', data: { __typename?: 'ArtistEntity', id: number, attributes: { __typename?: 'Artist', name: string, albums: { __typename?: 'AlbumRelationResponseCollection', data: Array<{ __typename?: 'AlbumEntity', id: number, attributes: { __typename?: 'Album', name: string, genre: string, albumType: Enum_Album_Albumtype, duration: number, releaseDate: any, cover: { __typename?: 'UploadFileEntityResponse', data: { __typename?: 'UploadFileEntity', attributes: { __typename?: 'UploadFile', url: string } } }, tracks: { __typename?: 'TrackRelationResponseCollection', data: Array<{ __typename?: 'TrackEntity', id: number, attributes: { __typename?: 'Track', name: string, duration: number, playCount: number, audio: { __typename?: 'UploadFileEntityResponse', data: { __typename?: 'UploadFileEntity', attributes: { __typename?: 'UploadFile', name: string, url: string } } }, album: { __typename?: 'AlbumEntityResponse', data: { __typename?: 'AlbumEntity', id: number, attributes: { __typename?: 'Album', name: string, releaseDate: any, cover: { __typename?: 'UploadFileEntityResponse', data: { __typename?: 'UploadFileEntity', attributes: { __typename?: 'UploadFile', url: string } } } } } }, artist: { __typename?: 'ArtistEntityResponse', data: { __typename?: 'ArtistEntity', id: number, attributes: { __typename?: 'Artist', name: string } } } } }> }, artist: { __typename?: 'ArtistEntityResponse', data: { __typename?: 'ArtistEntity', id: number, attributes: { __typename?: 'Artist', name: string, image: { __typename?: 'UploadFileEntityResponse', data: { __typename?: 'UploadFileEntity', attributes: { __typename?: 'UploadFile', url: string } } } } } } } }> }, image: { __typename?: 'UploadFileEntityResponse', data: { __typename?: 'UploadFileEntity', attributes: { __typename?: 'UploadFile', url: string } } } } } }, popularTracks: { __typename?: 'TrackEntityResponseCollection', data: Array<{ __typename?: 'TrackEntity', id: number, attributes: { __typename?: 'Track', name: string, duration: number, playCount: number, audio: { __typename?: 'UploadFileEntityResponse', data: { __typename?: 'UploadFileEntity', attributes: { __typename?: 'UploadFile', name: string, url: string } } }, album: { __typename?: 'AlbumEntityResponse', data: { __typename?: 'AlbumEntity', id: number, attributes: { __typename?: 'Album', name: string, releaseDate: any, cover: { __typename?: 'UploadFileEntityResponse', data: { __typename?: 'UploadFileEntity', attributes: { __typename?: 'UploadFile', url: string } } } } } }, artist: { __typename?: 'ArtistEntityResponse', data: { __typename?: 'ArtistEntity', id: number, attributes: { __typename?: 'Artist', name: string } } } } }> } };
 
 export type ChangePasswordMutationVariables = Exact<{
   currentPassword: Scalars['String']['input'];
@@ -1367,35 +1374,35 @@ export type ChangePasswordMutationVariables = Exact<{
 }>;
 
 
-export type ChangePasswordMutation = { readonly __typename?: 'Mutation', readonly changePassword: { readonly __typename: 'UsersPermissionsLoginPayload' } };
+export type ChangePasswordMutation = { __typename?: 'Mutation', changePassword: { __typename: 'UsersPermissionsLoginPayload' } };
 
 export type EmailAvailableQueryVariables = Exact<{
   email: Scalars['String']['input'];
 }>;
 
 
-export type EmailAvailableQuery = { readonly __typename?: 'Query', readonly emailAvailable: boolean };
+export type EmailAvailableQuery = { __typename?: 'Query', emailAvailable: boolean };
 
 export type ForgotPasswordMutationVariables = Exact<{
   email: Scalars['String']['input'];
 }>;
 
 
-export type ForgotPasswordMutation = { readonly __typename?: 'Mutation', readonly forgotPassword: { readonly __typename?: 'UsersPermissionsPasswordPayload', readonly ok: boolean } };
+export type ForgotPasswordMutation = { __typename?: 'Mutation', forgotPassword: { __typename?: 'UsersPermissionsPasswordPayload', ok: boolean } };
 
 export type LoginMutationVariables = Exact<{
   input: UsersPermissionsLoginInput;
 }>;
 
 
-export type LoginMutation = { readonly __typename?: 'Mutation', readonly login: { readonly __typename?: 'UsersPermissionsLoginPayload', readonly jwt: string, readonly user: { readonly __typename?: 'UsersPermissionsMe', readonly id: number, readonly username: string, readonly email: string } } };
+export type LoginMutation = { __typename?: 'Mutation', login: { __typename?: 'UsersPermissionsLoginPayload', jwt: string, user: { __typename?: 'UsersPermissionsMe', id: number, username: string, email: string } } };
 
 export type RegisterMutationVariables = Exact<{
   input: UsersPermissionsRegisterInput;
 }>;
 
 
-export type RegisterMutation = { readonly __typename?: 'Mutation', readonly register: { readonly __typename?: 'UsersPermissionsLoginPayload', readonly jwt: string, readonly user: { readonly __typename?: 'UsersPermissionsMe', readonly id: number, readonly username: string, readonly email: string } } };
+export type RegisterMutation = { __typename?: 'Mutation', register: { __typename?: 'UsersPermissionsLoginPayload', jwt: string, user: { __typename?: 'UsersPermissionsMe', id: number, username: string, email: string } } };
 
 export type ResetPasswordMutationVariables = Exact<{
   code: Scalars['String']['input'];
@@ -1404,54 +1411,54 @@ export type ResetPasswordMutationVariables = Exact<{
 }>;
 
 
-export type ResetPasswordMutation = { readonly __typename?: 'Mutation', readonly resetPassword: { readonly __typename: 'UsersPermissionsLoginPayload', readonly user: { readonly __typename?: 'UsersPermissionsMe', readonly email: string } } };
+export type ResetPasswordMutation = { __typename?: 'Mutation', resetPassword: { __typename: 'UsersPermissionsLoginPayload', user: { __typename?: 'UsersPermissionsMe', email: string } } };
 
 export type TrackIncrementPlayCountQueryVariables = Exact<{
   trackId: Scalars['ID']['input'];
 }>;
 
 
-export type TrackIncrementPlayCountQuery = { readonly __typename?: 'Query', readonly trackIncrementPlayCount: { readonly __typename?: 'TrackIncrementPlayCountResponse', readonly playCount: number } };
+export type TrackIncrementPlayCountQuery = { __typename?: 'Query', trackIncrementPlayCount: { __typename?: 'TrackIncrementPlayCountResponse', playCount: number } };
 
 export type TrackListQueryVariables = Exact<{
   filters: InputMaybe<TrackFiltersInput>;
-  sort?: InputMaybe<ReadonlyArray<InputMaybe<Scalars['String']['input']>> | InputMaybe<Scalars['String']['input']>>;
+  sort?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>> | InputMaybe<Scalars['String']['input']>>;
 }>;
 
 
-export type TrackListQuery = { readonly __typename?: 'Query', readonly tracks: { readonly __typename?: 'TrackEntityResponseCollection', readonly data: ReadonlyArray<{ readonly __typename?: 'TrackEntity', readonly id: number, readonly attributes: { readonly __typename?: 'Track', readonly name: string, readonly duration: number, readonly playCount: number, readonly audio: { readonly __typename?: 'UploadFileEntityResponse', readonly data: { readonly __typename?: 'UploadFileEntity', readonly attributes: { readonly __typename?: 'UploadFile', readonly name: string, readonly url: string } } }, readonly album: { readonly __typename?: 'AlbumEntityResponse', readonly data: { readonly __typename?: 'AlbumEntity', readonly id: number, readonly attributes: { readonly __typename?: 'Album', readonly name: string, readonly releaseDate: any, readonly cover: { readonly __typename?: 'UploadFileEntityResponse', readonly data: { readonly __typename?: 'UploadFileEntity', readonly attributes: { readonly __typename?: 'UploadFile', readonly url: string } } } } } }, readonly artist: { readonly __typename?: 'ArtistEntityResponse', readonly data: { readonly __typename?: 'ArtistEntity', readonly id: number, readonly attributes: { readonly __typename?: 'Artist', readonly name: string } } } } }> } };
+export type TrackListQuery = { __typename?: 'Query', tracks: { __typename?: 'TrackEntityResponseCollection', data: Array<{ __typename?: 'TrackEntity', id: number, attributes: { __typename?: 'Track', name: string, duration: number, playCount: number, audio: { __typename?: 'UploadFileEntityResponse', data: { __typename?: 'UploadFileEntity', attributes: { __typename?: 'UploadFile', name: string, url: string } } }, album: { __typename?: 'AlbumEntityResponse', data: { __typename?: 'AlbumEntity', id: number, attributes: { __typename?: 'Album', name: string, releaseDate: any, cover: { __typename?: 'UploadFileEntityResponse', data: { __typename?: 'UploadFileEntity', attributes: { __typename?: 'UploadFile', url: string } } } } } }, artist: { __typename?: 'ArtistEntityResponse', data: { __typename?: 'ArtistEntity', id: number, attributes: { __typename?: 'Artist', name: string } } } } }> } };
 
-export type TrackFragment = { readonly __typename?: 'TrackEntity', readonly id: number, readonly attributes: { readonly __typename?: 'Track', readonly name: string, readonly duration: number, readonly playCount: number, readonly audio: { readonly __typename?: 'UploadFileEntityResponse', readonly data: { readonly __typename?: 'UploadFileEntity', readonly attributes: { readonly __typename?: 'UploadFile', readonly name: string, readonly url: string } } }, readonly album: { readonly __typename?: 'AlbumEntityResponse', readonly data: { readonly __typename?: 'AlbumEntity', readonly id: number, readonly attributes: { readonly __typename?: 'Album', readonly name: string, readonly releaseDate: any, readonly cover: { readonly __typename?: 'UploadFileEntityResponse', readonly data: { readonly __typename?: 'UploadFileEntity', readonly attributes: { readonly __typename?: 'UploadFile', readonly url: string } } } } } }, readonly artist: { readonly __typename?: 'ArtistEntityResponse', readonly data: { readonly __typename?: 'ArtistEntity', readonly id: number, readonly attributes: { readonly __typename?: 'Artist', readonly name: string } } } } };
+export type TrackFragment = { __typename?: 'TrackEntity', id: number, attributes: { __typename?: 'Track', name: string, duration: number, playCount: number, audio: { __typename?: 'UploadFileEntityResponse', data: { __typename?: 'UploadFileEntity', attributes: { __typename?: 'UploadFile', name: string, url: string } } }, album: { __typename?: 'AlbumEntityResponse', data: { __typename?: 'AlbumEntity', id: number, attributes: { __typename?: 'Album', name: string, releaseDate: any, cover: { __typename?: 'UploadFileEntityResponse', data: { __typename?: 'UploadFileEntity', attributes: { __typename?: 'UploadFile', url: string } } } } } }, artist: { __typename?: 'ArtistEntityResponse', data: { __typename?: 'ArtistEntity', id: number, attributes: { __typename?: 'Artist', name: string } } } } };
 
 export type TrackQueryVariables = Exact<{
   id: Scalars['ID']['input'];
 }>;
 
 
-export type TrackQuery = { readonly __typename?: 'Query', readonly track: { readonly __typename?: 'TrackEntityResponse', readonly data: { readonly __typename?: 'TrackEntity', readonly id: number, readonly attributes: { readonly __typename?: 'Track', readonly name: string, readonly duration: number, readonly playCount: number, readonly audio: { readonly __typename?: 'UploadFileEntityResponse', readonly data: { readonly __typename?: 'UploadFileEntity', readonly attributes: { readonly __typename?: 'UploadFile', readonly name: string, readonly url: string } } }, readonly album: { readonly __typename?: 'AlbumEntityResponse', readonly data: { readonly __typename?: 'AlbumEntity', readonly id: number, readonly attributes: { readonly __typename?: 'Album', readonly name: string, readonly releaseDate: any, readonly cover: { readonly __typename?: 'UploadFileEntityResponse', readonly data: { readonly __typename?: 'UploadFileEntity', readonly attributes: { readonly __typename?: 'UploadFile', readonly url: string } } } } } }, readonly artist: { readonly __typename?: 'ArtistEntityResponse', readonly data: { readonly __typename?: 'ArtistEntity', readonly id: number, readonly attributes: { readonly __typename?: 'Artist', readonly name: string } } } } } } };
+export type TrackQuery = { __typename?: 'Query', track: { __typename?: 'TrackEntityResponse', data: { __typename?: 'TrackEntity', id: number, attributes: { __typename?: 'Track', name: string, duration: number, playCount: number, audio: { __typename?: 'UploadFileEntityResponse', data: { __typename?: 'UploadFileEntity', attributes: { __typename?: 'UploadFile', name: string, url: string } } }, album: { __typename?: 'AlbumEntityResponse', data: { __typename?: 'AlbumEntity', id: number, attributes: { __typename?: 'Album', name: string, releaseDate: any, cover: { __typename?: 'UploadFileEntityResponse', data: { __typename?: 'UploadFileEntity', attributes: { __typename?: 'UploadFile', url: string } } } } } }, artist: { __typename?: 'ArtistEntityResponse', data: { __typename?: 'ArtistEntity', id: number, attributes: { __typename?: 'Artist', name: string } } } } } } };
 
-export type MeFragment = { readonly __typename?: 'UsersPermissionsMe', readonly id: number, readonly username: string, readonly email: string, readonly profileName: string, readonly dob: any, readonly gender: Enum_Userspermissionsuser_Gender, readonly marketingEmails: boolean, readonly communicationEmails: boolean, readonly socialEmails: boolean, readonly image: { readonly __typename?: 'UploadFile', readonly url: string } };
+export type MeFragment = { __typename?: 'UsersPermissionsMe', id: number, username: string, email: string, profileName: string, dob: any, gender: Enum_Userspermissionsuser_Gender, marketingEmails: boolean, communicationEmails: boolean, socialEmails: boolean, image: { __typename?: 'UploadFile', url: string } };
 
 export type MeQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type MeQuery = { readonly __typename?: 'Query', readonly me: { readonly __typename?: 'UsersPermissionsMe', readonly id: number, readonly username: string, readonly email: string, readonly profileName: string, readonly dob: any, readonly gender: Enum_Userspermissionsuser_Gender, readonly marketingEmails: boolean, readonly communicationEmails: boolean, readonly socialEmails: boolean, readonly image: { readonly __typename?: 'UploadFile', readonly url: string } } };
+export type MeQuery = { __typename?: 'Query', me: { __typename?: 'UsersPermissionsMe', id: number, username: string, email: string, profileName: string, dob: any, gender: Enum_Userspermissionsuser_Gender, marketingEmails: boolean, communicationEmails: boolean, socialEmails: boolean, image: { __typename?: 'UploadFile', url: string } } };
 
 export type UpdateUserNotificationsMutationVariables = Exact<{
   data: InputMaybe<UpdateUserNotificationsInput>;
 }>;
 
 
-export type UpdateUserNotificationsMutation = { readonly __typename?: 'Mutation', readonly updateUserNotifications: { readonly __typename: 'UsersPermissionsUserEntityResponse' } };
+export type UpdateUserNotificationsMutation = { __typename?: 'Mutation', updateUserNotifications: { __typename: 'UsersPermissionsUserEntityResponse' } };
 
 export type UpdateUserProfileMutationVariables = Exact<{
   data: UpdateUserProfileInput;
 }>;
 
 
-export type UpdateUserProfileMutation = { readonly __typename?: 'Mutation', readonly updateUserProfile: { readonly __typename: 'UsersPermissionsUserEntityResponse' } };
+export type UpdateUserProfileMutation = { __typename?: 'Mutation', updateUserProfile: { __typename: 'UsersPermissionsUserEntityResponse' } };
 
-export type UserFragment = { readonly __typename?: 'UsersPermissionsUserEntity', readonly id: number, readonly attributes: { readonly __typename?: 'UsersPermissionsUser', readonly username: string, readonly profileName: string, readonly image: { readonly __typename?: 'UploadFileEntityResponse', readonly data: { readonly __typename?: 'UploadFileEntity', readonly attributes: { readonly __typename?: 'UploadFile', readonly url: string } } } } };
+export type UserFragment = { __typename?: 'UsersPermissionsUserEntity', id: number, attributes: { __typename?: 'UsersPermissionsUser', username: string, profileName: string, image: { __typename?: 'UploadFileEntityResponse', data: { __typename?: 'UploadFileEntity', attributes: { __typename?: 'UploadFile', url: string } } } } };
 
 export const TrackFragmentDoc = gql`
     fragment Track on TrackEntity {
@@ -1539,9 +1546,21 @@ export const ArtistFragmentDoc = gql`
   id
   attributes {
     name
+    albums {
+      data {
+        ...Album
+      }
+    }
+    image {
+      data {
+        attributes {
+          url
+        }
+      }
+    }
   }
 }
-    `;
+    ${AlbumFragmentDoc}`;
 export const MeFragmentDoc = gql`
     fragment Me on UsersPermissionsMe {
   id
@@ -1578,11 +1597,29 @@ export const AlbumListDocument = gql`
     query AlbumList {
   albums {
     data {
-      ...Album
+      id
+      attributes {
+        name
+        cover {
+          data {
+            attributes {
+              url
+            }
+          }
+        }
+        artist {
+          data {
+            id
+            attributes {
+              name
+            }
+          }
+        }
+      }
     }
   }
 }
-    ${AlbumFragmentDoc}`;
+    `;
 
 /**
  * __useAlbumListQuery__
@@ -1615,8 +1652,56 @@ export type AlbumListQueryHookResult = ReturnType<typeof useAlbumListQuery>;
 export type AlbumListLazyQueryHookResult = ReturnType<typeof useAlbumListLazyQuery>;
 export type AlbumListSuspenseQueryHookResult = ReturnType<typeof useAlbumListSuspenseQuery>;
 export type AlbumListQueryResult = Apollo.QueryResult<AlbumListQuery, AlbumListQueryVariables>;
-export const GetAlbumDocument = gql`
-    query GetAlbum($id: ID!) {
+export const AlbumTrackListDocument = gql`
+    query AlbumTrackList($albumId: ID!) {
+  album(id: $albumId) {
+    data {
+      attributes {
+        tracks {
+          data {
+            ...Track
+          }
+        }
+      }
+    }
+  }
+}
+    ${TrackFragmentDoc}`;
+
+/**
+ * __useAlbumTrackListQuery__
+ *
+ * To run a query within a React component, call `useAlbumTrackListQuery` and pass it any options that fit your needs.
+ * When your component renders, `useAlbumTrackListQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useAlbumTrackListQuery({
+ *   variables: {
+ *      albumId: // value for 'albumId'
+ *   },
+ * });
+ */
+export function useAlbumTrackListQuery(baseOptions: Apollo.QueryHookOptions<AlbumTrackListQuery, AlbumTrackListQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<AlbumTrackListQuery, AlbumTrackListQueryVariables>(AlbumTrackListDocument, options);
+      }
+export function useAlbumTrackListLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<AlbumTrackListQuery, AlbumTrackListQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<AlbumTrackListQuery, AlbumTrackListQueryVariables>(AlbumTrackListDocument, options);
+        }
+export function useAlbumTrackListSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<AlbumTrackListQuery, AlbumTrackListQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<AlbumTrackListQuery, AlbumTrackListQueryVariables>(AlbumTrackListDocument, options);
+        }
+export type AlbumTrackListQueryHookResult = ReturnType<typeof useAlbumTrackListQuery>;
+export type AlbumTrackListLazyQueryHookResult = ReturnType<typeof useAlbumTrackListLazyQuery>;
+export type AlbumTrackListSuspenseQueryHookResult = ReturnType<typeof useAlbumTrackListSuspenseQuery>;
+export type AlbumTrackListQueryResult = Apollo.QueryResult<AlbumTrackListQuery, AlbumTrackListQueryVariables>;
+export const AlbumDocument = gql`
+    query Album($id: ID!) {
   album(id: $id) {
     data {
       ...Album
@@ -1626,37 +1711,37 @@ export const GetAlbumDocument = gql`
     ${AlbumFragmentDoc}`;
 
 /**
- * __useGetAlbumQuery__
+ * __useAlbumQuery__
  *
- * To run a query within a React component, call `useGetAlbumQuery` and pass it any options that fit your needs.
- * When your component renders, `useGetAlbumQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * To run a query within a React component, call `useAlbumQuery` and pass it any options that fit your needs.
+ * When your component renders, `useAlbumQuery` returns an object from Apollo Client that contains loading, error, and data properties
  * you can use to render your UI.
  *
  * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
  *
  * @example
- * const { data, loading, error } = useGetAlbumQuery({
+ * const { data, loading, error } = useAlbumQuery({
  *   variables: {
  *      id: // value for 'id'
  *   },
  * });
  */
-export function useGetAlbumQuery(baseOptions: Apollo.QueryHookOptions<GetAlbumQuery, GetAlbumQueryVariables>) {
+export function useAlbumQuery(baseOptions: Apollo.QueryHookOptions<AlbumQuery, AlbumQueryVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<GetAlbumQuery, GetAlbumQueryVariables>(GetAlbumDocument, options);
+        return Apollo.useQuery<AlbumQuery, AlbumQueryVariables>(AlbumDocument, options);
       }
-export function useGetAlbumLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetAlbumQuery, GetAlbumQueryVariables>) {
+export function useAlbumLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<AlbumQuery, AlbumQueryVariables>) {
           const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<GetAlbumQuery, GetAlbumQueryVariables>(GetAlbumDocument, options);
+          return Apollo.useLazyQuery<AlbumQuery, AlbumQueryVariables>(AlbumDocument, options);
         }
-export function useGetAlbumSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<GetAlbumQuery, GetAlbumQueryVariables>) {
+export function useAlbumSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<AlbumQuery, AlbumQueryVariables>) {
           const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useSuspenseQuery<GetAlbumQuery, GetAlbumQueryVariables>(GetAlbumDocument, options);
+          return Apollo.useSuspenseQuery<AlbumQuery, AlbumQueryVariables>(AlbumDocument, options);
         }
-export type GetAlbumQueryHookResult = ReturnType<typeof useGetAlbumQuery>;
-export type GetAlbumLazyQueryHookResult = ReturnType<typeof useGetAlbumLazyQuery>;
-export type GetAlbumSuspenseQueryHookResult = ReturnType<typeof useGetAlbumSuspenseQuery>;
-export type GetAlbumQueryResult = Apollo.QueryResult<GetAlbumQuery, GetAlbumQueryVariables>;
+export type AlbumQueryHookResult = ReturnType<typeof useAlbumQuery>;
+export type AlbumLazyQueryHookResult = ReturnType<typeof useAlbumLazyQuery>;
+export type AlbumSuspenseQueryHookResult = ReturnType<typeof useAlbumSuspenseQuery>;
+export type AlbumQueryResult = Apollo.QueryResult<AlbumQuery, AlbumQueryVariables>;
 export const ArtistDocument = gql`
     query Artist($id: ID!) {
   artist(id: $id) {
@@ -1669,11 +1754,6 @@ export const ArtistDocument = gql`
             ...Album
           }
         }
-        tracks {
-          data {
-            ...Track
-          }
-        }
         image {
           data {
             attributes {
@@ -1682,6 +1762,14 @@ export const ArtistDocument = gql`
           }
         }
       }
+    }
+  }
+  popularTracks: tracks(
+    filters: {artist: {id: {eq: $id}}}
+    sort: "playCount:desc"
+  ) {
+    data {
+      ...Track
     }
   }
 }

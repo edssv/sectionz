@@ -9,11 +9,6 @@ query Artist($id: ID!) {
             ...Album
           }
         }
-        tracks {
-          data {
-            ...Track
-          }
-        }
         image {
           data {
             attributes {
@@ -22,6 +17,12 @@ query Artist($id: ID!) {
           }
         }
       }
+    }
+  }
+
+  popularTracks: tracks(filters: { artist: { id: { eq: $id } } }, sort: "playCount:desc") {
+    data {
+      ...Track
     }
   }
 }

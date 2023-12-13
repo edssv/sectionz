@@ -1,0 +1,13 @@
+query AlbumTrackList($albumId: ID!) {
+  album(id: $albumId) {
+    data {
+      attributes {
+        tracks {
+          data {
+            ...Track
+          }
+        }
+      }
+    }
+  }
+}

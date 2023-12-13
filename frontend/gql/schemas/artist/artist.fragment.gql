@@ -2,5 +2,17 @@ fragment Artist on ArtistEntity {
   id
   attributes {
     name
+    albums {
+      data {
+        ...Album
+      }
+    }
+    image {
+      data {
+        attributes {
+          url
+        }
+      }
+    }
   }
 }

@@ -1,7 +1,25 @@
 query AlbumList {
   albums {
     data {
-      ...Album
+      id
+      attributes {
+        name
+        cover {
+          data {
+            attributes {
+              url
+            }
+          }
+        }
+        artist {
+          data {
+            id
+            attributes {
+              name
+            }
+          }
+        }
+      }
     }
   }
 }

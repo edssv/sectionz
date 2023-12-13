@@ -1,4 +1,4 @@
-query GetAlbum($id: ID!) {
+query Album($id: ID!) {
   album(id: $id) {
     data {
       ...Album
