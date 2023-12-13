@@ -34,7 +34,7 @@
 
     --radius: 0.5rem;
 
-    --header-nav-height: 4rem;
+    --header-nav-height: 3.75rem;
     --sidebar-nav-width: 16rem;
     --footer-height: 4.5rem;
     --player-height: 4.5rem;
@@ -81,8 +81,18 @@
 }
 
 @layer components {
-  .heading {
+  .heading,
+  .typo-h1,
+  .typo-h2 {
     @apply scroll-m-20 font-bold tracking-tight;
+  }
+
+  .typo-h1 {
+    @apply text-2xl  lg:text-3xl;
+  }
+
+  .typo-h2 {
+    @apply scroll-m-20 text-xl font-bold tracking-tight;
   }
 
   .dot-separator {
@@ -95,6 +105,10 @@
     vertical-align: middle;
     background-color: hsl(var(--muted-foreground));
     border-radius: 100%;
+  }
+
+  .grid-list {
+    @apply grid lg:grid-cols-5 2xl:grid-cols-6;
   }
 }
 
@@ -114,7 +128,7 @@
 }
 
 .track-list-cols-1 .track-list-row {
-  grid-template-columns: [index] 16px [first] minmax(120px, 4fr) [last] minmax(120px, 1fr);
+  grid-template-columns: [index] 16px [first] minmax(120px, 4fr) [last] 40px;
 
   @screen lg {
     grid-template-columns: [index] 16px [first] minmax(120px, var(--col1, 4fr)) [var1] minmax(120px, var(--col2, 2fr)) [last] minmax(
