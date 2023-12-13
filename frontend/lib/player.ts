@@ -39,12 +39,15 @@ class Player {
   }
 
   async play() {
-    if (!this.audio.src)
-      return toast({
+    if (!this.audio.src) {
+      toast({
         variant: 'destructive',
         title: 'Трек не найден',
         description: 'Не удалось найти трек или его файл.'
       });
+
+      throw new Error('Trying to play a track but not audio.src is defined');
+    }
 
     await this.audio.play();
   }
