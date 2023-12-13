@@ -29,7 +29,7 @@ export function AlbumTrackList({ data }: AlbumPageListProps) {
 
   return (
     <TrackList className='track-list-cols-1'>
-      <TrackListHeader>
+      <TrackListHeader className='hidden lg:flex'>
         <TrackListRow>
           <TrackListHead className='text-base'>#</TrackListHead>
           <TrackListHead className='justify-start'>Название</TrackListHead>
