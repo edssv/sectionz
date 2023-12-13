@@ -1358,6 +1358,13 @@ export type AlbumQueryVariables = Exact<{
 
 export type AlbumQuery = { __typename?: 'Query', album: { __typename?: 'AlbumEntityResponse', data: { __typename?: 'AlbumEntity', id: number, attributes: { __typename?: 'Album', name: string, genre: string, albumType: Enum_Album_Albumtype, duration: number, releaseDate: any, cover: { __typename?: 'UploadFileEntityResponse', data: { __typename?: 'UploadFileEntity', attributes: { __typename?: 'UploadFile', url: string } } }, tracks: { __typename?: 'TrackRelationResponseCollection', data: Array<{ __typename?: 'TrackEntity', id: number, attributes: { __typename?: 'Track', name: string, duration: number, playCount: number, audio: { __typename?: 'UploadFileEntityResponse', data: { __typename?: 'UploadFileEntity', attributes: { __typename?: 'UploadFile', name: string, url: string } } }, album: { __typename?: 'AlbumEntityResponse', data: { __typename?: 'AlbumEntity', id: number, attributes: { __typename?: 'Album', name: string, releaseDate: any, cover: { __typename?: 'UploadFileEntityResponse', data: { __typename?: 'UploadFileEntity', attributes: { __typename?: 'UploadFile', url: string } } } } } }, artist: { __typename?: 'ArtistEntityResponse', data: { __typename?: 'ArtistEntity', id: number, attributes: { __typename?: 'Artist', name: string } } } } }> }, artist: { __typename?: 'ArtistEntityResponse', data: { __typename?: 'ArtistEntity', id: number, attributes: { __typename?: 'Artist', name: string, image: { __typename?: 'UploadFileEntityResponse', data: { __typename?: 'UploadFileEntity', attributes: { __typename?: 'UploadFile', url: string } } } } } } } } } };
 
+export type ArtistPopularTrackListQueryVariables = Exact<{
+  artistId: Scalars['ID']['input'];
+}>;
+
+
+export type ArtistPopularTrackListQuery = { __typename?: 'Query', popularTracks: { __typename?: 'TrackEntityResponseCollection', data: Array<{ __typename?: 'TrackEntity', id: number, attributes: { __typename?: 'Track', name: string, duration: number, playCount: number, audio: { __typename?: 'UploadFileEntityResponse', data: { __typename?: 'UploadFileEntity', attributes: { __typename?: 'UploadFile', name: string, url: string } } }, album: { __typename?: 'AlbumEntityResponse', data: { __typename?: 'AlbumEntity', id: number, attributes: { __typename?: 'Album', name: string, releaseDate: any, cover: { __typename?: 'UploadFileEntityResponse', data: { __typename?: 'UploadFileEntity', attributes: { __typename?: 'UploadFile', url: string } } } } } }, artist: { __typename?: 'ArtistEntityResponse', data: { __typename?: 'ArtistEntity', id: number, attributes: { __typename?: 'Artist', name: string } } } } }> } };
+
 export type ArtistFragment = { __typename?: 'ArtistEntity', id: number, attributes: { __typename?: 'Artist', name: string, albums: { __typename?: 'AlbumRelationResponseCollection', data: Array<{ __typename?: 'AlbumEntity', id: number, attributes: { __typename?: 'Album', name: string, genre: string, albumType: Enum_Album_Albumtype, duration: number, releaseDate: any, cover: { __typename?: 'UploadFileEntityResponse', data: { __typename?: 'UploadFileEntity', attributes: { __typename?: 'UploadFile', url: string } } }, tracks: { __typename?: 'TrackRelationResponseCollection', data: Array<{ __typename?: 'TrackEntity', id: number, attributes: { __typename?: 'Track', name: string, duration: number, playCount: number, audio: { __typename?: 'UploadFileEntityResponse', data: { __typename?: 'UploadFileEntity', attributes: { __typename?: 'UploadFile', name: string, url: string } } }, album: { __typename?: 'AlbumEntityResponse', data: { __typename?: 'AlbumEntity', id: number, attributes: { __typename?: 'Album', name: string, releaseDate: any, cover: { __typename?: 'UploadFileEntityResponse', data: { __typename?: 'UploadFileEntity', attributes: { __typename?: 'UploadFile', url: string } } } } } }, artist: { __typename?: 'ArtistEntityResponse', data: { __typename?: 'ArtistEntity', id: number, attributes: { __typename?: 'Artist', name: string } } } } }> }, artist: { __typename?: 'ArtistEntityResponse', data: { __typename?: 'ArtistEntity', id: number, attributes: { __typename?: 'Artist', name: string, image: { __typename?: 'UploadFileEntityResponse', data: { __typename?: 'UploadFileEntity', attributes: { __typename?: 'UploadFile', url: string } } } } } } } }> }, image: { __typename?: 'UploadFileEntityResponse', data: { __typename?: 'UploadFileEntity', attributes: { __typename?: 'UploadFile', url: string } } } } };
 
 export type ArtistQueryVariables = Exact<{
@@ -1742,6 +1749,51 @@ export type AlbumQueryHookResult = ReturnType<typeof useAlbumQuery>;
 export type AlbumLazyQueryHookResult = ReturnType<typeof useAlbumLazyQuery>;
 export type AlbumSuspenseQueryHookResult = ReturnType<typeof useAlbumSuspenseQuery>;
 export type AlbumQueryResult = Apollo.QueryResult<AlbumQuery, AlbumQueryVariables>;
+export const ArtistPopularTrackListDocument = gql`
+    query ArtistPopularTrackList($artistId: ID!) {
+  popularTracks: tracks(
+    filters: {artist: {id: {eq: $artistId}}}
+    sort: "playCount:desc"
+  ) {
+    data {
+      ...Track
+    }
+  }
+}
+    ${TrackFragmentDoc}`;
+
+/**
+ * __useArtistPopularTrackListQuery__
+ *
+ * To run a query within a React component, call `useArtistPopularTrackListQuery` and pass it any options that fit your needs.
+ * When your component renders, `useArtistPopularTrackListQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useArtistPopularTrackListQuery({
+ *   variables: {
+ *      artistId: // value for 'artistId'
+ *   },
+ * });
+ */
+export function useArtistPopularTrackListQuery(baseOptions: Apollo.QueryHookOptions<ArtistPopularTrackListQuery, ArtistPopularTrackListQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<ArtistPopularTrackListQuery, ArtistPopularTrackListQueryVariables>(ArtistPopularTrackListDocument, options);
+      }
+export function useArtistPopularTrackListLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<ArtistPopularTrackListQuery, ArtistPopularTrackListQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<ArtistPopularTrackListQuery, ArtistPopularTrackListQueryVariables>(ArtistPopularTrackListDocument, options);
+        }
+export function useArtistPopularTrackListSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<ArtistPopularTrackListQuery, ArtistPopularTrackListQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<ArtistPopularTrackListQuery, ArtistPopularTrackListQueryVariables>(ArtistPopularTrackListDocument, options);
+        }
+export type ArtistPopularTrackListQueryHookResult = ReturnType<typeof useArtistPopularTrackListQuery>;
+export type ArtistPopularTrackListLazyQueryHookResult = ReturnType<typeof useArtistPopularTrackListLazyQuery>;
+export type ArtistPopularTrackListSuspenseQueryHookResult = ReturnType<typeof useArtistPopularTrackListSuspenseQuery>;
+export type ArtistPopularTrackListQueryResult = Apollo.QueryResult<ArtistPopularTrackListQuery, ArtistPopularTrackListQueryVariables>;
 export const ArtistDocument = gql`
     query Artist($id: ID!) {
   artist(id: $id) {

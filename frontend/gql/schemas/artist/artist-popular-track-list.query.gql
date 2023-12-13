@@ -1,0 +1,7 @@
+query ArtistPopularTrackList($artistId: ID!) {
+  popularTracks: tracks(filters: { artist: { id: { eq: $artistId } } }, sort: "playCount:desc") {
+    data {
+      ...Track
+    }
+  }
+}
