@@ -8,9 +8,9 @@ import { getPublicUrl } from '@/lib/publicUrlBuilder';
 import { absoluteUrlStrapi, cn, parseDuration } from '@/lib/utils';
 
 import { Icons } from './icons';
-import { LikeButton } from './like-button';
 import { TrackListCell, TrackListRow } from './track-list';
-import TrackPlayButton from './track-play-button';
+import { TrackPlayingIndicator } from './track-playing-indicator';
+import { TrackSaveButton } from './track-save-button';
 import { Button } from './ui/button';
 
 interface TrackProps {
@@ -21,6 +21,8 @@ interface TrackProps {
   hideCover?: boolean;
   isCurrentTrack: boolean;
   isPlaying: boolean;
+  isSaved: boolean;
+  isUnauth: boolean;
   onClick: (trackId: number) => void;
 }
 
@@ -31,19 +33,23 @@ export function TrackListItem({
   index,
   isCurrentTrack,
   isPlaying,
+  isSaved,
+  isUnauth,
   onClick,
   track
 }: TrackProps) {
   return (
     <TrackListRow key={track.id} className='group' onDoubleClick={() => onClick(track.id)}>
       <TrackListCell className='text-muted-foreground'>
-        <TrackPlayButton
-          isPlaying={isCurrentTrack && isPlaying}
-          data={{
-            album: { name: track.attributes.album.data.attributes.name },
-            track: { name: track.attributes.name }
-          }}
-          onClick={() => onClick(track.id)}
+        <TrackPlayingIndicator
+          isCurrentTrack={isCurrentTrack}
+          isPlaying={isPlaying}
+          start={() => onClick(track.id)}
+          title={
+            isPlaying && isCurrentTrack
+              ? 'Пауза'
+              : `Включить трек "${track.attributes.name}" исполнителя ${track.attributes.artist.data.attributes.name}`
+          }
         />
         <div
           className={cn('group-hover:hidden', {
@@ -82,14 +88,16 @@ export function TrackListItem({
       {children}
       <TrackListCell className='lg:hidden'>
         <Button size='icon' variant='link'>
-          <Icons.dotsHorizontal />
+          <Icons.moreHorizontal />
         </Button>
       </TrackListCell>
-      <TrackListCell className='hidden lg:flex'>
-        <LikeButton
-          isLike
-          className={cn('hidden text-muted-foreground hover:text-primary group-hover:block', { 'text-primary': false })}
+      <TrackListCell className='hidden gap-6 lg:flex'>
+        <TrackSaveButton
+          className={cn('hidden text-muted-foreground hover:text-primary group-hover:flex')}
+          isSaved={isSaved}
+          isUnauth={isUnauth}
           size='icon'
+          trackId={track.id}
           variant='link'
         />
         {parseDuration(track.attributes.duration)}

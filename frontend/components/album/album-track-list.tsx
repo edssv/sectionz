@@ -1,9 +1,10 @@
 'use client';
 
+import { useSession } from 'next-auth/react';
 import { useCallback } from 'react';
 
 import { Icons } from '@/components/icons';
-import type { TrackFragment } from '@/gql/types';
+import { useCheckUserSavedTracksQuery, type TrackFragment } from '@/gql/types';
 import usePlayingTrackID from '@/hooks/use-playing-track-id';
 import { PlayerStatus } from '@/lib/types/types';
 import usePlayerStore, { usePlayerAPI } from '@/stores/use-player-store';
@@ -16,9 +17,16 @@ interface AlbumPageListProps {
 }
 
 export function AlbumTrackList({ data }: AlbumPageListProps) {
+  const { data: session } = useSession();
+  const { data: areTracksInLibrary } = useCheckUserSavedTracksQuery({
+    variables: { tracks: data.tracks.map((obj) => obj.id) },
+    skip: !session
+  });
   const playerAPI = usePlayerAPI();
   const trackPlayingID = usePlayingTrackID();
   const { playerStatus } = usePlayerStore();
+
+  const savedTracks = areTracksInLibrary?.checkUserSavedTracks.tracks;
 
   const startPlayback = useCallback(
     (trackID: number) => {
@@ -35,7 +43,7 @@ export function AlbumTrackList({ data }: AlbumPageListProps) {
           <TrackListHead className='justify-start'>Название</TrackListHead>
           <TrackListHead className='hidden lg:flex'>Прослушивания</TrackListHead>
           <TrackListHead>
-            <Icons.clock />
+            <Icons.clock className='h-4 w-4' />
           </TrackListHead>
         </TrackListRow>
       </TrackListHeader>
@@ -47,12 +55,12 @@ export function AlbumTrackList({ data }: AlbumPageListProps) {
             index={index}
             isCurrentTrack={trackPlayingID === track.id}
             isPlaying={playerStatus === PlayerStatus.PLAY}
+            isSaved={savedTracks ? savedTracks[index] && savedTracks[index].isSaved : false}
+            isUnauth={!session}
             track={track}
             onClick={startPlayback}
           >
-            <TrackListCell className='hidden lg:flex'>
-              {track.attributes.playCount <= 100 ? 'менее 100' : track.attributes.playCount}
-            </TrackListCell>
+            <TrackListCell className='hidden lg:flex'>{track.attributes.playCount}</TrackListCell>
           </TrackListItem>
         ))}
       </TrackListBody>

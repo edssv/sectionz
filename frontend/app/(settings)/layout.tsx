@@ -27,9 +27,9 @@ export default async function SettingsLayout({ children }: SettingsLayoutProps) 
   return (
     <div className='min-h-full overflow-hidden'>
       <div className='fixed top-0 flex h-full w-full'>
-        <div className={cn('hidden w-full max-w-[var(--sidebar-nav-width)] border-r pb-12 md:block')}>
+        <div className={cn('hidden w-full max-w-[var(--sidebar-nav-width)] border-r pb-12 lg:block')}>
           <div className='space-y-4 pb-4'>
-            <SiteBrand className='mb-8 mt-3 px-6' />
+            <SiteBrand className='mb-8 mt-3 !border-none px-6' />
             <div className='px-3 py-2'>
               <h1 className='heading mb-2 px-4 text-lg'>Настройки</h1>{' '}
               <SidebarNav items={navConfig.settingsSidebarNav} />
@@ -38,8 +38,8 @@ export default async function SettingsLayout({ children }: SettingsLayoutProps) 
         </div>
         <SiteHeader user={user} />
         <div className={cn('mt-[var(--header-nav-height)] h-auto w-full overflow-y-auto overflow-x-hidden')}>
-          <ScrollArea className='w-full md:hidden'>
-            <SidebarNav className='w-full  border-b md:border-none' items={navConfig.settingsSidebarNav} />
+          <ScrollArea className='w-full lg:hidden'>
+            <SidebarNav className='w-full border-b lg:border-none' items={navConfig.settingsSidebarNav} />
             <ScrollBar orientation='horizontal' />
           </ScrollArea>
           <main className='container min-h-main-height max-w-5xl flex-grow justify-between py-10 '>{children}</main>

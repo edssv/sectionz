@@ -1,11 +1,8 @@
-/* eslint-disable jsx-a11y/no-static-element-interactions */
-/* eslint-disable jsx-a11y/click-events-have-key-events */
-
 'use client';
 
-import { PlusCircledIcon } from '@radix-ui/react-icons';
 import Image from 'next/image';
 import Link from 'next/link';
+import { useState } from 'react';
 
 import {
   ContextMenu,
@@ -17,22 +14,29 @@ import {
   ContextMenuSubTrigger,
   ContextMenuTrigger
 } from '@/components/ui/context-menu';
-import type { AlbumFragment } from '@/gql/types';
+import type { AlbumPreviewFragment } from '@/gql/types';
 import { getPublicUrl } from '@/lib/publicUrlBuilder';
 import { cn } from '@/lib/utils';
+import { AlbumService } from '@/services/album.service';
 import LibraryApi from '@/stores/library-api';
+import { usePlayerAPI } from '@/stores/use-player-store';
 
 import { playlists } from '../lib/data/playlists';
 
-import { PlayButton } from './play-button';
+import { AlbumSaveButton } from './album-save-button';
+import { Icons } from './icons';
+import ShareDialog from './share-dialog';
+import { Button } from './ui/button';
 import { TypographyMuted } from './ui/typography-muted';
 
 interface AlbumArtworkProps extends React.HTMLAttributes<HTMLDivElement> {
-  album: AlbumFragment;
+  album: AlbumPreviewFragment;
   coverUrl: string;
   aspectRatio?: 'portrait' | 'square';
   width?: number;
   height?: number;
+  isSaved: boolean;
+  isUnauth: boolean;
 }
 
 export function AlbumArtwork({
@@ -41,9 +45,24 @@ export function AlbumArtwork({
   className,
   coverUrl,
   height,
+  isSaved: saved,
+  isUnauth,
   width,
   ...props
 }: AlbumArtworkProps) {
+  const [isSaved, setIsSaved] = useState(saved);
+  const PlayerApi = usePlayerAPI();
+
+  const SaveToLibraryIcon = isSaved ? Icons.checkCircle : Icons.plusCircle;
+
+  const saveAlbumToLibrary = () => {
+    if (isSaved) {
+      AlbumService.removeUserSavedAlbum(album.id).then((res) => setIsSaved(res.isSaved));
+    } else {
+      AlbumService.saveAlbumForCurrentUser(album.id).then((res) => setIsSaved(res.isSaved));
+    }
+  };
+
   return (
     <div className={cn('space-y-3', className)} {...props}>
       <ContextMenu>
@@ -55,60 +74,68 @@ export function AlbumArtwork({
               src={coverUrl}
               width={width}
               className={cn(
-                'h-auto w-auto object-cover transition-all group-hover:brightness-75 group-hover:saturate-100'
+                'h-full w-full object-cover transition-all group-hover:brightness-75 group-hover:saturate-100',
+                aspectRatio === 'portrait' ? 'aspect-[3/4]' : 'aspect-square'
               )}
             />
           </Link>
           <div className='opacity-0 transition-all group-hover:opacity-100'>
-            <PlayButton
+            <Button
               className='absolute bottom-3 right-3 z-10 h-12 w-12 rounded-full'
-              isPlaying={false}
               size='icon'
               onClick={() => LibraryApi.Album.play(album.id)}
-            />
-            {/* <ButtonIcon
-              className='absolute right-2 top-2 h-10 w-10 rounded-full'
-              icon='dotsHorizontal'
-              variant='secondary'
-            /> */}
+            >
+              <Icons.play className='h-4 w-4' />
+            </Button>
           </div>
         </ContextMenuTrigger>
-        <ContextMenuContent className='w-40'>
-          <ContextMenuItem>Add to Library</ContextMenuItem>
+        <ContextMenuContent>
+          <ContextMenuItem onClick={() => PlayerApi.addNextInQueue(album.attributes.tracks.data.map((obj) => obj.id))}>
+            <Icons.queueNext className='mr-2 h-4 w-4' />
+            Включить следующим
+          </ContextMenuItem>
+          <ContextMenuItem onClick={() => PlayerApi.addInQueue(album.attributes.tracks.data.map((obj) => obj.id))}>
+            <Icons.queueEnd className='mr-2 h-4 w-4' />
+            Добавить в очередь
+          </ContextMenuItem>
+
+          <ContextMenuSeparator />
+
+          <ContextMenuItem asChild={isUnauth} onClick={saveAlbumToLibrary}>
+            <SaveToLibraryIcon className={cn('mr-2 h-4 w-4', { 'text-primary': isSaved })} />{' '}
+            {isSaved ? 'Удалить из библиотеки' : 'Добавить в библиотеку'}
+          </ContextMenuItem>
           <ContextMenuSub>
-            <ContextMenuSubTrigger>Add to Playlist</ContextMenuSubTrigger>
+            <ContextMenuSubTrigger>
+              <Icons.plus className='mr-2 h-4 w-4' />
+              Добавить в плейлист
+            </ContextMenuSubTrigger>
             <ContextMenuSubContent className='w-48'>
               <ContextMenuItem>
-                <PlusCircledIcon className='mr-2 h-4 w-4' />
+                <Icons.plusCircle className='mr-2 h-4 w-4' />
                 New Playlist
               </ContextMenuItem>
               <ContextMenuSeparator />
               {playlists.map((playlist) => (
                 <ContextMenuItem key={playlist}>
-                  <svg
-                    className='mr-2 h-4 w-4'
-                    fill='none'
-                    stroke='currentColor'
-                    strokeLinecap='round'
-                    strokeLinejoin='round'
-                    strokeWidth='2'
-                    viewBox='0 0 24 24'
-                    xmlns='http://www.w3.org/2000/svg'
-                  >
-                    <path d='M21 15V6M18.5 18a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5ZM12 12H3M16 6H3M12 18H3' />
-                  </svg>
+                  <Icons.playlists className='mr-2 h-4 w-4' />
                   {playlist}
                 </ContextMenuItem>
               ))}
             </ContextMenuSubContent>
           </ContextMenuSub>
+
           <ContextMenuSeparator />
-          <ContextMenuItem>Play Next</ContextMenuItem>
-          <ContextMenuItem>Play Later</ContextMenuItem>
-          <ContextMenuItem>Create Station</ContextMenuItem>
-          <ContextMenuSeparator />
-          <ContextMenuItem>Like</ContextMenuItem>
-          <ContextMenuItem>Share</ContextMenuItem>
+
+          <ContextMenuItem>
+            <ShareDialog>
+              <div className='flex items-center'>
+                {' '}
+                <Icons.share className='mr-2 h-4 w-4' />
+                Поделиться
+              </div>
+            </ShareDialog>
+          </ContextMenuItem>
         </ContextMenuContent>
       </ContextMenu>
       <div className='space-y-1 text-sm'>

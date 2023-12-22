@@ -162,7 +162,7 @@ export function DisplayForm() {
             </FormItem>
           )}
         />
-        <Button disabled={!form.formState.isDirty} type='submit'>
+        <Button className='w-full lg:w-auto' disabled={!form.formState.isDirty} type='submit'>
           Обновить дисплей
         </Button>
       </form>

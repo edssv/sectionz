@@ -1,9 +1,10 @@
 'use client';
 
 import Link from 'next/link';
+import { useSession } from 'next-auth/react';
 import { useCallback } from 'react';
 
-import type { TrackFragment } from '@/gql/types';
+import { useCheckUserSavedTracksQuery, type TrackFragment } from '@/gql/types';
 import usePlayingTrackID from '@/hooks/use-playing-track-id';
 import { getPublicUrl } from '@/lib/publicUrlBuilder';
 import { PlayerStatus } from '@/lib/types/types';
@@ -21,6 +22,14 @@ export function QueueTrackList({ data }: QueuePageListProps) {
   const trackPlayingID = usePlayingTrackID();
   const { playerStatus } = usePlayerStore();
 
+  const { data: session } = useSession();
+  const { data: areTracksInLibrary } = useCheckUserSavedTracksQuery({
+    variables: { tracks: data.map(({ id }) => id) },
+    skip: !session
+  });
+
+  const savedTracks = areTracksInLibrary?.checkUserSavedTracks.tracks;
+
   const startPlayback = useCallback(
     (trackID: number) => {
       playerAPI.start(data, trackID);
@@ -37,6 +46,8 @@ export function QueueTrackList({ data }: QueuePageListProps) {
             index={index}
             isCurrentTrack={trackPlayingID === track.id}
             isPlaying={playerStatus === PlayerStatus.PLAY}
+            isSaved={savedTracks ? savedTracks[index] && savedTracks[index].isSaved : false}
+            isUnauth={!session}
             track={track}
             onClick={startPlayback}
           >

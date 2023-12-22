@@ -17,7 +17,7 @@ export function SidebarNav({ className, items, ...props }: SidebarNavProps) {
   const router = useRouter();
 
   return (
-    <div className={cn('flex space-x-2 md:flex-col md:space-x-0 md:space-y-1', className)} {...props}>
+    <div className={cn('flex space-x-2 lg:flex-col lg:space-x-0 lg:space-y-1', className)} {...props}>
       {items.map((item) => {
         const Icon = Icons[item.icon || 'arrowRight'];
 

@@ -41,7 +41,7 @@ TrackListRow.displayName = 'TrackListRow';
 
 const TrackListHead = React.forwardRef<HTMLDivElement, React.ThHTMLAttributes<HTMLDivElement>>(
   ({ className, ...props }, ref) => (
-    <div ref={ref} className={cn('flex h-10 items-center justify-center font-medium', className)} {...props} />
+    <div ref={ref} className={cn('flex h-10 items-center justify-center', className)} {...props} />
   )
 );
 TrackListHead.displayName = 'TrackListHead';
