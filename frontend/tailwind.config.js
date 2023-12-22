@@ -72,12 +72,21 @@ module.exports = {
         'bar-animate': {
           '0%, 100%': { transform: 'scale3d(1, 0, 1)' },
           '50%': { transform: 'scale3d(1, 1, 1)' }
+        },
+        'bar-loading': {
+          '0%': {
+            transform: 'translateX(100%)'
+          },
+          '100%': {
+            transform: 'translateX(-100%)'
+          }
         }
       },
       animation: {
         'accordion-down': 'accordion-down 0.2s ease-out',
         'accordion-up': 'accordion-up 0.2s ease-out',
-        bar: 'bar-animate 1s ease-in-out infinite'
+        bar: 'bar-animate 1s ease-in-out infinite',
+        'bar-loading': 'bar-loading 0.5s linear infinite'
       },
       backgroundImage: {
         'gradient-container': 'linear-gradient(1turn,hsl(20 14.3% 4.1%) 8.98%,rgba(0,0,0,0) 100%)',
