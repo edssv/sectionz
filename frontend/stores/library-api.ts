@@ -1,29 +1,14 @@
-import client from '@/apollo/apollo-client';
 import { toast } from '@/components/ui/use-toast';
-import type {
-  AlbumTrackListQuery,
-  AlbumTrackListQueryVariables,
-  ArtistPopularTrackListQuery,
-  ArtistPopularTrackListQueryVariables
-} from '@/gql/types';
-import { AlbumTrackListDocument, ArtistPopularTrackListDocument } from '@/gql/types';
+import { AlbumService } from '@/services/album.service';
 
 import usePlayerStore from './use-player-store';
 
 const Album = {
-  /**
-   * Start playing album
-   */
   async play(albumId: number): Promise<void> {
     try {
-      const { data } = await client.query<AlbumTrackListQuery, AlbumTrackListQueryVariables>({
-        query: AlbumTrackListDocument,
-        variables: { albumId }
-      });
+      const { data } = await AlbumService.getAlbumTracks(albumId);
 
-      const tracks = data.album.data.attributes.tracks.data;
-
-      usePlayerStore.getState().api.start(tracks);
+      usePlayerStore.getState().api.start(data.album.data.attributes.tracks.data);
     } catch (error) {
       toast({ variant: 'destructive', description: 'Не удалось воспроизвести альбом' });
     }
@@ -31,18 +16,8 @@ const Album = {
 };
 
 const Artist = {
-  /**
-   * Start playing artist tracks
-   */
-  async play(artistId: number): Promise<void> {
+  play(tracks: []): void {
     try {
-      const { data } = await client.query<ArtistPopularTrackListQuery, ArtistPopularTrackListQueryVariables>({
-        query: ArtistPopularTrackListDocument,
-        variables: { artistId }
-      });
-
-      const tracks = data.popularTracks.data;
-
       usePlayerStore.getState().api.start(tracks);
     } catch (error) {
       toast({ variant: 'destructive', description: 'Не удалось воспроизвести треки исполнителя' });
