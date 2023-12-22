@@ -2,7 +2,7 @@
 
 import { useCallback } from 'react';
 
-import type { TrackFragment } from '@/gql/types';
+import { useCheckUserSavedTracksQuery, type TrackFragment } from '@/gql/types';
 import usePlayingTrackID from '@/hooks/use-playing-track-id';
 import { PlayerStatus } from '@/lib/types/types';
 import usePlayerStore, { usePlayerAPI } from '@/stores/use-player-store';
@@ -11,14 +11,21 @@ import { TrackList, TrackListBody, TrackListCell } from '../track-list';
 import { TrackListItem } from '../track-list-item';
 import { Button } from '../ui/button';
 
-interface PopularTracksProps {
+interface ArtistTopTracksProps {
   data: { tracks: TrackFragment[] };
+  isUnauth: boolean;
 }
 
-export function ArtistPopularTracks({ data }: PopularTracksProps) {
+export function ArtistTopTracks({ data, isUnauth }: ArtistTopTracksProps) {
+  const { data: areTracksInLibrary } = useCheckUserSavedTracksQuery({
+    variables: { tracks: data.tracks.map((obj) => obj.id) },
+    skip: isUnauth
+  });
   const playerAPI = usePlayerAPI();
   const playingTrackId = usePlayingTrackID();
   const { playerStatus } = usePlayerStore();
+
+  const savedTracks = areTracksInLibrary?.checkUserSavedTracks?.tracks || [];
 
   const startPlayback = useCallback(
     (trackID: number) => {
@@ -34,10 +41,13 @@ export function ArtistPopularTracks({ data }: PopularTracksProps) {
           {data.tracks.map((track, index) =>
             index < 5 ? (
               <TrackListItem
+                key={track.id}
                 hideArtist
                 index={index}
                 isCurrentTrack={track.id === playingTrackId}
                 isPlaying={playerStatus === PlayerStatus.PLAY}
+                isSaved={savedTracks[index] && savedTracks[index].isSaved}
+                isUnauth={isUnauth}
                 track={track}
                 onClick={startPlayback}
               >

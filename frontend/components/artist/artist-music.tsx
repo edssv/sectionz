@@ -1,4 +1,6 @@
-import type { AlbumFragment } from '@/gql/types';
+'use client';
+
+import type { AlbumFragment, SavedStatus } from '@/gql/types';
 import { absoluteUrlStrapi } from '@/lib/utils';
 
 import { AlbumArtwork } from '../album-artwork';
@@ -7,22 +9,26 @@ import { ScrollArea, ScrollBar } from '../ui/scroll-area';
 interface ArtistMusicProps {
   data: {
     albums: AlbumFragment[];
+    savedAlbums: SavedStatus[] | undefined;
   };
+  isUnauth: boolean;
 }
 
-export function ArtistMusic({ data }: ArtistMusicProps) {
+export function ArtistMusic({ data, isUnauth }: ArtistMusicProps) {
   return (
     <div className='relative'>
       <ScrollArea>
-        <div className='grid-list grid space-x-6 pb-4 '>
-          {data.albums.reverse().map((album) => (
+        <div className='carousel flex'>
+          {data.albums.reverse().map((album, i) => (
             <AlbumArtwork
               key={album.id}
               album={album}
               aspectRatio='square'
-              className='h-auto w-full'
+              className='w-[var(--carousel-item-base-width)]'
               coverUrl={absoluteUrlStrapi(album.attributes.cover?.data.attributes.url)}
               height={240}
+              isSaved={data.savedAlbums ? data.savedAlbums[i] && data.savedAlbums[i].isSaved : false}
+              isUnauth={isUnauth}
               width={240}
             />
           ))}
