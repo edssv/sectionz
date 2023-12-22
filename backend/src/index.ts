@@ -1,11 +1,20 @@
 import { typeDefs } from "./extensions/graphql/types/typeDefs";
-import { emailAvailable } from "./extensions/graphql/resolvers/email-available";
-import { updateUserProfile } from "./extensions/graphql/resolvers/update-user-profile";
-import { updateUserNotifications } from "./extensions/graphql/resolvers/update-user-notifications";
-import { trackIncrementPlayCount } from "./extensions/graphql/resolvers/track-increment-play-count";
-import { me } from "./extensions/graphql/resolvers/me";
+import { emailAvailable } from "./extensions/graphql/resolvers/auth/email-available";
+import { updateUserProfile } from "./extensions/graphql/resolvers/user/update-user-profile";
+import { updateUserNotifications } from "./extensions/graphql/resolvers/user/update-user-notifications";
+import { trackIncrementPlayCount } from "./extensions/graphql/resolvers/track/track-increment-play-count";
+import { me } from "./extensions/graphql/resolvers/auth/me";
 import { getAudioMetadata } from "./lib/utils";
 import { Strapi } from "@strapi/strapi";
+import { createFollowingArtist } from "./extensions/graphql/resolvers/following-artist/create-following-artist";
+import { deleteFollowingArtist } from "./extensions/graphql/resolvers/following-artist/delete-following-artist";
+import { createSavedTrack } from "./extensions/graphql/resolvers/saved-track/create-saved-track";
+import { createSavedAlbum } from "./extensions/graphql/resolvers/saved-album/create-saved-album";
+import { deleteSavedTrack } from "./extensions/graphql/resolvers/saved-track/delete-saved-track";
+import { deleteSavedAlbum } from "./extensions/graphql/resolvers/saved-album/delete-saved-album";
+import { checkUserSavedTracks } from "./extensions/graphql/resolvers/track/check-user-saved-tracks";
+import { checkUserSavedAlbums } from "./extensions/graphql/resolvers/album/check-user-saved-albums";
+import { userTopItems } from "./extensions/graphql/resolvers/user/user-top-items";
 
 export default {
   bootstrap({ strapi }: { strapi: Strapi }) {
@@ -35,7 +44,7 @@ export default {
             0
           );
 
-          event.params.data.duration = 5000;
+          event.params.data.duration = duration;
         }
       }
 
@@ -62,15 +71,37 @@ export default {
   },
 
   register({ strapi }: { strapi: Strapi }) {
+    const extensionService = strapi.plugin("graphql").service("extension");
+
+    extensionService
+      .shadowCRUD("api::following-artist.following-artist")
+      .disableMutations();
+    extensionService
+      .shadowCRUD("api::saved-album.saved-album")
+      .disableMutations();
+    extensionService
+      .shadowCRUD("api::saved-track.saved-track")
+      .disableMutations();
+    extensionService.shadowCRUD("api::artist.artist").disableMutations();
+
     const extension = ({ strapi }: { strapi: Strapi }) => ({
       typeDefs: typeDefs,
       resolvers: {
         Query: {
+          checkUserSavedAlbums,
+          checkUserSavedTracks,
           emailAvailable,
           me,
           trackIncrementPlayCount,
+          userTopItems,
         },
         Mutation: {
+          createFollowingArtist,
+          createSavedAlbum,
+          createSavedTrack,
+          deleteFollowingArtist,
+          deleteSavedAlbum,
+          deleteSavedTrack,
           updateUserProfile,
           updateUserNotifications,
         },

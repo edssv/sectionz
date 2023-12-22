@@ -102,6 +102,24 @@
     "marketingEmails": {
       "type": "boolean",
       "default": false
+    },
+    "savedTracks": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::saved-track.saved-track",
+      "mappedBy": "user"
+    },
+    "savedAlbums": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::saved-album.saved-album",
+      "mappedBy": "user"
+    },
+    "followingArtists": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::following-artist.following-artist",
+      "mappedBy": "user"
     }
   }
 }

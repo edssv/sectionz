@@ -362,174 +362,6 @@ export interface AdminTransferTokenPermission extends Schema.CollectionType {
   };
 }
 
-export interface ApiAlbumAlbum extends Schema.CollectionType {
-  collectionName: 'albums';
-  info: {
-    singularName: 'album';
-    pluralName: 'albums';
-    displayName: 'Album';
-    description: '';
-  };
-  options: {
-    draftAndPublish: true;
-  };
-  attributes: {
-    name: Attribute.String & Attribute.Required;
-    genre: Attribute.String;
-    cover: Attribute.Media & Attribute.Required;
-    tracks: Attribute.Relation<
-      'api::album.album',
-      'oneToMany',
-      'api::track.track'
-    >;
-    albumType: Attribute.Enumeration<['album', 'single']> & Attribute.Required;
-    artist: Attribute.Relation<
-      'api::album.album',
-      'manyToOne',
-      'api::artist.artist'
-    >;
-    releaseDate: Attribute.DateTime & Attribute.Required;
-    duration: Attribute.Float & Attribute.Required & Attribute.DefaultTo<0>;
-    createdAt: Attribute.DateTime;
-    updatedAt: Attribute.DateTime;
-    publishedAt: Attribute.DateTime;
-    createdBy: Attribute.Relation<
-      'api::album.album',
-      'oneToOne',
-      'admin::user'
-    > &
-      Attribute.Private;
-    updatedBy: Attribute.Relation<
-      'api::album.album',
-      'oneToOne',
-      'admin::user'
-    > &
-      Attribute.Private;
-  };
-}
-
-export interface ApiArtistArtist extends Schema.CollectionType {
-  collectionName: 'artists';
-  info: {
-    singularName: 'artist';
-    pluralName: 'artists';
-    displayName: 'Artist';
-    description: '';
-  };
-  options: {
-    draftAndPublish: true;
-  };
-  attributes: {
-    name: Attribute.String &
-      Attribute.Required &
-      Attribute.SetMinMaxLength<{
-        minLength: 3;
-        maxLength: 23;
-      }>;
-    albums: Attribute.Relation<
-      'api::artist.artist',
-      'oneToMany',
-      'api::album.album'
-    >;
-    tracks: Attribute.Relation<
-      'api::artist.artist',
-      'oneToMany',
-      'api::track.track'
-    >;
-    image: Attribute.Media;
-    createdAt: Attribute.DateTime;
-    updatedAt: Attribute.DateTime;
-    publishedAt: Attribute.DateTime;
-    createdBy: Attribute.Relation<
-      'api::artist.artist',
-      'oneToOne',
-      'admin::user'
-    > &
-      Attribute.Private;
-    updatedBy: Attribute.Relation<
-      'api::artist.artist',
-      'oneToOne',
-      'admin::user'
-    > &
-      Attribute.Private;
-  };
-}
-
-export interface ApiLikeLike extends Schema.CollectionType {
-  collectionName: 'likes';
-  info: {
-    singularName: 'like';
-    pluralName: 'likes';
-    displayName: 'Like';
-  };
-  options: {
-    draftAndPublish: false;
-  };
-  attributes: {
-    track: Attribute.Relation<'api::like.like', 'oneToOne', 'api::track.track'>;
-    user: Attribute.Relation<
-      'api::like.like',
-      'oneToOne',
-      'plugin::users-permissions.user'
-    >;
-    createdAt: Attribute.DateTime;
-    updatedAt: Attribute.DateTime;
-    createdBy: Attribute.Relation<'api::like.like', 'oneToOne', 'admin::user'> &
-      Attribute.Private;
-    updatedBy: Attribute.Relation<'api::like.like', 'oneToOne', 'admin::user'> &
-      Attribute.Private;
-  };
-}
-
-export interface ApiTrackTrack extends Schema.CollectionType {
-  collectionName: 'tracks';
-  info: {
-    singularName: 'track';
-    pluralName: 'tracks';
-    displayName: 'Track';
-    description: '';
-  };
-  options: {
-    draftAndPublish: true;
-  };
-  attributes: {
-    name: Attribute.String & Attribute.Required;
-    genre: Attribute.String;
-    audio: Attribute.Media & Attribute.Required;
-    album: Attribute.Relation<
-      'api::track.track',
-      'manyToOne',
-      'api::album.album'
-    >;
-    artist: Attribute.Relation<
-      'api::track.track',
-      'manyToOne',
-      'api::artist.artist'
-    >;
-    playCount: Attribute.Integer &
-      Attribute.SetMinMax<{
-        min: 0;
-      }> &
-      Attribute.DefaultTo<0>;
-    duration: Attribute.Float;
-    createdAt: Attribute.DateTime;
-    updatedAt: Attribute.DateTime;
-    publishedAt: Attribute.DateTime;
-    createdBy: Attribute.Relation<
-      'api::track.track',
-      'oneToOne',
-      'admin::user'
-    > &
-      Attribute.Private;
-    updatedBy: Attribute.Relation<
-      'api::track.track',
-      'oneToOne',
-      'admin::user'
-    > &
-      Attribute.Private;
-  };
-}
-
 export interface PluginUploadFile extends Schema.CollectionType {
   collectionName: 'files';
   info: {
@@ -794,6 +626,21 @@ export interface PluginUsersPermissionsUser extends Schema.CollectionType {
     socialEmails: Attribute.Boolean & Attribute.DefaultTo<true>;
     communicationEmails: Attribute.Boolean & Attribute.DefaultTo<false>;
     marketingEmails: Attribute.Boolean & Attribute.DefaultTo<false>;
+    savedTracks: Attribute.Relation<
+      'plugin::users-permissions.user',
+      'oneToMany',
+      'api::saved-track.saved-track'
+    >;
+    savedAlbums: Attribute.Relation<
+      'plugin::users-permissions.user',
+      'oneToMany',
+      'api::saved-album.saved-album'
+    >;
+    followingArtists: Attribute.Relation<
+      'plugin::users-permissions.user',
+      'oneToMany',
+      'api::following-artist.following-artist'
+    >;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     createdBy: Attribute.Relation<
@@ -855,6 +702,268 @@ export interface PluginI18NLocale extends Schema.CollectionType {
   };
 }
 
+export interface ApiAlbumAlbum extends Schema.CollectionType {
+  collectionName: 'albums';
+  info: {
+    singularName: 'album';
+    pluralName: 'albums';
+    displayName: 'Album';
+    description: '';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    name: Attribute.String & Attribute.Required;
+    genre: Attribute.String;
+    cover: Attribute.Media & Attribute.Required;
+    tracks: Attribute.Relation<
+      'api::album.album',
+      'oneToMany',
+      'api::track.track'
+    >;
+    albumType: Attribute.Enumeration<['album', 'single']> & Attribute.Required;
+    artist: Attribute.Relation<
+      'api::album.album',
+      'manyToOne',
+      'api::artist.artist'
+    >;
+    releaseDate: Attribute.DateTime & Attribute.Required;
+    duration: Attribute.Float & Attribute.Required & Attribute.DefaultTo<0>;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    publishedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::album.album',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::album.album',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
+export interface ApiArtistArtist extends Schema.CollectionType {
+  collectionName: 'artists';
+  info: {
+    singularName: 'artist';
+    pluralName: 'artists';
+    displayName: 'Artist';
+    description: '';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    name: Attribute.String &
+      Attribute.Required &
+      Attribute.SetMinMaxLength<{
+        minLength: 3;
+        maxLength: 23;
+      }>;
+    albums: Attribute.Relation<
+      'api::artist.artist',
+      'oneToMany',
+      'api::album.album'
+    >;
+    tracks: Attribute.Relation<
+      'api::artist.artist',
+      'oneToMany',
+      'api::track.track'
+    >;
+    image: Attribute.Media;
+    followers: Attribute.Relation<
+      'api::artist.artist',
+      'oneToMany',
+      'api::following-artist.following-artist'
+    >;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    publishedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::artist.artist',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::artist.artist',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
+export interface ApiFollowingArtistFollowingArtist
+  extends Schema.CollectionType {
+  collectionName: 'following_artists';
+  info: {
+    singularName: 'following-artist';
+    pluralName: 'following-artists';
+    displayName: 'FollowingArtist';
+  };
+  options: {
+    draftAndPublish: false;
+  };
+  attributes: {
+    artist: Attribute.Relation<
+      'api::following-artist.following-artist',
+      'manyToOne',
+      'api::artist.artist'
+    >;
+    user: Attribute.Relation<
+      'api::following-artist.following-artist',
+      'manyToOne',
+      'plugin::users-permissions.user'
+    >;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::following-artist.following-artist',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::following-artist.following-artist',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
+export interface ApiSavedAlbumSavedAlbum extends Schema.CollectionType {
+  collectionName: 'saved_albums';
+  info: {
+    singularName: 'saved-album';
+    pluralName: 'saved-albums';
+    displayName: 'SavedAlbum';
+  };
+  options: {
+    draftAndPublish: false;
+  };
+  attributes: {
+    album: Attribute.Relation<
+      'api::saved-album.saved-album',
+      'oneToOne',
+      'api::album.album'
+    >;
+    user: Attribute.Relation<
+      'api::saved-album.saved-album',
+      'manyToOne',
+      'plugin::users-permissions.user'
+    >;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::saved-album.saved-album',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::saved-album.saved-album',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
+export interface ApiSavedTrackSavedTrack extends Schema.CollectionType {
+  collectionName: 'saved_tracks';
+  info: {
+    singularName: 'saved-track';
+    pluralName: 'saved-tracks';
+    displayName: 'SavedTrack';
+  };
+  options: {
+    draftAndPublish: false;
+  };
+  attributes: {
+    track: Attribute.Relation<
+      'api::saved-track.saved-track',
+      'oneToOne',
+      'api::track.track'
+    >;
+    user: Attribute.Relation<
+      'api::saved-track.saved-track',
+      'manyToOne',
+      'plugin::users-permissions.user'
+    >;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::saved-track.saved-track',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::saved-track.saved-track',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
+export interface ApiTrackTrack extends Schema.CollectionType {
+  collectionName: 'tracks';
+  info: {
+    singularName: 'track';
+    pluralName: 'tracks';
+    displayName: 'Track';
+    description: '';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    name: Attribute.String & Attribute.Required;
+    genre: Attribute.String;
+    audio: Attribute.Media & Attribute.Required;
+    album: Attribute.Relation<
+      'api::track.track',
+      'manyToOne',
+      'api::album.album'
+    >;
+    artist: Attribute.Relation<
+      'api::track.track',
+      'manyToOne',
+      'api::artist.artist'
+    >;
+    playCount: Attribute.Integer &
+      Attribute.SetMinMax<{
+        min: 0;
+      }> &
+      Attribute.DefaultTo<0>;
+    duration: Attribute.Float;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    publishedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::track.track',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::track.track',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
 declare module '@strapi/types' {
   export module Shared {
     export interface ContentTypes {
@@ -865,16 +974,18 @@ declare module '@strapi/types' {
       'admin::api-token-permission': AdminApiTokenPermission;
       'admin::transfer-token': AdminTransferToken;
       'admin::transfer-token-permission': AdminTransferTokenPermission;
-      'api::album.album': ApiAlbumAlbum;
-      'api::artist.artist': ApiArtistArtist;
-      'api::like.like': ApiLikeLike;
-      'api::track.track': ApiTrackTrack;
       'plugin::upload.file': PluginUploadFile;
       'plugin::upload.folder': PluginUploadFolder;
       'plugin::users-permissions.permission': PluginUsersPermissionsPermission;
       'plugin::users-permissions.role': PluginUsersPermissionsRole;
       'plugin::users-permissions.user': PluginUsersPermissionsUser;
       'plugin::i18n.locale': PluginI18NLocale;
+      'api::album.album': ApiAlbumAlbum;
+      'api::artist.artist': ApiArtistArtist;
+      'api::following-artist.following-artist': ApiFollowingArtistFollowingArtist;
+      'api::saved-album.saved-album': ApiSavedAlbumSavedAlbum;
+      'api::saved-track.saved-track': ApiSavedTrackSavedTrack;
+      'api::track.track': ApiTrackTrack;
     }
   }
 }

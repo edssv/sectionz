@@ -10,9 +10,9 @@ export const me = {
       where: {
         id: user.id,
       },
-      populate: ["image"],
+      populate: ["image", "savedTracks.track", "savedAlbums.album"],
     });
-
+    console.log(data.savedTracks);
     return data;
   },
 };
