@@ -9,10 +9,10 @@ import { cn, parseDuration } from '@/lib/utils';
 import { usePlayerAPI } from '@/stores/use-player-store';
 
 interface ProgressBarProps {
-  trackPlaying: TrackFragment;
+  duration: TrackFragment['attributes']['duration'];
 }
 
-export function ProgressBar({ trackPlaying }: ProgressBarProps) {
+export function ProgressBar({ duration }: ProgressBarProps) {
   const elapsed = usePlayingTrackCurrentTime();
   const playerAPI = usePlayerAPI();
 
@@ -35,12 +35,12 @@ export function ProgressBar({ trackPlaying }: ProgressBarProps) {
 
       const percent = (offsetX / barWidth) * 100;
 
-      const time = (percent * trackPlaying.attributes.duration) / 100;
+      const time = (percent * duration) / 100;
 
       setTooltipTargetTime(time);
       setTooltipX(percent);
     },
-    [trackPlaying]
+    [duration]
   );
 
   const hideTooltip = React.useCallback(() => {
@@ -53,7 +53,7 @@ export function ProgressBar({ trackPlaying }: ProgressBarProps) {
       aria-disabled='false'
       aria-label='Ползунок прокрутки'
       defaultValue={[0]}
-      max={trackPlaying.attributes.duration}
+      max={duration}
       role='slider'
       step={1}
       tabIndex={0}
@@ -75,7 +75,7 @@ export function ProgressBar({ trackPlaying }: ProgressBarProps) {
           {parseDuration(tooltipTargetTime)}
         </div>
       )}
-      <SliderPrimitive.Track className='relative h-0.5 w-full grow overflow-hidden bg-border group-hover/slider:h-1'>
+      <SliderPrimitive.Track className='relative h-0.5 w-full grow overflow-hidden bg-primary/20 group-hover/slider:h-1'>
         <SliderPrimitive.Range className='absolute h-full bg-primary' />
       </SliderPrimitive.Track>
       {/* <SliderPrimitive.Thumb

@@ -11,11 +11,6 @@ import { Button } from '../ui/button';
 
 import VolumeControl from './volume-control';
 
-interface RightControlsProps {
-  showVolume: boolean;
-  setShowVolume: React.Dispatch<React.SetStateAction<boolean>>;
-}
-
 const titleMap = {
   [Repeat.ONE]: 'Отключить повтор',
   [Repeat.ALL]: 'Включить повтор одной',
@@ -23,25 +18,38 @@ const titleMap = {
   default: 'Включить повтор всех'
 };
 
-export function RightControls({ setShowVolume, showVolume }: RightControlsProps) {
+export function RightControls() {
   const { repeat, shuffle } = usePlayerStore();
   const playerAPI = usePlayerAPI();
 
   const RepeatIcon = repeat === Repeat.ONE ? Icons.repeatOne : Icons.repeat;
 
   return (
-    <div className='flex items-center gap-1.5'>
-      <VolumeControl setShowVolume={setShowVolume} showVolume={showVolume} />
+    <div className='flex items-center gap-1'>
+      <VolumeControl />
       <Button
         size='icon'
         title={titleMap[repeat] || titleMap.default}
         variant='ghost'
+        className={cn({
+          'relative after:absolute after:bottom-1 after:left-1/2 after:block after:h-1 after:w-1 after:-translate-x-1/2 after:rounded-full after:bg-primary':
+            repeat !== Repeat.NONE
+        })}
         onClick={() => playerAPI.toggleRepeat()}
       >
-        <RepeatIcon className={cn('h-[1.1rem] w-[1.1rem]', { 'text-muted-foreground': repeat === Repeat.NONE })} />
+        <RepeatIcon className={cn('h-4 w-4', { 'text-muted-foreground': repeat === Repeat.NONE })} />
       </Button>
-      <Button size='icon' title='Включить случайный порядок' variant='ghost' onClick={() => playerAPI.toggleShuffle()}>
-        <Icons.shuffle className={cn('h-[1.1rem] w-[1.1rem]', { 'text-muted-foreground': !shuffle })} />
+      <Button
+        size='icon'
+        title={shuffle ? 'Отключить случайный порядок' : 'Включить случайный порядок'}
+        variant='ghost'
+        className={cn({
+          'relative after:absolute after:bottom-1 after:left-1/2 after:block after:h-1 after:w-1 after:-translate-x-1/2 after:rounded-full after:bg-primary':
+            shuffle
+        })}
+        onClick={() => playerAPI.toggleShuffle()}
+      >
+        <Icons.shuffle className={cn('h-4 w-4', { 'text-muted-foreground': !shuffle })} />
       </Button>
     </div>
   );
