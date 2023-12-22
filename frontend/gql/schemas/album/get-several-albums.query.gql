@@ -1,0 +1,7 @@
+query GetSeveralAlbums {
+  albums {
+    data {
+      ...AlbumPreview
+    }
+  }
+}

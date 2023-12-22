@@ -1,0 +1,25 @@
+fragment AlbumPreview on AlbumEntity {
+  id
+  attributes {
+    name
+    cover {
+      data {
+        attributes {
+          url
+        }
+      }
+    }
+    artist {
+      data {
+        attributes {
+          name
+        }
+      }
+    }
+    tracks {
+      data {
+        id
+      }
+    }
+  }
+}

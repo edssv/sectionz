@@ -1,0 +1,5 @@
+mutation FollowArtist($artistId: ID!) {
+  createFollowingArtist(artistId: $artistId) {
+    isFollowed
+  }
+}

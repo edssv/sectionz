@@ -1,0 +1,7 @@
+query GetSeveralArtists($filters: ArtistFiltersInput, $sort: [String] = []) {
+  artists(filters: $filters, sort: $sort) {
+    data {
+      ...ArtistPreview
+    }
+  }
+}

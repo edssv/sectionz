@@ -1,0 +1,12 @@
+query GetUserSavedAlbums {
+  me {
+    savedAlbums {
+      createdAt
+      album {
+        data {
+          ...AlbumPreview
+        }
+      }
+    }
+  }
+}

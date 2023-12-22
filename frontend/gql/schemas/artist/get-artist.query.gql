@@ -1,4 +1,4 @@
-query Artist($id: ID!) {
+query GetArtist($id: ID!) {
   artist(id: $id) {
     data {
       id
@@ -6,7 +6,7 @@ query Artist($id: ID!) {
         name
         albums {
           data {
-            ...Album
+            ...AlbumPreview
           }
         }
         image {
@@ -20,7 +20,7 @@ query Artist($id: ID!) {
     }
   }
 
-  popularTracks: tracks(filters: { artist: { id: { eq: $id } } }, sort: "playCount:desc") {
+  topTracks: tracks(filters: { artist: { id: { eq: $id } } }, sort: "playCount:desc") {
     data {
       ...Track
     }

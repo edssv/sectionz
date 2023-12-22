@@ -1,4 +1,4 @@
-query TrackList($filters: TrackFiltersInput, $sort: [String] = []) {
+query GetSeveralTracks($filters: TrackFiltersInput, $sort: [String] = []) {
   tracks(filters: $filters, sort: $sort) {
     data {
       ...Track

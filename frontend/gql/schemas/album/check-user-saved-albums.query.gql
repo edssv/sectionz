@@ -1,0 +1,7 @@
+query CheckUserSavedAlbums($albums: [ID]!) {
+  checkUserSavedAlbums(albums: $albums) {
+    albums {
+      isSaved
+    }
+  }
+}

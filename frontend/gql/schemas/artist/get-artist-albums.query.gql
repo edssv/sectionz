@@ -1,0 +1,13 @@
+query GetArtistAlbums($artistId: ID!) {
+  artist(id: $artistId) {
+    data {
+      attributes {
+        albums {
+          data {
+            ...AlbumPreview
+          }
+        }
+      }
+    }
+  }
+}

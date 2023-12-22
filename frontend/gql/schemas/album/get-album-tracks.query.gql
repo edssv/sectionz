@@ -1,4 +1,4 @@
-query AlbumTrackList($albumId: ID!) {
+query GetAlbumTracks($albumId: ID!) {
   album(id: $albumId) {
     data {
       attributes {

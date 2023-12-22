@@ -1,0 +1,7 @@
+query GetArtistTopTracks($artistId: ID!) {
+  topTracks: tracks(filters: { artist: { id: { eq: $artistId } } }, sort: "playCount:desc") {
+    data {
+      ...Track
+    }
+  }
+}

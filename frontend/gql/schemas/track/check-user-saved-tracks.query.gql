@@ -1,0 +1,7 @@
+query CheckUserSavedTracks($tracks: [ID]!) {
+  checkUserSavedTracks(tracks: $tracks) {
+    tracks {
+      isSaved
+    }
+  }
+}

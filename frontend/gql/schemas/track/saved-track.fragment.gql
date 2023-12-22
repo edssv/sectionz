@@ -1,0 +1,8 @@
+fragment SavedTrack on SavedTrack {
+  createdAt
+  track {
+    data {
+      ...Track
+    }
+  }
+}

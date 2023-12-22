@@ -1,0 +1,5 @@
+mutation SaveTrackForCurrentUser($trackId: ID!) {
+  createSavedTrack(trackId: $trackId) {
+    isSaved
+  }
+}

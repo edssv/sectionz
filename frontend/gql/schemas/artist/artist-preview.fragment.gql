@@ -1,0 +1,13 @@
+fragment ArtistPreview on ArtistEntity {
+  id
+  attributes {
+    name
+    image {
+      data {
+        attributes {
+          url
+        }
+      }
+    }
+  }
+}

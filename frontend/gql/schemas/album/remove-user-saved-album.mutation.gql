@@ -1,0 +1,5 @@
+mutation RemoveUserSavedAlbum($albumId: ID!) {
+  deleteSavedAlbum(albumId: $albumId) {
+    isSaved
+  }
+}

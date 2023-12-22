@@ -1,4 +1,4 @@
-query Track($id: ID!) {
+query GetTrack($id: ID!) {
   track(id: $id) {
     data {
       ...Track

@@ -1,0 +1,5 @@
+mutation SaveAlbumForCurrentUser($albumId: ID!) {
+  createSavedAlbum(albumId: $albumId) {
+    isSaved
+  }
+}
