@@ -1,0 +1,27 @@
+{
+  "kind": "collectionType",
+  "collectionName": "following_artists",
+  "info": {
+    "singularName": "following-artist",
+    "pluralName": "following-artists",
+    "displayName": "FollowingArtist"
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "artist": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::artist.artist",
+      "inversedBy": "followers"
+    },
+    "user": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "plugin::users-permissions.user",
+      "inversedBy": "followingArtists"
+    }
+  }
+}

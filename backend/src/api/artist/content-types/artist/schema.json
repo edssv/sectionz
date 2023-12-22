@@ -31,11 +31,18 @@
       "mappedBy": "artist"
     },
     "image": {
+      "type": "media",
+      "multiple": false,
+      "required": false,
       "allowedTypes": [
         "images"
-      ],
-      "type": "media",
-      "multiple": false
+      ]
+    },
+    "followers": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::following-artist.following-artist",
+      "mappedBy": "artist"
     }
   }
 }

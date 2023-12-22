@@ -1,0 +1,26 @@
+{
+  "kind": "collectionType",
+  "collectionName": "saved_albums",
+  "info": {
+    "singularName": "saved-album",
+    "pluralName": "saved-albums",
+    "displayName": "SavedAlbum"
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "album": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::album.album"
+    },
+    "user": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "plugin::users-permissions.user",
+      "inversedBy": "savedAlbums"
+    }
+  }
+}

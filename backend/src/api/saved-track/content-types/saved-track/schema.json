@@ -1,10 +1,10 @@
 {
   "kind": "collectionType",
-  "collectionName": "likes",
+  "collectionName": "saved_tracks",
   "info": {
-    "singularName": "like",
-    "pluralName": "likes",
-    "displayName": "Like"
+    "singularName": "saved-track",
+    "pluralName": "saved-tracks",
+    "displayName": "SavedTrack"
   },
   "options": {
     "draftAndPublish": false
@@ -18,8 +18,9 @@
     },
     "user": {
       "type": "relation",
-      "relation": "oneToOne",
-      "target": "plugin::users-permissions.user"
+      "relation": "manyToOne",
+      "target": "plugin::users-permissions.user",
+      "inversedBy": "savedTracks"
     }
   }
 }
