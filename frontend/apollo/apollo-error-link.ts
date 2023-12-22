@@ -3,6 +3,8 @@ import { onError } from '@apollo/client/link/error';
 import { toast } from '@/components/ui/use-toast';
 
 const errorLink = onError(({ graphQLErrors, networkError }) => {
+  if (process.env.NODE_ENV === 'production') return null;
+
   if (graphQLErrors) {
     graphQLErrors.forEach(({ locations, message, path }) => {
       toast({ description: message });
