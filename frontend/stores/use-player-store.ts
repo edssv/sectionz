@@ -4,17 +4,13 @@ import { type StateCreator } from 'zustand';
 import { persist } from 'zustand/middleware';
 
 import client from '@/apollo/apollo-client';
-import { TrackDocument, TrackListDocument } from '@/gql/types';
-import type {
-  TrackQuery,
-  TrackQueryVariables,
-  TrackFragment,
-  TrackListQuery,
-  TrackListQueryVariables
-} from '@/gql/types';
+import { toast } from '@/components/ui/use-toast';
+import { errorConfig } from '@/config/error';
+import type { TrackFragment } from '@/gql/types';
 import player from '@/lib/player';
 import { PlayerStatus, Repeat } from '@/lib/types/types';
 import { shuffleTracks } from '@/lib/utils-player';
+import { TrackService } from '@/services/track.service';
 
 import { createStore } from './store-helpers';
 
@@ -22,7 +18,6 @@ type PlayerState = {
   queue: TrackFragment[];
   oldQueue: TrackFragment[];
   queueCursor: number | null;
-  queueOrigin: null | string;
   repeat: Repeat;
   shuffle: boolean;
   playerStatus: PlayerStatus;
@@ -39,12 +34,11 @@ type PlayerState = {
     setVolume: (volume: number) => void;
     setMuted: (muted: boolean) => void;
     jumpTo: (to: number) => void;
-    jumpToPlayingTrack: () => Promise<void>;
     startFromQueue: (index: number) => Promise<void>;
     clearQueue: () => void;
     removeFromQueue: (index: number) => void;
-    addInQueue: (tracksIDs: number[]) => Promise<void>;
-    addNextInQueue: (tracksIDs: number[]) => Promise<void>;
+    addInQueue: (trackIds: number[]) => Promise<void>;
+    addNextInQueue: (trackIds: number[]) => Promise<void>;
     setQueue: (tracks: TrackFragment[]) => void;
   };
 };
@@ -58,91 +52,77 @@ const usePlayerStore = createPlayerStore<PlayerState>((set, get) => ({
   shuffle: false, // If shuffle mode is enabled
   playerStatus: PlayerStatus.STOP, // Player status
   api: {
-    /**
-     * Start playing audio (queue instantiation, shuffle and everything...)
-     * TODO: this function ~could probably~ needs to be refactored ~a bit~
-     */
     start: async (queue, id?): Promise<void> => {
-      if (queue.length === 0) return;
+      try {
+        if (queue.length === 0) return;
 
-      const state = get();
+        const state = get();
 
-      let newQueue = [...queue];
+        let newQueue = [...queue];
 
-      // Check if there's already a queue planned
-      if (newQueue === null && state.queue !== null) {
-        newQueue = state.queue;
-      }
-
-      const { shuffle } = state;
-
-      const oldQueue = [...newQueue];
-      const trackID = id || newQueue[0].id;
-
-      // Typically, if we are in the playlists generic view without any view selected
-      if (newQueue.length === 0) return;
-
-      const queuePosition = newQueue.findIndex((track) => track.id === trackID);
-
-      // If a track exists
-      if (queuePosition > -1) {
-        const trackId = newQueue[queuePosition].id;
-
-        const { data } = await client.query<TrackQuery, TrackQueryVariables>({
-          query: TrackDocument,
-          variables: { id: trackId }
-        });
-
-        player.setTrack(data.track.data);
-        await player.play();
-
-        let queueCursor = queuePosition; // Clean that variable mess later
-
-        // Check if we have to shuffle the queue
-        if (shuffle) {
-          // Shuffle the tracks
-          newQueue = shuffleTracks(newQueue, queueCursor);
-          // Let's set the cursor to 0
-          queueCursor = 0;
+        // Check if there's already a queue planned
+        if (newQueue === null && state.queue !== null) {
+          newQueue = state.queue;
         }
 
-        // Determine the queue origin in case the user wants to jump to the current
-        // track
-        const { hash } = window.location;
-        const queueOrigin = hash.substring(1); // remove #
+        const { shuffle } = state;
 
-        set({
-          queue: newQueue,
-          queueCursor,
-          queueOrigin,
-          oldQueue,
-          playerStatus: PlayerStatus.PLAY
+        const oldQueue = [...newQueue];
+        const trackId = id || newQueue[0].id;
+
+        // Typically, if we are in the playlists generic view without any view selected
+        if (newQueue.length === 0) return;
+
+        const queuePosition = newQueue.findIndex((track) => track.id === trackId);
+
+        // If a track exists
+        if (queuePosition > -1) {
+          const trackId = newQueue[queuePosition].id;
+
+          const { data } = await TrackService.getTrack(trackId);
+          const track = data.track.data;
+
+          player.setTrack(track);
+          await player.play();
+
+          let queueCursor = queuePosition; // Clean that variable mess later
+
+          // Check if we have to shuffle the queue
+          if (shuffle) {
+            // Shuffle the tracks
+            newQueue = shuffleTracks(newQueue, queueCursor);
+            // Let's set the cursor to 0
+            queueCursor = 0;
+          }
+
+          set({
+            queue: newQueue,
+            queueCursor,
+            oldQueue,
+            playerStatus: PlayerStatus.PLAY
+          });
+        }
+      } catch (error) {
+        toast({
+          variant: 'destructive',
+          title: errorConfig.loadTrack.title,
+          description: errorConfig.loadTrack.description
         });
       }
     },
 
-    /**
-     * Play/resume audio
-     */
     play: async () => {
       await player.play();
 
       set({ playerStatus: PlayerStatus.PLAY });
     },
 
-    /**
-     * Pause audio
-     */
     pause: (): void => {
       player.pause();
 
       set({ playerStatus: PlayerStatus.PAUSE });
     },
 
-    /**
-     * Toggle play/pause
-     * FIXME: how to start when player is stopped?
-     */
     playPause: () => {
       const playerAPI = get().api;
       const { queue /* , playerStatus */ } = get();
@@ -158,24 +138,17 @@ const usePlayerStore = createPlayerStore<PlayerState>((set, get) => ({
       }
     },
 
-    /**
-     * Stop the player
-     */
     stop: (): void => {
       player.stop();
 
       set({
-        queue: [],
-        queueCursor: null,
         playerStatus: PlayerStatus.STOP
       });
     },
 
-    /**
-     * Jump to the next track
-     */
     next: async () => {
       const { queue, queueCursor, repeat } = get();
+      const currentTime = player.getCurrentTime();
       let newQueueCursor;
 
       if (queueCursor !== null) {
@@ -188,25 +161,40 @@ const usePlayerStore = createPlayerStore<PlayerState>((set, get) => ({
           newQueueCursor = queueCursor + 1;
         }
 
-        const track = queue[newQueueCursor];
+        const trackId = queue[newQueueCursor]?.id;
 
-        if (track !== undefined) {
-          player.setTrack(track);
-          await player.play();
-          set({
-            playerStatus: PlayerStatus.PLAY,
-            queueCursor: newQueueCursor
-          });
-        } else {
+        if (!trackId && currentTime === 0) {
           get().api.stop();
         }
+
+        if (!trackId) return;
+
+        // fetch track
+        const { data } = await TrackService.getTrack(trackId);
+        const track = data.track.data;
+
+        if (!track) {
+          toast({
+            variant: 'destructive',
+            title: errorConfig.loadTrack.title,
+            description: errorConfig.loadTrack.description
+          });
+          return;
+        }
+
+        const newQueue = queue;
+        newQueue[newQueueCursor] = track;
+
+        player.setTrack(track);
+        await player.play();
+        set({
+          queue: newQueue,
+          playerStatus: PlayerStatus.PLAY,
+          queueCursor: newQueueCursor
+        });
       }
     },
 
-    /**
-     * Jump to the previous track, or restart the current track after a certain
-     * treshold
-     */
     previous: async () => {
       const currentTime = player.getCurrentTime();
 
@@ -220,26 +208,37 @@ const usePlayerStore = createPlayerStore<PlayerState>((set, get) => ({
           newQueueCursor = queueCursor - 1;
         }
 
-        const newTrack = queue[newQueueCursor];
+        const newTrackId = queue[newQueueCursor]?.id;
 
-        // tslint:disable-next-line
-        if (newTrack !== undefined) {
-          player.setTrack(newTrack);
-          await player.play();
+        if (!newTrackId) return;
 
-          set({
-            playerStatus: PlayerStatus.PLAY,
-            queueCursor: newQueueCursor
+        const { data } = await TrackService.getTrack(newTrackId);
+
+        const newTrack = data?.track?.data;
+
+        if (!newTrack) {
+          toast({
+            variant: 'destructive',
+            title: errorConfig.loadTrack.title,
+            description: errorConfig.loadTrack.description
           });
-        } else {
-          get().api.stop();
+          return;
         }
+
+        const newQueue = queue;
+        newQueue[newQueueCursor] = newTrack;
+
+        player.setTrack(newTrack);
+        await player.play();
+
+        set({
+          queue: newQueue,
+          playerStatus: PlayerStatus.PLAY,
+          queueCursor: newQueueCursor
+        });
       }
     },
 
-    /**
-     * Enable/disable shuffle
-     */
     toggleShuffle: (shuffle) => {
       shuffle = shuffle ?? !get().shuffle;
 
@@ -275,9 +274,6 @@ const usePlayerStore = createPlayerStore<PlayerState>((set, get) => ({
       }
     },
 
-    /**
-     * Enable disable repeat
-     */
     toggleRepeat: (repeat) => {
       // Get to the next repeat type if none is specified
       if (repeat === undefined) {
@@ -298,17 +294,11 @@ const usePlayerStore = createPlayerStore<PlayerState>((set, get) => ({
       set({ repeat });
     },
 
-    /**
-     * Set volume
-     */
     setVolume: (volume) => {
       player.setVolume(volume);
       saveVolume(volume);
     },
 
-    /**
-     * Mute/unmute the audio
-     */
     setMuted: (muted = false) => {
       if (muted) player.mute();
       else player.unmute();
@@ -316,28 +306,10 @@ const usePlayerStore = createPlayerStore<PlayerState>((set, get) => ({
       localStorage.setItem('audioMuted', JSON.stringify(muted));
     },
 
-    /**
-     * Jump to a time in the track
-     */
     jumpTo: (to) => {
       player.setCurrentTime(to);
     },
 
-    /**
-     * Toggle play/pause
-     */
-    jumpToPlayingTrack: async () => {
-      const queueOrigin = get().queueOrigin ?? '#/library';
-      await router.navigate(queueOrigin);
-
-      setTimeout(() => {
-        useLibraryStore.getState().api.highlightPlayingTrack(true);
-      }, 0);
-    },
-
-    /**
-     * Start audio playback from the queue
-     */
     startFromQueue: async (index) => {
       const { queue } = get();
       const track = queue[index];
@@ -352,9 +324,6 @@ const usePlayerStore = createPlayerStore<PlayerState>((set, get) => ({
       });
     },
 
-    /**
-     * Clear the queue
-     */
     clearQueue: () => {
       const { queueCursor } = get();
       const queue = [...get().queue];
@@ -368,9 +337,6 @@ const usePlayerStore = createPlayerStore<PlayerState>((set, get) => ({
       }
     },
 
-    /**
-     * Remove track from queue
-     */
     removeFromQueue: (index) => {
       const { queueCursor } = get();
       const queue = [...get().queue];
@@ -384,15 +350,9 @@ const usePlayerStore = createPlayerStore<PlayerState>((set, get) => ({
       }
     },
 
-    /**
-     * Add tracks at the end of the queue
-     */
-    addInQueue: async (tracksIDs) => {
+    addInQueue: async (tracksIds) => {
       const { queue, queueCursor } = get();
-      const { data } = await client.query<TrackListQuery, TrackListQueryVariables>({
-        query: TrackListDocument,
-        variables: { filters: { id: { in: tracksIDs } } }
-      });
+      const { data } = await TrackService.getSeveralTracks({ filters: { id: { in: tracksIds } } });
       const newQueue = [...queue, ...data.tracks.data];
 
       set({
@@ -400,16 +360,12 @@ const usePlayerStore = createPlayerStore<PlayerState>((set, get) => ({
         // Set the queue cursor to zero if there is no current queue
         queueCursor: queue.length === 0 ? 0 : queueCursor
       });
+
+      toast({ description: 'Добавлено в очередь' });
     },
 
-    /**
-     * Add tracks at the beginning of the queue
-     */
-    addNextInQueue: async (tracksIDs) => {
-      const { data } = await client.query<TrackListQuery, TrackListQueryVariables>({
-        query: TrackListDocument,
-        variables: { filters: { id: { in: tracksIDs } } }
-      });
+    addNextInQueue: async (trackIds) => {
+      const { data } = await TrackService.getSeveralTracks({ filters: { id: { in: trackIds } } });
 
       const { queueCursor } = get();
       const queue = [...get().queue];
@@ -425,11 +381,10 @@ const usePlayerStore = createPlayerStore<PlayerState>((set, get) => ({
           queueCursor: 0
         });
       }
+
+      toast({ description: 'Добавлено в очередь' });
     },
 
-    /**
-     * Set the queue
-     */
     setQueue: (tracks: TrackFragment[]) => {
       set({
         queue: tracks
@@ -457,7 +412,7 @@ function createPlayerStore<T extends PlayerState>(store: StateCreator<T>) {
       name: 'player',
       onRehydrateStorage: () => (state, error) => {
         if (error || state == null) {
-          logger.error('an error happened during player store hydration', error);
+          console.log('an error happened during player store hydration', error);
         } else {
           //  Let's set the player's src and currentTime with the info we have persisted in store
           const { queue, queueCursor } = state;
