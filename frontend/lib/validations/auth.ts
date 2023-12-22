@@ -24,7 +24,7 @@ export const userRegisterEmailSchema = z
         variables: { email: val.email }
       });
 
-      if (!data.emailAvailable) {
+      if (data.emailAvailable === false) {
         ctx.addIssue({
           code: 'custom',
           message: ' ',

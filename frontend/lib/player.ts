@@ -1,4 +1,5 @@
 import { toast } from '@/components/ui/use-toast';
+import { errorConfig } from '@/config/error';
 import type { TrackFragment } from '@/gql/types';
 
 import { absoluteUrlStrapi } from './utils';
@@ -9,7 +10,7 @@ interface PlayerOptions {
 }
 
 class Player {
-  private audio: HTMLAudioElement;
+  private audio!: HTMLAudioElement;
 
   private durationThresholdReached: boolean;
 
@@ -26,11 +27,12 @@ class Player {
       ...options
     };
 
-    this.audio = new Audio();
+    if (typeof window !== 'undefined') {
+      this.audio = new Audio();
+      this.audio.volume = mergedOptions.volume;
+      this.audio.muted = mergedOptions.muted;
+    }
     this.track = null;
-
-    this.audio.volume = mergedOptions.volume;
-    this.audio.muted = mergedOptions.muted;
 
     this.threshold = 0.75;
     this.durationThresholdReached = false;
@@ -42,8 +44,8 @@ class Player {
     if (!this.audio.src) {
       toast({
         variant: 'destructive',
-        title: 'Трек не найден',
-        description: 'Не удалось найти трек или его файл.'
+        title: errorConfig.loadTrack.title,
+        description: errorConfig.loadTrack.description
       });
 
       throw new Error('Trying to play a track but not audio.src is defined');
@@ -73,7 +75,7 @@ class Player {
   }
 
   getCurrentTime() {
-    return this.audio.currentTime;
+    return this.audio?.currentTime;
   }
 
   getVolume() {
@@ -126,8 +128,8 @@ class Player {
   }
 }
 
-const audioVolume = localStorage.getItem('audioVolume');
-const audioMuted = localStorage.getItem('audioMuted');
+const audioVolume = typeof window !== 'undefined' && localStorage.getItem('audioVolume');
+const audioMuted = typeof window !== 'undefined' && localStorage.getItem('audioMuted');
 
 export default new Player({
   volume: audioVolume ? JSON.parse(audioVolume) : 1,

@@ -98,6 +98,7 @@ export type Artist = {
   __typename?: 'Artist';
   albums: Maybe<AlbumRelationResponseCollection>;
   createdAt: Maybe<Scalars['DateTime']['output']>;
+  followers: Maybe<FollowingArtistRelationResponseCollection>;
   image: Maybe<UploadFileEntityResponse>;
   name: Scalars['String']['output'];
   publishedAt: Maybe<Scalars['DateTime']['output']>;
@@ -110,6 +111,13 @@ export type ArtistAlbumsArgs = {
   filters: InputMaybe<AlbumFiltersInput>;
   pagination?: InputMaybe<PaginationArg>;
   publicationState?: InputMaybe<PublicationState>;
+  sort?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+};
+
+
+export type ArtistFollowersArgs = {
+  filters: InputMaybe<FollowingArtistFiltersInput>;
+  pagination?: InputMaybe<PaginationArg>;
   sort?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
 };
 
@@ -142,6 +150,7 @@ export type ArtistFiltersInput = {
   albums: InputMaybe<AlbumFiltersInput>;
   and: InputMaybe<Array<InputMaybe<ArtistFiltersInput>>>;
   createdAt: InputMaybe<DateTimeFilterInput>;
+  followers: InputMaybe<FollowingArtistFiltersInput>;
   id: InputMaybe<IdFilterInput>;
   name: InputMaybe<StringFilterInput>;
   not: InputMaybe<ArtistFiltersInput>;
@@ -149,14 +158,6 @@ export type ArtistFiltersInput = {
   publishedAt: InputMaybe<DateTimeFilterInput>;
   tracks: InputMaybe<TrackFiltersInput>;
   updatedAt: InputMaybe<DateTimeFilterInput>;
-};
-
-export type ArtistInput = {
-  albums: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
-  image: InputMaybe<Scalars['ID']['input']>;
-  name: InputMaybe<Scalars['String']['input']>;
-  publishedAt: InputMaybe<Scalars['DateTime']['input']>;
-  tracks: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
 };
 
 export type BooleanFilterInput = {
@@ -182,6 +183,16 @@ export type BooleanFilterInput = {
   null: InputMaybe<Scalars['Boolean']['input']>;
   or: InputMaybe<Array<InputMaybe<Scalars['Boolean']['input']>>>;
   startsWith: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+export type CheckUserSavedAlbumsResponse = {
+  __typename?: 'CheckUserSavedAlbumsResponse';
+  albums: Maybe<Array<Maybe<SavedStatus>>>;
+};
+
+export type CheckUserSavedTracksResponse = {
+  __typename?: 'CheckUserSavedTracksResponse';
+  tracks: Maybe<Array<Maybe<SavedStatus>>>;
 };
 
 export type DateTimeFilterInput = {
@@ -252,7 +263,53 @@ export type FloatFilterInput = {
   startsWith: InputMaybe<Scalars['Float']['input']>;
 };
 
-export type GenericMorph = Album | Artist | I18NLocale | Like | Track | UploadFile | UploadFolder | UsersPermissionsPermission | UsersPermissionsRole | UsersPermissionsUser;
+export type FollowedStatus = {
+  __typename?: 'FollowedStatus';
+  isFollowed: Maybe<Scalars['Boolean']['output']>;
+};
+
+export type FollowingArtist = {
+  __typename?: 'FollowingArtist';
+  artist: Maybe<ArtistEntityResponse>;
+  createdAt: Maybe<Scalars['DateTime']['output']>;
+  updatedAt: Maybe<Scalars['DateTime']['output']>;
+  user: Maybe<UsersPermissionsUserEntityResponse>;
+};
+
+export type FollowingArtistEntity = {
+  __typename?: 'FollowingArtistEntity';
+  attributes: Maybe<FollowingArtist>;
+  id: Maybe<Scalars['ID']['output']>;
+};
+
+export type FollowingArtistEntityResponse = {
+  __typename?: 'FollowingArtistEntityResponse';
+  data: Maybe<FollowingArtistEntity>;
+};
+
+export type FollowingArtistEntityResponseCollection = {
+  __typename?: 'FollowingArtistEntityResponseCollection';
+  data: Array<FollowingArtistEntity>;
+  meta: ResponseCollectionMeta;
+};
+
+export type FollowingArtistFiltersInput = {
+  and: InputMaybe<Array<InputMaybe<FollowingArtistFiltersInput>>>;
+  artist: InputMaybe<ArtistFiltersInput>;
+  createdAt: InputMaybe<DateTimeFilterInput>;
+  id: InputMaybe<IdFilterInput>;
+  not: InputMaybe<FollowingArtistFiltersInput>;
+  or: InputMaybe<Array<InputMaybe<FollowingArtistFiltersInput>>>;
+  updatedAt: InputMaybe<DateTimeFilterInput>;
+  user: InputMaybe<UsersPermissionsUserFiltersInput>;
+};
+
+export type FollowingArtistRelationResponseCollection = {
+  __typename?: 'FollowingArtistRelationResponseCollection';
+  data: Array<FollowingArtistEntity>;
+};
+
+export type GenericMorph = Album | Artist | FollowingArtist | I18NLocale | SavedAlbum | SavedTrack | Track | UploadFile | UploadFolder | UsersPermissionsPermission | UsersPermissionsRole | UsersPermissionsUser;
 
 export type I18NLocale = {
   __typename?: 'I18NLocale';
@@ -365,54 +422,14 @@ export type JsonFilterInput = {
   startsWith: InputMaybe<Scalars['JSON']['input']>;
 };
 
-export type Like = {
-  __typename?: 'Like';
-  createdAt: Maybe<Scalars['DateTime']['output']>;
-  track: Maybe<TrackEntityResponse>;
-  updatedAt: Maybe<Scalars['DateTime']['output']>;
-  user: Maybe<UsersPermissionsUserEntityResponse>;
-};
-
-export type LikeEntity = {
-  __typename?: 'LikeEntity';
-  attributes: Maybe<Like>;
-  id: Maybe<Scalars['ID']['output']>;
-};
-
-export type LikeEntityResponse = {
-  __typename?: 'LikeEntityResponse';
-  data: Maybe<LikeEntity>;
-};
-
-export type LikeEntityResponseCollection = {
-  __typename?: 'LikeEntityResponseCollection';
-  data: Array<LikeEntity>;
-  meta: ResponseCollectionMeta;
-};
-
-export type LikeFiltersInput = {
-  and: InputMaybe<Array<InputMaybe<LikeFiltersInput>>>;
-  createdAt: InputMaybe<DateTimeFilterInput>;
-  id: InputMaybe<IdFilterInput>;
-  not: InputMaybe<LikeFiltersInput>;
-  or: InputMaybe<Array<InputMaybe<LikeFiltersInput>>>;
-  track: InputMaybe<TrackFiltersInput>;
-  updatedAt: InputMaybe<DateTimeFilterInput>;
-  user: InputMaybe<UsersPermissionsUserFiltersInput>;
-};
-
-export type LikeInput = {
-  track: InputMaybe<Scalars['ID']['input']>;
-  user: InputMaybe<Scalars['ID']['input']>;
-};
-
 export type Mutation = {
   __typename?: 'Mutation';
   /** Change user password. Confirm with the current password. */
   changePassword: Maybe<UsersPermissionsLoginPayload>;
   createAlbum: Maybe<AlbumEntityResponse>;
-  createArtist: Maybe<ArtistEntityResponse>;
-  createLike: Maybe<LikeEntityResponse>;
+  createFollowingArtist: FollowedStatus;
+  createSavedAlbum: SavedStatus;
+  createSavedTrack: SavedStatus;
   createTrack: Maybe<TrackEntityResponse>;
   createUploadFile: Maybe<UploadFileEntityResponse>;
   createUploadFolder: Maybe<UploadFolderEntityResponse>;
@@ -421,8 +438,9 @@ export type Mutation = {
   /** Create a new user */
   createUsersPermissionsUser: UsersPermissionsUserEntityResponse;
   deleteAlbum: Maybe<AlbumEntityResponse>;
-  deleteArtist: Maybe<ArtistEntityResponse>;
-  deleteLike: Maybe<LikeEntityResponse>;
+  deleteFollowingArtist: FollowedStatus;
+  deleteSavedAlbum: SavedStatus;
+  deleteSavedTrack: SavedStatus;
   deleteTrack: Maybe<TrackEntityResponse>;
   deleteUploadFile: Maybe<UploadFileEntityResponse>;
   deleteUploadFolder: Maybe<UploadFolderEntityResponse>;
@@ -442,9 +460,7 @@ export type Mutation = {
   /** Reset user password. Confirm with a code (resetToken from forgotPassword) */
   resetPassword: Maybe<UsersPermissionsLoginPayload>;
   updateAlbum: Maybe<AlbumEntityResponse>;
-  updateArtist: Maybe<ArtistEntityResponse>;
   updateFileInfo: UploadFileEntityResponse;
-  updateLike: Maybe<LikeEntityResponse>;
   updateTrack: Maybe<TrackEntityResponse>;
   updateUploadFile: Maybe<UploadFileEntityResponse>;
   updateUploadFolder: Maybe<UploadFolderEntityResponse>;
@@ -470,13 +486,18 @@ export type MutationCreateAlbumArgs = {
 };
 
 
-export type MutationCreateArtistArgs = {
-  data: ArtistInput;
+export type MutationCreateFollowingArtistArgs = {
+  artistId: Scalars['ID']['input'];
 };
 
 
-export type MutationCreateLikeArgs = {
-  data: LikeInput;
+export type MutationCreateSavedAlbumArgs = {
+  albumId: Scalars['ID']['input'];
+};
+
+
+export type MutationCreateSavedTrackArgs = {
+  trackId: Scalars['ID']['input'];
 };
 
 
@@ -510,13 +531,18 @@ export type MutationDeleteAlbumArgs = {
 };
 
 
-export type MutationDeleteArtistArgs = {
-  id: Scalars['ID']['input'];
+export type MutationDeleteFollowingArtistArgs = {
+  artistId: Scalars['ID']['input'];
 };
 
 
-export type MutationDeleteLikeArgs = {
-  id: Scalars['ID']['input'];
+export type MutationDeleteSavedAlbumArgs = {
+  albumId: Scalars['ID']['input'];
+};
+
+
+export type MutationDeleteSavedTrackArgs = {
+  trackId: Scalars['ID']['input'];
 };
 
 
@@ -591,21 +617,9 @@ export type MutationUpdateAlbumArgs = {
 };
 
 
-export type MutationUpdateArtistArgs = {
-  data: ArtistInput;
-  id: Scalars['ID']['input'];
-};
-
-
 export type MutationUpdateFileInfoArgs = {
   id: Scalars['ID']['input'];
   info: InputMaybe<FileInfoInput>;
-};
-
-
-export type MutationUpdateLikeArgs = {
-  data: LikeInput;
-  id: Scalars['ID']['input'];
 };
 
 
@@ -683,12 +697,18 @@ export type Query = {
   albums: Maybe<AlbumEntityResponseCollection>;
   artist: Maybe<ArtistEntityResponse>;
   artists: Maybe<ArtistEntityResponseCollection>;
+  checkUserSavedAlbums: Maybe<CheckUserSavedAlbumsResponse>;
+  checkUserSavedTracks: Maybe<CheckUserSavedTracksResponse>;
   emailAvailable: Maybe<Scalars['Boolean']['output']>;
+  followingArtist: Maybe<FollowingArtistEntityResponse>;
+  followingArtists: Maybe<FollowingArtistEntityResponseCollection>;
   i18NLocale: Maybe<I18NLocaleEntityResponse>;
   i18NLocales: Maybe<I18NLocaleEntityResponseCollection>;
-  like: Maybe<LikeEntityResponse>;
-  likes: Maybe<LikeEntityResponseCollection>;
   me: Maybe<UsersPermissionsMe>;
+  savedAlbum: Maybe<SavedAlbumEntityResponse>;
+  savedAlbums: Maybe<SavedAlbumEntityResponseCollection>;
+  savedTrack: Maybe<SavedTrackEntityResponse>;
+  savedTracks: Maybe<SavedTrackEntityResponseCollection>;
   track: Maybe<TrackEntityResponse>;
   trackIncrementPlayCount: TrackIncrementPlayCountResponse;
   tracks: Maybe<TrackEntityResponseCollection>;
@@ -696,6 +716,7 @@ export type Query = {
   uploadFiles: Maybe<UploadFileEntityResponseCollection>;
   uploadFolder: Maybe<UploadFolderEntityResponse>;
   uploadFolders: Maybe<UploadFolderEntityResponseCollection>;
+  userTopItems: Maybe<Scalars['Boolean']['output']>;
   usersPermissionsRole: Maybe<UsersPermissionsRoleEntityResponse>;
   usersPermissionsRoles: Maybe<UsersPermissionsRoleEntityResponseCollection>;
   usersPermissionsUser: Maybe<UsersPermissionsUserEntityResponse>;
@@ -729,8 +750,30 @@ export type QueryArtistsArgs = {
 };
 
 
+export type QueryCheckUserSavedAlbumsArgs = {
+  albums: Array<InputMaybe<Scalars['ID']['input']>>;
+};
+
+
+export type QueryCheckUserSavedTracksArgs = {
+  tracks: Array<InputMaybe<Scalars['ID']['input']>>;
+};
+
+
 export type QueryEmailAvailableArgs = {
   email: Scalars['String']['input'];
+};
+
+
+export type QueryFollowingArtistArgs = {
+  id: InputMaybe<Scalars['ID']['input']>;
+};
+
+
+export type QueryFollowingArtistsArgs = {
+  filters: InputMaybe<FollowingArtistFiltersInput>;
+  pagination?: InputMaybe<PaginationArg>;
+  sort?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
 };
 
 
@@ -746,13 +789,25 @@ export type QueryI18NLocalesArgs = {
 };
 
 
-export type QueryLikeArgs = {
+export type QuerySavedAlbumArgs = {
   id: InputMaybe<Scalars['ID']['input']>;
 };
 
 
-export type QueryLikesArgs = {
-  filters: InputMaybe<LikeFiltersInput>;
+export type QuerySavedAlbumsArgs = {
+  filters: InputMaybe<SavedAlbumFiltersInput>;
+  pagination?: InputMaybe<PaginationArg>;
+  sort?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+};
+
+
+export type QuerySavedTrackArgs = {
+  id: InputMaybe<Scalars['ID']['input']>;
+};
+
+
+export type QuerySavedTracksArgs = {
+  filters: InputMaybe<SavedTrackFiltersInput>;
   pagination?: InputMaybe<PaginationArg>;
   sort?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
 };
@@ -826,6 +881,93 @@ export type QueryUsersPermissionsUsersArgs = {
 export type ResponseCollectionMeta = {
   __typename?: 'ResponseCollectionMeta';
   pagination: Pagination;
+};
+
+export type SavedAlbum = {
+  __typename?: 'SavedAlbum';
+  album: Maybe<AlbumEntityResponse>;
+  createdAt: Maybe<Scalars['DateTime']['output']>;
+  updatedAt: Maybe<Scalars['DateTime']['output']>;
+  user: Maybe<UsersPermissionsUserEntityResponse>;
+};
+
+export type SavedAlbumEntity = {
+  __typename?: 'SavedAlbumEntity';
+  attributes: Maybe<SavedAlbum>;
+  id: Maybe<Scalars['ID']['output']>;
+};
+
+export type SavedAlbumEntityResponse = {
+  __typename?: 'SavedAlbumEntityResponse';
+  data: Maybe<SavedAlbumEntity>;
+};
+
+export type SavedAlbumEntityResponseCollection = {
+  __typename?: 'SavedAlbumEntityResponseCollection';
+  data: Array<SavedAlbumEntity>;
+  meta: ResponseCollectionMeta;
+};
+
+export type SavedAlbumFiltersInput = {
+  album: InputMaybe<AlbumFiltersInput>;
+  and: InputMaybe<Array<InputMaybe<SavedAlbumFiltersInput>>>;
+  createdAt: InputMaybe<DateTimeFilterInput>;
+  id: InputMaybe<IdFilterInput>;
+  not: InputMaybe<SavedAlbumFiltersInput>;
+  or: InputMaybe<Array<InputMaybe<SavedAlbumFiltersInput>>>;
+  updatedAt: InputMaybe<DateTimeFilterInput>;
+  user: InputMaybe<UsersPermissionsUserFiltersInput>;
+};
+
+export type SavedAlbumRelationResponseCollection = {
+  __typename?: 'SavedAlbumRelationResponseCollection';
+  data: Array<SavedAlbumEntity>;
+};
+
+export type SavedStatus = {
+  __typename?: 'SavedStatus';
+  isSaved: Maybe<Scalars['Boolean']['output']>;
+};
+
+export type SavedTrack = {
+  __typename?: 'SavedTrack';
+  createdAt: Maybe<Scalars['DateTime']['output']>;
+  track: Maybe<TrackEntityResponse>;
+  updatedAt: Maybe<Scalars['DateTime']['output']>;
+  user: Maybe<UsersPermissionsUserEntityResponse>;
+};
+
+export type SavedTrackEntity = {
+  __typename?: 'SavedTrackEntity';
+  attributes: Maybe<SavedTrack>;
+  id: Maybe<Scalars['ID']['output']>;
+};
+
+export type SavedTrackEntityResponse = {
+  __typename?: 'SavedTrackEntityResponse';
+  data: Maybe<SavedTrackEntity>;
+};
+
+export type SavedTrackEntityResponseCollection = {
+  __typename?: 'SavedTrackEntityResponseCollection';
+  data: Array<SavedTrackEntity>;
+  meta: ResponseCollectionMeta;
+};
+
+export type SavedTrackFiltersInput = {
+  and: InputMaybe<Array<InputMaybe<SavedTrackFiltersInput>>>;
+  createdAt: InputMaybe<DateTimeFilterInput>;
+  id: InputMaybe<IdFilterInput>;
+  not: InputMaybe<SavedTrackFiltersInput>;
+  or: InputMaybe<Array<InputMaybe<SavedTrackFiltersInput>>>;
+  track: InputMaybe<TrackFiltersInput>;
+  updatedAt: InputMaybe<DateTimeFilterInput>;
+  user: InputMaybe<UsersPermissionsUserFiltersInput>;
+};
+
+export type SavedTrackRelationResponseCollection = {
+  __typename?: 'SavedTrackRelationResponseCollection';
+  data: Array<SavedTrackEntity>;
 };
 
 export type StringFilterInput = {
@@ -1127,6 +1269,8 @@ export type UsersPermissionsMe = {
   marketingEmails: Scalars['Boolean']['output'];
   profileName: Maybe<Scalars['String']['output']>;
   role: Maybe<UsersPermissionsMeRole>;
+  savedAlbums: Maybe<Array<Maybe<SavedAlbum>>>;
+  savedTracks: Maybe<Array<Maybe<SavedTrack>>>;
   socialEmails: Scalars['Boolean']['output'];
   username: Scalars['String']['output'];
 };
@@ -1261,15 +1405,39 @@ export type UsersPermissionsUser = {
   createdAt: Maybe<Scalars['DateTime']['output']>;
   dob: Maybe<Scalars['DateTime']['output']>;
   email: Scalars['String']['output'];
+  followingArtists: Maybe<FollowingArtistRelationResponseCollection>;
   gender: Maybe<Enum_Userspermissionsuser_Gender>;
   image: Maybe<UploadFileEntityResponse>;
   marketingEmails: Maybe<Scalars['Boolean']['output']>;
   profileName: Scalars['String']['output'];
   provider: Maybe<Scalars['String']['output']>;
   role: Maybe<UsersPermissionsRoleEntityResponse>;
+  savedAlbums: Maybe<SavedAlbumRelationResponseCollection>;
+  savedTracks: Maybe<SavedTrackRelationResponseCollection>;
   socialEmails: Maybe<Scalars['Boolean']['output']>;
   updatedAt: Maybe<Scalars['DateTime']['output']>;
   username: Maybe<Scalars['String']['output']>;
+};
+
+
+export type UsersPermissionsUserFollowingArtistsArgs = {
+  filters: InputMaybe<FollowingArtistFiltersInput>;
+  pagination?: InputMaybe<PaginationArg>;
+  sort?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+};
+
+
+export type UsersPermissionsUserSavedAlbumsArgs = {
+  filters: InputMaybe<SavedAlbumFiltersInput>;
+  pagination?: InputMaybe<PaginationArg>;
+  sort?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+};
+
+
+export type UsersPermissionsUserSavedTracksArgs = {
+  filters: InputMaybe<SavedTrackFiltersInput>;
+  pagination?: InputMaybe<PaginationArg>;
+  sort?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
 };
 
 export type UsersPermissionsUserEntity = {
@@ -1298,6 +1466,7 @@ export type UsersPermissionsUserFiltersInput = {
   createdAt: InputMaybe<DateTimeFilterInput>;
   dob: InputMaybe<DateTimeFilterInput>;
   email: InputMaybe<StringFilterInput>;
+  followingArtists: InputMaybe<FollowingArtistFiltersInput>;
   gender: InputMaybe<StringFilterInput>;
   id: InputMaybe<IdFilterInput>;
   marketingEmails: InputMaybe<BooleanFilterInput>;
@@ -1308,6 +1477,8 @@ export type UsersPermissionsUserFiltersInput = {
   provider: InputMaybe<StringFilterInput>;
   resetPasswordToken: InputMaybe<StringFilterInput>;
   role: InputMaybe<UsersPermissionsRoleFiltersInput>;
+  savedAlbums: InputMaybe<SavedAlbumFiltersInput>;
+  savedTracks: InputMaybe<SavedTrackFiltersInput>;
   socialEmails: InputMaybe<BooleanFilterInput>;
   updatedAt: InputMaybe<DateTimeFilterInput>;
   username: InputMaybe<StringFilterInput>;
@@ -1320,6 +1491,7 @@ export type UsersPermissionsUserInput = {
   confirmed: InputMaybe<Scalars['Boolean']['input']>;
   dob: InputMaybe<Scalars['DateTime']['input']>;
   email: InputMaybe<Scalars['String']['input']>;
+  followingArtists: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
   gender: InputMaybe<Enum_Userspermissionsuser_Gender>;
   image: InputMaybe<Scalars['ID']['input']>;
   marketingEmails: InputMaybe<Scalars['Boolean']['input']>;
@@ -1328,6 +1500,8 @@ export type UsersPermissionsUserInput = {
   provider: InputMaybe<Scalars['String']['input']>;
   resetPasswordToken: InputMaybe<Scalars['String']['input']>;
   role: InputMaybe<Scalars['ID']['input']>;
+  savedAlbums: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
+  savedTracks: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
   socialEmails: InputMaybe<Scalars['Boolean']['input']>;
   username: InputMaybe<Scalars['String']['input']>;
 };
@@ -1337,42 +1511,87 @@ export type UsersPermissionsUserRelationResponseCollection = {
   data: Array<UsersPermissionsUserEntity>;
 };
 
-export type AlbumListQueryVariables = Exact<{ [key: string]: never; }>;
+export type AlbumPreviewFragment = { __typename?: 'AlbumEntity', id: number, attributes: { __typename?: 'Album', name: string, cover: { __typename?: 'UploadFileEntityResponse', data: { __typename?: 'UploadFileEntity', attributes: { __typename?: 'UploadFile', url: string } } }, artist: { __typename?: 'ArtistEntityResponse', data: { __typename?: 'ArtistEntity', attributes: { __typename?: 'Artist', name: string } } }, tracks: { __typename?: 'TrackRelationResponseCollection', data: Array<{ __typename?: 'TrackEntity', id: number }> } } };
+
+export type AlbumFragment = { __typename?: 'AlbumEntity', id: number, attributes: { __typename?: 'Album', name: string, genre: string, albumType: Enum_Album_Albumtype, duration: number, releaseDate: any, cover: { __typename?: 'UploadFileEntityResponse', data: { __typename?: 'UploadFileEntity', attributes: { __typename?: 'UploadFile', url: string } } }, tracks: { __typename?: 'TrackRelationResponseCollection', data: Array<{ __typename?: 'TrackEntity', id: number, attributes: { __typename?: 'Track', name: string, duration: number, playCount: number, audio: { __typename?: 'UploadFileEntityResponse', data: { __typename?: 'UploadFileEntity', attributes: { __typename?: 'UploadFile', name: string, url: string } } }, album: { __typename?: 'AlbumEntityResponse', data: { __typename?: 'AlbumEntity', id: number, attributes: { __typename?: 'Album', name: string, releaseDate: any, cover: { __typename?: 'UploadFileEntityResponse', data: { __typename?: 'UploadFileEntity', attributes: { __typename?: 'UploadFile', url: string } } } } } }, artist: { __typename?: 'ArtistEntityResponse', data: { __typename?: 'ArtistEntity', id: number, attributes: { __typename?: 'Artist', name: string } } } } }> }, artist: { __typename?: 'ArtistEntityResponse', data: { __typename?: 'ArtistEntity', id: number, attributes: { __typename?: 'Artist', name: string, image: { __typename?: 'UploadFileEntityResponse', data: { __typename?: 'UploadFileEntity', attributes: { __typename?: 'UploadFile', url: string } } } } } } } };
+
+export type CheckUserSavedAlbumsQueryVariables = Exact<{
+  albums: Array<InputMaybe<Scalars['ID']['input']>> | InputMaybe<Scalars['ID']['input']>;
+}>;
 
 
-export type AlbumListQuery = { __typename?: 'Query', albums: { __typename?: 'AlbumEntityResponseCollection', data: Array<{ __typename?: 'AlbumEntity', id: number, attributes: { __typename?: 'Album', name: string, cover: { __typename?: 'UploadFileEntityResponse', data: { __typename?: 'UploadFileEntity', attributes: { __typename?: 'UploadFile', url: string } } }, artist: { __typename?: 'ArtistEntityResponse', data: { __typename?: 'ArtistEntity', id: number, attributes: { __typename?: 'Artist', name: string } } } } }> } };
+export type CheckUserSavedAlbumsQuery = { __typename?: 'Query', checkUserSavedAlbums: { __typename?: 'CheckUserSavedAlbumsResponse', albums: Array<{ __typename?: 'SavedStatus', isSaved: boolean }> } };
 
-export type AlbumTrackListQueryVariables = Exact<{
+export type GetAlbumTracksQueryVariables = Exact<{
   albumId: Scalars['ID']['input'];
 }>;
 
 
-export type AlbumTrackListQuery = { __typename?: 'Query', album: { __typename?: 'AlbumEntityResponse', data: { __typename?: 'AlbumEntity', attributes: { __typename?: 'Album', tracks: { __typename?: 'TrackRelationResponseCollection', data: Array<{ __typename?: 'TrackEntity', id: number, attributes: { __typename?: 'Track', name: string, duration: number, playCount: number, audio: { __typename?: 'UploadFileEntityResponse', data: { __typename?: 'UploadFileEntity', attributes: { __typename?: 'UploadFile', name: string, url: string } } }, album: { __typename?: 'AlbumEntityResponse', data: { __typename?: 'AlbumEntity', id: number, attributes: { __typename?: 'Album', name: string, releaseDate: any, cover: { __typename?: 'UploadFileEntityResponse', data: { __typename?: 'UploadFileEntity', attributes: { __typename?: 'UploadFile', url: string } } } } } }, artist: { __typename?: 'ArtistEntityResponse', data: { __typename?: 'ArtistEntity', id: number, attributes: { __typename?: 'Artist', name: string } } } } }> } } } } };
+export type GetAlbumTracksQuery = { __typename?: 'Query', album: { __typename?: 'AlbumEntityResponse', data: { __typename?: 'AlbumEntity', attributes: { __typename?: 'Album', tracks: { __typename?: 'TrackRelationResponseCollection', data: Array<{ __typename?: 'TrackEntity', id: number, attributes: { __typename?: 'Track', name: string, duration: number, playCount: number, audio: { __typename?: 'UploadFileEntityResponse', data: { __typename?: 'UploadFileEntity', attributes: { __typename?: 'UploadFile', name: string, url: string } } }, album: { __typename?: 'AlbumEntityResponse', data: { __typename?: 'AlbumEntity', id: number, attributes: { __typename?: 'Album', name: string, releaseDate: any, cover: { __typename?: 'UploadFileEntityResponse', data: { __typename?: 'UploadFileEntity', attributes: { __typename?: 'UploadFile', url: string } } } } } }, artist: { __typename?: 'ArtistEntityResponse', data: { __typename?: 'ArtistEntity', id: number, attributes: { __typename?: 'Artist', name: string } } } } }> } } } } };
 
-export type AlbumFragment = { __typename?: 'AlbumEntity', id: number, attributes: { __typename?: 'Album', name: string, genre: string, albumType: Enum_Album_Albumtype, duration: number, releaseDate: any, cover: { __typename?: 'UploadFileEntityResponse', data: { __typename?: 'UploadFileEntity', attributes: { __typename?: 'UploadFile', url: string } } }, tracks: { __typename?: 'TrackRelationResponseCollection', data: Array<{ __typename?: 'TrackEntity', id: number, attributes: { __typename?: 'Track', name: string, duration: number, playCount: number, audio: { __typename?: 'UploadFileEntityResponse', data: { __typename?: 'UploadFileEntity', attributes: { __typename?: 'UploadFile', name: string, url: string } } }, album: { __typename?: 'AlbumEntityResponse', data: { __typename?: 'AlbumEntity', id: number, attributes: { __typename?: 'Album', name: string, releaseDate: any, cover: { __typename?: 'UploadFileEntityResponse', data: { __typename?: 'UploadFileEntity', attributes: { __typename?: 'UploadFile', url: string } } } } } }, artist: { __typename?: 'ArtistEntityResponse', data: { __typename?: 'ArtistEntity', id: number, attributes: { __typename?: 'Artist', name: string } } } } }> }, artist: { __typename?: 'ArtistEntityResponse', data: { __typename?: 'ArtistEntity', id: number, attributes: { __typename?: 'Artist', name: string, image: { __typename?: 'UploadFileEntityResponse', data: { __typename?: 'UploadFileEntity', attributes: { __typename?: 'UploadFile', url: string } } } } } } } };
-
-export type AlbumQueryVariables = Exact<{
+export type GetAlbumQueryVariables = Exact<{
   id: Scalars['ID']['input'];
 }>;
 
 
-export type AlbumQuery = { __typename?: 'Query', album: { __typename?: 'AlbumEntityResponse', data: { __typename?: 'AlbumEntity', id: number, attributes: { __typename?: 'Album', name: string, genre: string, albumType: Enum_Album_Albumtype, duration: number, releaseDate: any, cover: { __typename?: 'UploadFileEntityResponse', data: { __typename?: 'UploadFileEntity', attributes: { __typename?: 'UploadFile', url: string } } }, tracks: { __typename?: 'TrackRelationResponseCollection', data: Array<{ __typename?: 'TrackEntity', id: number, attributes: { __typename?: 'Track', name: string, duration: number, playCount: number, audio: { __typename?: 'UploadFileEntityResponse', data: { __typename?: 'UploadFileEntity', attributes: { __typename?: 'UploadFile', name: string, url: string } } }, album: { __typename?: 'AlbumEntityResponse', data: { __typename?: 'AlbumEntity', id: number, attributes: { __typename?: 'Album', name: string, releaseDate: any, cover: { __typename?: 'UploadFileEntityResponse', data: { __typename?: 'UploadFileEntity', attributes: { __typename?: 'UploadFile', url: string } } } } } }, artist: { __typename?: 'ArtistEntityResponse', data: { __typename?: 'ArtistEntity', id: number, attributes: { __typename?: 'Artist', name: string } } } } }> }, artist: { __typename?: 'ArtistEntityResponse', data: { __typename?: 'ArtistEntity', id: number, attributes: { __typename?: 'Artist', name: string, image: { __typename?: 'UploadFileEntityResponse', data: { __typename?: 'UploadFileEntity', attributes: { __typename?: 'UploadFile', url: string } } } } } } } } } };
+export type GetAlbumQuery = { __typename?: 'Query', album: { __typename?: 'AlbumEntityResponse', data: { __typename?: 'AlbumEntity', id: number, attributes: { __typename?: 'Album', name: string, genre: string, albumType: Enum_Album_Albumtype, duration: number, releaseDate: any, cover: { __typename?: 'UploadFileEntityResponse', data: { __typename?: 'UploadFileEntity', attributes: { __typename?: 'UploadFile', url: string } } }, tracks: { __typename?: 'TrackRelationResponseCollection', data: Array<{ __typename?: 'TrackEntity', id: number, attributes: { __typename?: 'Track', name: string, duration: number, playCount: number, audio: { __typename?: 'UploadFileEntityResponse', data: { __typename?: 'UploadFileEntity', attributes: { __typename?: 'UploadFile', name: string, url: string } } }, album: { __typename?: 'AlbumEntityResponse', data: { __typename?: 'AlbumEntity', id: number, attributes: { __typename?: 'Album', name: string, releaseDate: any, cover: { __typename?: 'UploadFileEntityResponse', data: { __typename?: 'UploadFileEntity', attributes: { __typename?: 'UploadFile', url: string } } } } } }, artist: { __typename?: 'ArtistEntityResponse', data: { __typename?: 'ArtistEntity', id: number, attributes: { __typename?: 'Artist', name: string } } } } }> }, artist: { __typename?: 'ArtistEntityResponse', data: { __typename?: 'ArtistEntity', id: number, attributes: { __typename?: 'Artist', name: string, image: { __typename?: 'UploadFileEntityResponse', data: { __typename?: 'UploadFileEntity', attributes: { __typename?: 'UploadFile', url: string } } } } } } } } } };
 
-export type ArtistPopularTrackListQueryVariables = Exact<{
+export type GetSeveralAlbumsQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetSeveralAlbumsQuery = { __typename?: 'Query', albums: { __typename?: 'AlbumEntityResponseCollection', data: Array<{ __typename?: 'AlbumEntity', id: number, attributes: { __typename?: 'Album', name: string, cover: { __typename?: 'UploadFileEntityResponse', data: { __typename?: 'UploadFileEntity', attributes: { __typename?: 'UploadFile', url: string } } }, artist: { __typename?: 'ArtistEntityResponse', data: { __typename?: 'ArtistEntity', attributes: { __typename?: 'Artist', name: string } } }, tracks: { __typename?: 'TrackRelationResponseCollection', data: Array<{ __typename?: 'TrackEntity', id: number }> } } }> } };
+
+export type GetUserSavedAlbumsQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetUserSavedAlbumsQuery = { __typename?: 'Query', me: { __typename?: 'UsersPermissionsMe', savedAlbums: Array<{ __typename?: 'SavedAlbum', createdAt: any, album: { __typename?: 'AlbumEntityResponse', data: { __typename?: 'AlbumEntity', id: number, attributes: { __typename?: 'Album', name: string, cover: { __typename?: 'UploadFileEntityResponse', data: { __typename?: 'UploadFileEntity', attributes: { __typename?: 'UploadFile', url: string } } }, artist: { __typename?: 'ArtistEntityResponse', data: { __typename?: 'ArtistEntity', attributes: { __typename?: 'Artist', name: string } } }, tracks: { __typename?: 'TrackRelationResponseCollection', data: Array<{ __typename?: 'TrackEntity', id: number }> } } } } }> } };
+
+export type RemoveUserSavedAlbumMutationVariables = Exact<{
+  albumId: Scalars['ID']['input'];
+}>;
+
+
+export type RemoveUserSavedAlbumMutation = { __typename?: 'Mutation', deleteSavedAlbum: { __typename?: 'SavedStatus', isSaved: boolean } };
+
+export type SaveAlbumForCurrentUserMutationVariables = Exact<{
+  albumId: Scalars['ID']['input'];
+}>;
+
+
+export type SaveAlbumForCurrentUserMutation = { __typename?: 'Mutation', createSavedAlbum: { __typename?: 'SavedStatus', isSaved: boolean } };
+
+export type ArtistPreviewFragment = { __typename?: 'ArtistEntity', id: number, attributes: { __typename?: 'Artist', name: string, image: { __typename?: 'UploadFileEntityResponse', data: { __typename?: 'UploadFileEntity', attributes: { __typename?: 'UploadFile', url: string } } } } };
+
+export type ArtistFragment = { __typename?: 'ArtistEntity', id: number, attributes: { __typename?: 'Artist', name: string, albums: { __typename?: 'AlbumRelationResponseCollection', data: Array<{ __typename?: 'AlbumEntity', id: number, attributes: { __typename?: 'Album', name: string, genre: string, albumType: Enum_Album_Albumtype, duration: number, releaseDate: any, cover: { __typename?: 'UploadFileEntityResponse', data: { __typename?: 'UploadFileEntity', attributes: { __typename?: 'UploadFile', url: string } } }, tracks: { __typename?: 'TrackRelationResponseCollection', data: Array<{ __typename?: 'TrackEntity', id: number, attributes: { __typename?: 'Track', name: string, duration: number, playCount: number, audio: { __typename?: 'UploadFileEntityResponse', data: { __typename?: 'UploadFileEntity', attributes: { __typename?: 'UploadFile', name: string, url: string } } }, album: { __typename?: 'AlbumEntityResponse', data: { __typename?: 'AlbumEntity', id: number, attributes: { __typename?: 'Album', name: string, releaseDate: any, cover: { __typename?: 'UploadFileEntityResponse', data: { __typename?: 'UploadFileEntity', attributes: { __typename?: 'UploadFile', url: string } } } } } }, artist: { __typename?: 'ArtistEntityResponse', data: { __typename?: 'ArtistEntity', id: number, attributes: { __typename?: 'Artist', name: string } } } } }> }, artist: { __typename?: 'ArtistEntityResponse', data: { __typename?: 'ArtistEntity', id: number, attributes: { __typename?: 'Artist', name: string, image: { __typename?: 'UploadFileEntityResponse', data: { __typename?: 'UploadFileEntity', attributes: { __typename?: 'UploadFile', url: string } } } } } } } }> }, image: { __typename?: 'UploadFileEntityResponse', data: { __typename?: 'UploadFileEntity', attributes: { __typename?: 'UploadFile', url: string } } } } };
+
+export type GetArtistAlbumsQueryVariables = Exact<{
   artistId: Scalars['ID']['input'];
 }>;
 
 
-export type ArtistPopularTrackListQuery = { __typename?: 'Query', popularTracks: { __typename?: 'TrackEntityResponseCollection', data: Array<{ __typename?: 'TrackEntity', id: number, attributes: { __typename?: 'Track', name: string, duration: number, playCount: number, audio: { __typename?: 'UploadFileEntityResponse', data: { __typename?: 'UploadFileEntity', attributes: { __typename?: 'UploadFile', name: string, url: string } } }, album: { __typename?: 'AlbumEntityResponse', data: { __typename?: 'AlbumEntity', id: number, attributes: { __typename?: 'Album', name: string, releaseDate: any, cover: { __typename?: 'UploadFileEntityResponse', data: { __typename?: 'UploadFileEntity', attributes: { __typename?: 'UploadFile', url: string } } } } } }, artist: { __typename?: 'ArtistEntityResponse', data: { __typename?: 'ArtistEntity', id: number, attributes: { __typename?: 'Artist', name: string } } } } }> } };
+export type GetArtistAlbumsQuery = { __typename?: 'Query', artist: { __typename?: 'ArtistEntityResponse', data: { __typename?: 'ArtistEntity', attributes: { __typename?: 'Artist', albums: { __typename?: 'AlbumRelationResponseCollection', data: Array<{ __typename?: 'AlbumEntity', id: number, attributes: { __typename?: 'Album', name: string, cover: { __typename?: 'UploadFileEntityResponse', data: { __typename?: 'UploadFileEntity', attributes: { __typename?: 'UploadFile', url: string } } }, artist: { __typename?: 'ArtistEntityResponse', data: { __typename?: 'ArtistEntity', attributes: { __typename?: 'Artist', name: string } } }, tracks: { __typename?: 'TrackRelationResponseCollection', data: Array<{ __typename?: 'TrackEntity', id: number }> } } }> } } } } };
 
-export type ArtistFragment = { __typename?: 'ArtistEntity', id: number, attributes: { __typename?: 'Artist', name: string, albums: { __typename?: 'AlbumRelationResponseCollection', data: Array<{ __typename?: 'AlbumEntity', id: number, attributes: { __typename?: 'Album', name: string, genre: string, albumType: Enum_Album_Albumtype, duration: number, releaseDate: any, cover: { __typename?: 'UploadFileEntityResponse', data: { __typename?: 'UploadFileEntity', attributes: { __typename?: 'UploadFile', url: string } } }, tracks: { __typename?: 'TrackRelationResponseCollection', data: Array<{ __typename?: 'TrackEntity', id: number, attributes: { __typename?: 'Track', name: string, duration: number, playCount: number, audio: { __typename?: 'UploadFileEntityResponse', data: { __typename?: 'UploadFileEntity', attributes: { __typename?: 'UploadFile', name: string, url: string } } }, album: { __typename?: 'AlbumEntityResponse', data: { __typename?: 'AlbumEntity', id: number, attributes: { __typename?: 'Album', name: string, releaseDate: any, cover: { __typename?: 'UploadFileEntityResponse', data: { __typename?: 'UploadFileEntity', attributes: { __typename?: 'UploadFile', url: string } } } } } }, artist: { __typename?: 'ArtistEntityResponse', data: { __typename?: 'ArtistEntity', id: number, attributes: { __typename?: 'Artist', name: string } } } } }> }, artist: { __typename?: 'ArtistEntityResponse', data: { __typename?: 'ArtistEntity', id: number, attributes: { __typename?: 'Artist', name: string, image: { __typename?: 'UploadFileEntityResponse', data: { __typename?: 'UploadFileEntity', attributes: { __typename?: 'UploadFile', url: string } } } } } } } }> }, image: { __typename?: 'UploadFileEntityResponse', data: { __typename?: 'UploadFileEntity', attributes: { __typename?: 'UploadFile', url: string } } } } };
+export type GetArtistTopTracksQueryVariables = Exact<{
+  artistId: Scalars['ID']['input'];
+}>;
 
-export type ArtistQueryVariables = Exact<{
+
+export type GetArtistTopTracksQuery = { __typename?: 'Query', topTracks: { __typename?: 'TrackEntityResponseCollection', data: Array<{ __typename?: 'TrackEntity', id: number, attributes: { __typename?: 'Track', name: string, duration: number, playCount: number, audio: { __typename?: 'UploadFileEntityResponse', data: { __typename?: 'UploadFileEntity', attributes: { __typename?: 'UploadFile', name: string, url: string } } }, album: { __typename?: 'AlbumEntityResponse', data: { __typename?: 'AlbumEntity', id: number, attributes: { __typename?: 'Album', name: string, releaseDate: any, cover: { __typename?: 'UploadFileEntityResponse', data: { __typename?: 'UploadFileEntity', attributes: { __typename?: 'UploadFile', url: string } } } } } }, artist: { __typename?: 'ArtistEntityResponse', data: { __typename?: 'ArtistEntity', id: number, attributes: { __typename?: 'Artist', name: string } } } } }> } };
+
+export type GetArtistQueryVariables = Exact<{
   id: Scalars['ID']['input'];
 }>;
 
 
-export type ArtistQuery = { __typename?: 'Query', artist: { __typename?: 'ArtistEntityResponse', data: { __typename?: 'ArtistEntity', id: number, attributes: { __typename?: 'Artist', name: string, albums: { __typename?: 'AlbumRelationResponseCollection', data: Array<{ __typename?: 'AlbumEntity', id: number, attributes: { __typename?: 'Album', name: string, genre: string, albumType: Enum_Album_Albumtype, duration: number, releaseDate: any, cover: { __typename?: 'UploadFileEntityResponse', data: { __typename?: 'UploadFileEntity', attributes: { __typename?: 'UploadFile', url: string } } }, tracks: { __typename?: 'TrackRelationResponseCollection', data: Array<{ __typename?: 'TrackEntity', id: number, attributes: { __typename?: 'Track', name: string, duration: number, playCount: number, audio: { __typename?: 'UploadFileEntityResponse', data: { __typename?: 'UploadFileEntity', attributes: { __typename?: 'UploadFile', name: string, url: string } } }, album: { __typename?: 'AlbumEntityResponse', data: { __typename?: 'AlbumEntity', id: number, attributes: { __typename?: 'Album', name: string, releaseDate: any, cover: { __typename?: 'UploadFileEntityResponse', data: { __typename?: 'UploadFileEntity', attributes: { __typename?: 'UploadFile', url: string } } } } } }, artist: { __typename?: 'ArtistEntityResponse', data: { __typename?: 'ArtistEntity', id: number, attributes: { __typename?: 'Artist', name: string } } } } }> }, artist: { __typename?: 'ArtistEntityResponse', data: { __typename?: 'ArtistEntity', id: number, attributes: { __typename?: 'Artist', name: string, image: { __typename?: 'UploadFileEntityResponse', data: { __typename?: 'UploadFileEntity', attributes: { __typename?: 'UploadFile', url: string } } } } } } } }> }, image: { __typename?: 'UploadFileEntityResponse', data: { __typename?: 'UploadFileEntity', attributes: { __typename?: 'UploadFile', url: string } } } } } }, popularTracks: { __typename?: 'TrackEntityResponseCollection', data: Array<{ __typename?: 'TrackEntity', id: number, attributes: { __typename?: 'Track', name: string, duration: number, playCount: number, audio: { __typename?: 'UploadFileEntityResponse', data: { __typename?: 'UploadFileEntity', attributes: { __typename?: 'UploadFile', name: string, url: string } } }, album: { __typename?: 'AlbumEntityResponse', data: { __typename?: 'AlbumEntity', id: number, attributes: { __typename?: 'Album', name: string, releaseDate: any, cover: { __typename?: 'UploadFileEntityResponse', data: { __typename?: 'UploadFileEntity', attributes: { __typename?: 'UploadFile', url: string } } } } } }, artist: { __typename?: 'ArtistEntityResponse', data: { __typename?: 'ArtistEntity', id: number, attributes: { __typename?: 'Artist', name: string } } } } }> } };
+export type GetArtistQuery = { __typename?: 'Query', artist: { __typename?: 'ArtistEntityResponse', data: { __typename?: 'ArtistEntity', id: number, attributes: { __typename?: 'Artist', name: string, albums: { __typename?: 'AlbumRelationResponseCollection', data: Array<{ __typename?: 'AlbumEntity', id: number, attributes: { __typename?: 'Album', name: string, cover: { __typename?: 'UploadFileEntityResponse', data: { __typename?: 'UploadFileEntity', attributes: { __typename?: 'UploadFile', url: string } } }, artist: { __typename?: 'ArtistEntityResponse', data: { __typename?: 'ArtistEntity', attributes: { __typename?: 'Artist', name: string } } }, tracks: { __typename?: 'TrackRelationResponseCollection', data: Array<{ __typename?: 'TrackEntity', id: number }> } } }> }, image: { __typename?: 'UploadFileEntityResponse', data: { __typename?: 'UploadFileEntity', attributes: { __typename?: 'UploadFile', url: string } } } } } }, topTracks: { __typename?: 'TrackEntityResponseCollection', data: Array<{ __typename?: 'TrackEntity', id: number, attributes: { __typename?: 'Track', name: string, duration: number, playCount: number, audio: { __typename?: 'UploadFileEntityResponse', data: { __typename?: 'UploadFileEntity', attributes: { __typename?: 'UploadFile', name: string, url: string } } }, album: { __typename?: 'AlbumEntityResponse', data: { __typename?: 'AlbumEntity', id: number, attributes: { __typename?: 'Album', name: string, releaseDate: any, cover: { __typename?: 'UploadFileEntityResponse', data: { __typename?: 'UploadFileEntity', attributes: { __typename?: 'UploadFile', url: string } } } } } }, artist: { __typename?: 'ArtistEntityResponse', data: { __typename?: 'ArtistEntity', id: number, attributes: { __typename?: 'Artist', name: string } } } } }> } };
+
+export type GetSeveralArtistsQueryVariables = Exact<{
+  filters: InputMaybe<ArtistFiltersInput>;
+  sort?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>> | InputMaybe<Scalars['String']['input']>>;
+}>;
+
+
+export type GetSeveralArtistsQuery = { __typename?: 'Query', artists: { __typename?: 'ArtistEntityResponseCollection', data: Array<{ __typename?: 'ArtistEntity', id: number, attributes: { __typename?: 'Artist', name: string, image: { __typename?: 'UploadFileEntityResponse', data: { __typename?: 'UploadFileEntity', attributes: { __typename?: 'UploadFile', url: string } } } } }> } };
 
 export type ChangePasswordMutationVariables = Exact<{
   currentPassword: Scalars['String']['input'];
@@ -1420,6 +1639,33 @@ export type ResetPasswordMutationVariables = Exact<{
 
 export type ResetPasswordMutation = { __typename?: 'Mutation', resetPassword: { __typename: 'UsersPermissionsLoginPayload', user: { __typename?: 'UsersPermissionsMe', email: string } } };
 
+export type CheckUserSavedTracksQueryVariables = Exact<{
+  tracks: Array<InputMaybe<Scalars['ID']['input']>> | InputMaybe<Scalars['ID']['input']>;
+}>;
+
+
+export type CheckUserSavedTracksQuery = { __typename?: 'Query', checkUserSavedTracks: { __typename?: 'CheckUserSavedTracksResponse', tracks: Array<{ __typename?: 'SavedStatus', isSaved: boolean }> } };
+
+export type GetSeveralTracksQueryVariables = Exact<{
+  filters: InputMaybe<TrackFiltersInput>;
+  sort?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>> | InputMaybe<Scalars['String']['input']>>;
+}>;
+
+
+export type GetSeveralTracksQuery = { __typename?: 'Query', tracks: { __typename?: 'TrackEntityResponseCollection', data: Array<{ __typename?: 'TrackEntity', id: number, attributes: { __typename?: 'Track', name: string, duration: number, playCount: number, audio: { __typename?: 'UploadFileEntityResponse', data: { __typename?: 'UploadFileEntity', attributes: { __typename?: 'UploadFile', name: string, url: string } } }, album: { __typename?: 'AlbumEntityResponse', data: { __typename?: 'AlbumEntity', id: number, attributes: { __typename?: 'Album', name: string, releaseDate: any, cover: { __typename?: 'UploadFileEntityResponse', data: { __typename?: 'UploadFileEntity', attributes: { __typename?: 'UploadFile', url: string } } } } } }, artist: { __typename?: 'ArtistEntityResponse', data: { __typename?: 'ArtistEntity', id: number, attributes: { __typename?: 'Artist', name: string } } } } }> } };
+
+export type GetTrackQueryVariables = Exact<{
+  id: Scalars['ID']['input'];
+}>;
+
+
+export type GetTrackQuery = { __typename?: 'Query', track: { __typename?: 'TrackEntityResponse', data: { __typename?: 'TrackEntity', id: number, attributes: { __typename?: 'Track', name: string, duration: number, playCount: number, audio: { __typename?: 'UploadFileEntityResponse', data: { __typename?: 'UploadFileEntity', attributes: { __typename?: 'UploadFile', name: string, url: string } } }, album: { __typename?: 'AlbumEntityResponse', data: { __typename?: 'AlbumEntity', id: number, attributes: { __typename?: 'Album', name: string, releaseDate: any, cover: { __typename?: 'UploadFileEntityResponse', data: { __typename?: 'UploadFileEntity', attributes: { __typename?: 'UploadFile', url: string } } } } } }, artist: { __typename?: 'ArtistEntityResponse', data: { __typename?: 'ArtistEntity', id: number, attributes: { __typename?: 'Artist', name: string } } } } } } };
+
+export type GetUserSavedTracksQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetUserSavedTracksQuery = { __typename?: 'Query', me: { __typename?: 'UsersPermissionsMe', savedTracks: Array<{ __typename?: 'SavedTrack', createdAt: any, track: { __typename?: 'TrackEntityResponse', data: { __typename?: 'TrackEntity', id: number, attributes: { __typename?: 'Track', name: string, duration: number, playCount: number, audio: { __typename?: 'UploadFileEntityResponse', data: { __typename?: 'UploadFileEntity', attributes: { __typename?: 'UploadFile', name: string, url: string } } }, album: { __typename?: 'AlbumEntityResponse', data: { __typename?: 'AlbumEntity', id: number, attributes: { __typename?: 'Album', name: string, releaseDate: any, cover: { __typename?: 'UploadFileEntityResponse', data: { __typename?: 'UploadFileEntity', attributes: { __typename?: 'UploadFile', url: string } } } } } }, artist: { __typename?: 'ArtistEntityResponse', data: { __typename?: 'ArtistEntity', id: number, attributes: { __typename?: 'Artist', name: string } } } } } } }> } };
+
 export type TrackIncrementPlayCountQueryVariables = Exact<{
   trackId: Scalars['ID']['input'];
 }>;
@@ -1427,29 +1673,49 @@ export type TrackIncrementPlayCountQueryVariables = Exact<{
 
 export type TrackIncrementPlayCountQuery = { __typename?: 'Query', trackIncrementPlayCount: { __typename?: 'TrackIncrementPlayCountResponse', playCount: number } };
 
-export type TrackListQueryVariables = Exact<{
-  filters: InputMaybe<TrackFiltersInput>;
-  sort?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>> | InputMaybe<Scalars['String']['input']>>;
+export type RemoveUserSavedTrackMutationVariables = Exact<{
+  trackId: Scalars['ID']['input'];
 }>;
 
 
-export type TrackListQuery = { __typename?: 'Query', tracks: { __typename?: 'TrackEntityResponseCollection', data: Array<{ __typename?: 'TrackEntity', id: number, attributes: { __typename?: 'Track', name: string, duration: number, playCount: number, audio: { __typename?: 'UploadFileEntityResponse', data: { __typename?: 'UploadFileEntity', attributes: { __typename?: 'UploadFile', name: string, url: string } } }, album: { __typename?: 'AlbumEntityResponse', data: { __typename?: 'AlbumEntity', id: number, attributes: { __typename?: 'Album', name: string, releaseDate: any, cover: { __typename?: 'UploadFileEntityResponse', data: { __typename?: 'UploadFileEntity', attributes: { __typename?: 'UploadFile', url: string } } } } } }, artist: { __typename?: 'ArtistEntityResponse', data: { __typename?: 'ArtistEntity', id: number, attributes: { __typename?: 'Artist', name: string } } } } }> } };
+export type RemoveUserSavedTrackMutation = { __typename?: 'Mutation', deleteSavedTrack: { __typename?: 'SavedStatus', isSaved: boolean } };
+
+export type SaveTrackForCurrentUserMutationVariables = Exact<{
+  trackId: Scalars['ID']['input'];
+}>;
+
+
+export type SaveTrackForCurrentUserMutation = { __typename?: 'Mutation', createSavedTrack: { __typename?: 'SavedStatus', isSaved: boolean } };
+
+export type SavedTrackFragment = { __typename?: 'SavedTrack', createdAt: any, track: { __typename?: 'TrackEntityResponse', data: { __typename?: 'TrackEntity', id: number, attributes: { __typename?: 'Track', name: string, duration: number, playCount: number, audio: { __typename?: 'UploadFileEntityResponse', data: { __typename?: 'UploadFileEntity', attributes: { __typename?: 'UploadFile', name: string, url: string } } }, album: { __typename?: 'AlbumEntityResponse', data: { __typename?: 'AlbumEntity', id: number, attributes: { __typename?: 'Album', name: string, releaseDate: any, cover: { __typename?: 'UploadFileEntityResponse', data: { __typename?: 'UploadFileEntity', attributes: { __typename?: 'UploadFile', url: string } } } } } }, artist: { __typename?: 'ArtistEntityResponse', data: { __typename?: 'ArtistEntity', id: number, attributes: { __typename?: 'Artist', name: string } } } } } } };
 
 export type TrackFragment = { __typename?: 'TrackEntity', id: number, attributes: { __typename?: 'Track', name: string, duration: number, playCount: number, audio: { __typename?: 'UploadFileEntityResponse', data: { __typename?: 'UploadFileEntity', attributes: { __typename?: 'UploadFile', name: string, url: string } } }, album: { __typename?: 'AlbumEntityResponse', data: { __typename?: 'AlbumEntity', id: number, attributes: { __typename?: 'Album', name: string, releaseDate: any, cover: { __typename?: 'UploadFileEntityResponse', data: { __typename?: 'UploadFileEntity', attributes: { __typename?: 'UploadFile', url: string } } } } } }, artist: { __typename?: 'ArtistEntityResponse', data: { __typename?: 'ArtistEntity', id: number, attributes: { __typename?: 'Artist', name: string } } } } };
 
-export type TrackQueryVariables = Exact<{
-  id: Scalars['ID']['input'];
+export type FollowArtistMutationVariables = Exact<{
+  artistId: Scalars['ID']['input'];
 }>;
 
 
-export type TrackQuery = { __typename?: 'Query', track: { __typename?: 'TrackEntityResponse', data: { __typename?: 'TrackEntity', id: number, attributes: { __typename?: 'Track', name: string, duration: number, playCount: number, audio: { __typename?: 'UploadFileEntityResponse', data: { __typename?: 'UploadFileEntity', attributes: { __typename?: 'UploadFile', name: string, url: string } } }, album: { __typename?: 'AlbumEntityResponse', data: { __typename?: 'AlbumEntity', id: number, attributes: { __typename?: 'Album', name: string, releaseDate: any, cover: { __typename?: 'UploadFileEntityResponse', data: { __typename?: 'UploadFileEntity', attributes: { __typename?: 'UploadFile', url: string } } } } } }, artist: { __typename?: 'ArtistEntityResponse', data: { __typename?: 'ArtistEntity', id: number, attributes: { __typename?: 'Artist', name: string } } } } } } };
+export type FollowArtistMutation = { __typename?: 'Mutation', createFollowingArtist: { __typename?: 'FollowedStatus', isFollowed: boolean } };
+
+export type GetCurrentUserProfileQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetCurrentUserProfileQuery = { __typename?: 'Query', me: { __typename?: 'UsersPermissionsMe', id: number, username: string, email: string, profileName: string, dob: any, gender: Enum_Userspermissionsuser_Gender, marketingEmails: boolean, communicationEmails: boolean, socialEmails: boolean, image: { __typename?: 'UploadFile', url: string } } };
+
+export type GetUserTopItemsQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetUserTopItemsQuery = { __typename?: 'Query', userTopItems: boolean };
 
 export type MeFragment = { __typename?: 'UsersPermissionsMe', id: number, username: string, email: string, profileName: string, dob: any, gender: Enum_Userspermissionsuser_Gender, marketingEmails: boolean, communicationEmails: boolean, socialEmails: boolean, image: { __typename?: 'UploadFile', url: string } };
 
-export type MeQueryVariables = Exact<{ [key: string]: never; }>;
+export type UnfollowArtistMutationVariables = Exact<{
+  artistId: Scalars['ID']['input'];
+}>;
 
 
-export type MeQuery = { __typename?: 'Query', me: { __typename?: 'UsersPermissionsMe', id: number, username: string, email: string, profileName: string, dob: any, gender: Enum_Userspermissionsuser_Gender, marketingEmails: boolean, communicationEmails: boolean, socialEmails: boolean, image: { __typename?: 'UploadFile', url: string } } };
+export type UnfollowArtistMutation = { __typename?: 'Mutation', deleteFollowingArtist: { __typename?: 'FollowedStatus', isFollowed: boolean } };
 
 export type UpdateUserNotificationsMutationVariables = Exact<{
   data: InputMaybe<UpdateUserNotificationsInput>;
@@ -1467,6 +1733,48 @@ export type UpdateUserProfileMutation = { __typename?: 'Mutation', updateUserPro
 
 export type UserFragment = { __typename?: 'UsersPermissionsUserEntity', id: number, attributes: { __typename?: 'UsersPermissionsUser', username: string, profileName: string, image: { __typename?: 'UploadFileEntityResponse', data: { __typename?: 'UploadFileEntity', attributes: { __typename?: 'UploadFile', url: string } } } } };
 
+export const AlbumPreviewFragmentDoc = gql`
+    fragment AlbumPreview on AlbumEntity {
+  id
+  attributes {
+    name
+    cover {
+      data {
+        attributes {
+          url
+        }
+      }
+    }
+    artist {
+      data {
+        attributes {
+          name
+        }
+      }
+    }
+    tracks {
+      data {
+        id
+      }
+    }
+  }
+}
+    `;
+export const ArtistPreviewFragmentDoc = gql`
+    fragment ArtistPreview on ArtistEntity {
+  id
+  attributes {
+    name
+    image {
+      data {
+        attributes {
+          url
+        }
+      }
+    }
+  }
+}
+    `;
 export const TrackFragmentDoc = gql`
     fragment Track on TrackEntity {
   id
@@ -1568,6 +1876,16 @@ export const ArtistFragmentDoc = gql`
   }
 }
     ${AlbumFragmentDoc}`;
+export const SavedTrackFragmentDoc = gql`
+    fragment SavedTrack on SavedTrack {
+  createdAt
+  track {
+    data {
+      ...Track
+    }
+  }
+}
+    ${TrackFragmentDoc}`;
 export const MeFragmentDoc = gql`
     fragment Me on UsersPermissionsMe {
   id
@@ -1600,67 +1918,50 @@ export const UserFragmentDoc = gql`
   }
 }
     `;
-export const AlbumListDocument = gql`
-    query AlbumList {
-  albums {
-    data {
-      id
-      attributes {
-        name
-        cover {
-          data {
-            attributes {
-              url
-            }
-          }
-        }
-        artist {
-          data {
-            id
-            attributes {
-              name
-            }
-          }
-        }
-      }
+export const CheckUserSavedAlbumsDocument = gql`
+    query CheckUserSavedAlbums($albums: [ID]!) {
+  checkUserSavedAlbums(albums: $albums) {
+    albums {
+      isSaved
     }
   }
 }
     `;
 
 /**
- * __useAlbumListQuery__
+ * __useCheckUserSavedAlbumsQuery__
  *
- * To run a query within a React component, call `useAlbumListQuery` and pass it any options that fit your needs.
- * When your component renders, `useAlbumListQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * To run a query within a React component, call `useCheckUserSavedAlbumsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useCheckUserSavedAlbumsQuery` returns an object from Apollo Client that contains loading, error, and data properties
  * you can use to render your UI.
  *
  * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
  *
  * @example
- * const { data, loading, error } = useAlbumListQuery({
+ * const { data, loading, error } = useCheckUserSavedAlbumsQuery({
  *   variables: {
+ *      albums: // value for 'albums'
  *   },
  * });
  */
-export function useAlbumListQuery(baseOptions?: Apollo.QueryHookOptions<AlbumListQuery, AlbumListQueryVariables>) {
+export function useCheckUserSavedAlbumsQuery(baseOptions: Apollo.QueryHookOptions<CheckUserSavedAlbumsQuery, CheckUserSavedAlbumsQueryVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<AlbumListQuery, AlbumListQueryVariables>(AlbumListDocument, options);
+        return Apollo.useQuery<CheckUserSavedAlbumsQuery, CheckUserSavedAlbumsQueryVariables>(CheckUserSavedAlbumsDocument, options);
       }
-export function useAlbumListLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<AlbumListQuery, AlbumListQueryVariables>) {
+export function useCheckUserSavedAlbumsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<CheckUserSavedAlbumsQuery, CheckUserSavedAlbumsQueryVariables>) {
           const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<AlbumListQuery, AlbumListQueryVariables>(AlbumListDocument, options);
+          return Apollo.useLazyQuery<CheckUserSavedAlbumsQuery, CheckUserSavedAlbumsQueryVariables>(CheckUserSavedAlbumsDocument, options);
         }
-export function useAlbumListSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<AlbumListQuery, AlbumListQueryVariables>) {
+export function useCheckUserSavedAlbumsSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<CheckUserSavedAlbumsQuery, CheckUserSavedAlbumsQueryVariables>) {
           const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useSuspenseQuery<AlbumListQuery, AlbumListQueryVariables>(AlbumListDocument, options);
+          return Apollo.useSuspenseQuery<CheckUserSavedAlbumsQuery, CheckUserSavedAlbumsQueryVariables>(CheckUserSavedAlbumsDocument, options);
         }
-export type AlbumListQueryHookResult = ReturnType<typeof useAlbumListQuery>;
-export type AlbumListLazyQueryHookResult = ReturnType<typeof useAlbumListLazyQuery>;
-export type AlbumListSuspenseQueryHookResult = ReturnType<typeof useAlbumListSuspenseQuery>;
-export type AlbumListQueryResult = Apollo.QueryResult<AlbumListQuery, AlbumListQueryVariables>;
-export const AlbumTrackListDocument = gql`
-    query AlbumTrackList($albumId: ID!) {
+export type CheckUserSavedAlbumsQueryHookResult = ReturnType<typeof useCheckUserSavedAlbumsQuery>;
+export type CheckUserSavedAlbumsLazyQueryHookResult = ReturnType<typeof useCheckUserSavedAlbumsLazyQuery>;
+export type CheckUserSavedAlbumsSuspenseQueryHookResult = ReturnType<typeof useCheckUserSavedAlbumsSuspenseQuery>;
+export type CheckUserSavedAlbumsQueryResult = Apollo.QueryResult<CheckUserSavedAlbumsQuery, CheckUserSavedAlbumsQueryVariables>;
+export const GetAlbumTracksDocument = gql`
+    query GetAlbumTracks($albumId: ID!) {
   album(id: $albumId) {
     data {
       attributes {
@@ -1676,39 +1977,39 @@ export const AlbumTrackListDocument = gql`
     ${TrackFragmentDoc}`;
 
 /**
- * __useAlbumTrackListQuery__
+ * __useGetAlbumTracksQuery__
  *
- * To run a query within a React component, call `useAlbumTrackListQuery` and pass it any options that fit your needs.
- * When your component renders, `useAlbumTrackListQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * To run a query within a React component, call `useGetAlbumTracksQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetAlbumTracksQuery` returns an object from Apollo Client that contains loading, error, and data properties
  * you can use to render your UI.
  *
  * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
  *
  * @example
- * const { data, loading, error } = useAlbumTrackListQuery({
+ * const { data, loading, error } = useGetAlbumTracksQuery({
  *   variables: {
  *      albumId: // value for 'albumId'
  *   },
  * });
  */
-export function useAlbumTrackListQuery(baseOptions: Apollo.QueryHookOptions<AlbumTrackListQuery, AlbumTrackListQueryVariables>) {
+export function useGetAlbumTracksQuery(baseOptions: Apollo.QueryHookOptions<GetAlbumTracksQuery, GetAlbumTracksQueryVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<AlbumTrackListQuery, AlbumTrackListQueryVariables>(AlbumTrackListDocument, options);
+        return Apollo.useQuery<GetAlbumTracksQuery, GetAlbumTracksQueryVariables>(GetAlbumTracksDocument, options);
       }
-export function useAlbumTrackListLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<AlbumTrackListQuery, AlbumTrackListQueryVariables>) {
+export function useGetAlbumTracksLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetAlbumTracksQuery, GetAlbumTracksQueryVariables>) {
           const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<AlbumTrackListQuery, AlbumTrackListQueryVariables>(AlbumTrackListDocument, options);
+          return Apollo.useLazyQuery<GetAlbumTracksQuery, GetAlbumTracksQueryVariables>(GetAlbumTracksDocument, options);
         }
-export function useAlbumTrackListSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<AlbumTrackListQuery, AlbumTrackListQueryVariables>) {
+export function useGetAlbumTracksSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<GetAlbumTracksQuery, GetAlbumTracksQueryVariables>) {
           const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useSuspenseQuery<AlbumTrackListQuery, AlbumTrackListQueryVariables>(AlbumTrackListDocument, options);
+          return Apollo.useSuspenseQuery<GetAlbumTracksQuery, GetAlbumTracksQueryVariables>(GetAlbumTracksDocument, options);
         }
-export type AlbumTrackListQueryHookResult = ReturnType<typeof useAlbumTrackListQuery>;
-export type AlbumTrackListLazyQueryHookResult = ReturnType<typeof useAlbumTrackListLazyQuery>;
-export type AlbumTrackListSuspenseQueryHookResult = ReturnType<typeof useAlbumTrackListSuspenseQuery>;
-export type AlbumTrackListQueryResult = Apollo.QueryResult<AlbumTrackListQuery, AlbumTrackListQueryVariables>;
-export const AlbumDocument = gql`
-    query Album($id: ID!) {
+export type GetAlbumTracksQueryHookResult = ReturnType<typeof useGetAlbumTracksQuery>;
+export type GetAlbumTracksLazyQueryHookResult = ReturnType<typeof useGetAlbumTracksLazyQuery>;
+export type GetAlbumTracksSuspenseQueryHookResult = ReturnType<typeof useGetAlbumTracksSuspenseQuery>;
+export type GetAlbumTracksQueryResult = Apollo.QueryResult<GetAlbumTracksQuery, GetAlbumTracksQueryVariables>;
+export const GetAlbumDocument = gql`
+    query GetAlbum($id: ID!) {
   album(id: $id) {
     data {
       ...Album
@@ -1718,40 +2019,241 @@ export const AlbumDocument = gql`
     ${AlbumFragmentDoc}`;
 
 /**
- * __useAlbumQuery__
+ * __useGetAlbumQuery__
  *
- * To run a query within a React component, call `useAlbumQuery` and pass it any options that fit your needs.
- * When your component renders, `useAlbumQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * To run a query within a React component, call `useGetAlbumQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetAlbumQuery` returns an object from Apollo Client that contains loading, error, and data properties
  * you can use to render your UI.
  *
  * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
  *
  * @example
- * const { data, loading, error } = useAlbumQuery({
+ * const { data, loading, error } = useGetAlbumQuery({
  *   variables: {
  *      id: // value for 'id'
  *   },
  * });
  */
-export function useAlbumQuery(baseOptions: Apollo.QueryHookOptions<AlbumQuery, AlbumQueryVariables>) {
+export function useGetAlbumQuery(baseOptions: Apollo.QueryHookOptions<GetAlbumQuery, GetAlbumQueryVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<AlbumQuery, AlbumQueryVariables>(AlbumDocument, options);
+        return Apollo.useQuery<GetAlbumQuery, GetAlbumQueryVariables>(GetAlbumDocument, options);
       }
-export function useAlbumLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<AlbumQuery, AlbumQueryVariables>) {
+export function useGetAlbumLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetAlbumQuery, GetAlbumQueryVariables>) {
           const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<AlbumQuery, AlbumQueryVariables>(AlbumDocument, options);
+          return Apollo.useLazyQuery<GetAlbumQuery, GetAlbumQueryVariables>(GetAlbumDocument, options);
         }
-export function useAlbumSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<AlbumQuery, AlbumQueryVariables>) {
+export function useGetAlbumSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<GetAlbumQuery, GetAlbumQueryVariables>) {
           const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useSuspenseQuery<AlbumQuery, AlbumQueryVariables>(AlbumDocument, options);
+          return Apollo.useSuspenseQuery<GetAlbumQuery, GetAlbumQueryVariables>(GetAlbumDocument, options);
         }
-export type AlbumQueryHookResult = ReturnType<typeof useAlbumQuery>;
-export type AlbumLazyQueryHookResult = ReturnType<typeof useAlbumLazyQuery>;
-export type AlbumSuspenseQueryHookResult = ReturnType<typeof useAlbumSuspenseQuery>;
-export type AlbumQueryResult = Apollo.QueryResult<AlbumQuery, AlbumQueryVariables>;
-export const ArtistPopularTrackListDocument = gql`
-    query ArtistPopularTrackList($artistId: ID!) {
-  popularTracks: tracks(
+export type GetAlbumQueryHookResult = ReturnType<typeof useGetAlbumQuery>;
+export type GetAlbumLazyQueryHookResult = ReturnType<typeof useGetAlbumLazyQuery>;
+export type GetAlbumSuspenseQueryHookResult = ReturnType<typeof useGetAlbumSuspenseQuery>;
+export type GetAlbumQueryResult = Apollo.QueryResult<GetAlbumQuery, GetAlbumQueryVariables>;
+export const GetSeveralAlbumsDocument = gql`
+    query GetSeveralAlbums {
+  albums {
+    data {
+      ...AlbumPreview
+    }
+  }
+}
+    ${AlbumPreviewFragmentDoc}`;
+
+/**
+ * __useGetSeveralAlbumsQuery__
+ *
+ * To run a query within a React component, call `useGetSeveralAlbumsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetSeveralAlbumsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetSeveralAlbumsQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useGetSeveralAlbumsQuery(baseOptions?: Apollo.QueryHookOptions<GetSeveralAlbumsQuery, GetSeveralAlbumsQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetSeveralAlbumsQuery, GetSeveralAlbumsQueryVariables>(GetSeveralAlbumsDocument, options);
+      }
+export function useGetSeveralAlbumsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetSeveralAlbumsQuery, GetSeveralAlbumsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetSeveralAlbumsQuery, GetSeveralAlbumsQueryVariables>(GetSeveralAlbumsDocument, options);
+        }
+export function useGetSeveralAlbumsSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<GetSeveralAlbumsQuery, GetSeveralAlbumsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<GetSeveralAlbumsQuery, GetSeveralAlbumsQueryVariables>(GetSeveralAlbumsDocument, options);
+        }
+export type GetSeveralAlbumsQueryHookResult = ReturnType<typeof useGetSeveralAlbumsQuery>;
+export type GetSeveralAlbumsLazyQueryHookResult = ReturnType<typeof useGetSeveralAlbumsLazyQuery>;
+export type GetSeveralAlbumsSuspenseQueryHookResult = ReturnType<typeof useGetSeveralAlbumsSuspenseQuery>;
+export type GetSeveralAlbumsQueryResult = Apollo.QueryResult<GetSeveralAlbumsQuery, GetSeveralAlbumsQueryVariables>;
+export const GetUserSavedAlbumsDocument = gql`
+    query GetUserSavedAlbums {
+  me {
+    savedAlbums {
+      createdAt
+      album {
+        data {
+          ...AlbumPreview
+        }
+      }
+    }
+  }
+}
+    ${AlbumPreviewFragmentDoc}`;
+
+/**
+ * __useGetUserSavedAlbumsQuery__
+ *
+ * To run a query within a React component, call `useGetUserSavedAlbumsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetUserSavedAlbumsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetUserSavedAlbumsQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useGetUserSavedAlbumsQuery(baseOptions?: Apollo.QueryHookOptions<GetUserSavedAlbumsQuery, GetUserSavedAlbumsQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetUserSavedAlbumsQuery, GetUserSavedAlbumsQueryVariables>(GetUserSavedAlbumsDocument, options);
+      }
+export function useGetUserSavedAlbumsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetUserSavedAlbumsQuery, GetUserSavedAlbumsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetUserSavedAlbumsQuery, GetUserSavedAlbumsQueryVariables>(GetUserSavedAlbumsDocument, options);
+        }
+export function useGetUserSavedAlbumsSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<GetUserSavedAlbumsQuery, GetUserSavedAlbumsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<GetUserSavedAlbumsQuery, GetUserSavedAlbumsQueryVariables>(GetUserSavedAlbumsDocument, options);
+        }
+export type GetUserSavedAlbumsQueryHookResult = ReturnType<typeof useGetUserSavedAlbumsQuery>;
+export type GetUserSavedAlbumsLazyQueryHookResult = ReturnType<typeof useGetUserSavedAlbumsLazyQuery>;
+export type GetUserSavedAlbumsSuspenseQueryHookResult = ReturnType<typeof useGetUserSavedAlbumsSuspenseQuery>;
+export type GetUserSavedAlbumsQueryResult = Apollo.QueryResult<GetUserSavedAlbumsQuery, GetUserSavedAlbumsQueryVariables>;
+export const RemoveUserSavedAlbumDocument = gql`
+    mutation RemoveUserSavedAlbum($albumId: ID!) {
+  deleteSavedAlbum(albumId: $albumId) {
+    isSaved
+  }
+}
+    `;
+export type RemoveUserSavedAlbumMutationFn = Apollo.MutationFunction<RemoveUserSavedAlbumMutation, RemoveUserSavedAlbumMutationVariables>;
+
+/**
+ * __useRemoveUserSavedAlbumMutation__
+ *
+ * To run a mutation, you first call `useRemoveUserSavedAlbumMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useRemoveUserSavedAlbumMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [removeUserSavedAlbumMutation, { data, loading, error }] = useRemoveUserSavedAlbumMutation({
+ *   variables: {
+ *      albumId: // value for 'albumId'
+ *   },
+ * });
+ */
+export function useRemoveUserSavedAlbumMutation(baseOptions?: Apollo.MutationHookOptions<RemoveUserSavedAlbumMutation, RemoveUserSavedAlbumMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<RemoveUserSavedAlbumMutation, RemoveUserSavedAlbumMutationVariables>(RemoveUserSavedAlbumDocument, options);
+      }
+export type RemoveUserSavedAlbumMutationHookResult = ReturnType<typeof useRemoveUserSavedAlbumMutation>;
+export type RemoveUserSavedAlbumMutationResult = Apollo.MutationResult<RemoveUserSavedAlbumMutation>;
+export type RemoveUserSavedAlbumMutationOptions = Apollo.BaseMutationOptions<RemoveUserSavedAlbumMutation, RemoveUserSavedAlbumMutationVariables>;
+export const SaveAlbumForCurrentUserDocument = gql`
+    mutation SaveAlbumForCurrentUser($albumId: ID!) {
+  createSavedAlbum(albumId: $albumId) {
+    isSaved
+  }
+}
+    `;
+export type SaveAlbumForCurrentUserMutationFn = Apollo.MutationFunction<SaveAlbumForCurrentUserMutation, SaveAlbumForCurrentUserMutationVariables>;
+
+/**
+ * __useSaveAlbumForCurrentUserMutation__
+ *
+ * To run a mutation, you first call `useSaveAlbumForCurrentUserMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useSaveAlbumForCurrentUserMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [saveAlbumForCurrentUserMutation, { data, loading, error }] = useSaveAlbumForCurrentUserMutation({
+ *   variables: {
+ *      albumId: // value for 'albumId'
+ *   },
+ * });
+ */
+export function useSaveAlbumForCurrentUserMutation(baseOptions?: Apollo.MutationHookOptions<SaveAlbumForCurrentUserMutation, SaveAlbumForCurrentUserMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<SaveAlbumForCurrentUserMutation, SaveAlbumForCurrentUserMutationVariables>(SaveAlbumForCurrentUserDocument, options);
+      }
+export type SaveAlbumForCurrentUserMutationHookResult = ReturnType<typeof useSaveAlbumForCurrentUserMutation>;
+export type SaveAlbumForCurrentUserMutationResult = Apollo.MutationResult<SaveAlbumForCurrentUserMutation>;
+export type SaveAlbumForCurrentUserMutationOptions = Apollo.BaseMutationOptions<SaveAlbumForCurrentUserMutation, SaveAlbumForCurrentUserMutationVariables>;
+export const GetArtistAlbumsDocument = gql`
+    query GetArtistAlbums($artistId: ID!) {
+  artist(id: $artistId) {
+    data {
+      attributes {
+        albums {
+          data {
+            ...AlbumPreview
+          }
+        }
+      }
+    }
+  }
+}
+    ${AlbumPreviewFragmentDoc}`;
+
+/**
+ * __useGetArtistAlbumsQuery__
+ *
+ * To run a query within a React component, call `useGetArtistAlbumsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetArtistAlbumsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetArtistAlbumsQuery({
+ *   variables: {
+ *      artistId: // value for 'artistId'
+ *   },
+ * });
+ */
+export function useGetArtistAlbumsQuery(baseOptions: Apollo.QueryHookOptions<GetArtistAlbumsQuery, GetArtistAlbumsQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetArtistAlbumsQuery, GetArtistAlbumsQueryVariables>(GetArtistAlbumsDocument, options);
+      }
+export function useGetArtistAlbumsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetArtistAlbumsQuery, GetArtistAlbumsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetArtistAlbumsQuery, GetArtistAlbumsQueryVariables>(GetArtistAlbumsDocument, options);
+        }
+export function useGetArtistAlbumsSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<GetArtistAlbumsQuery, GetArtistAlbumsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<GetArtistAlbumsQuery, GetArtistAlbumsQueryVariables>(GetArtistAlbumsDocument, options);
+        }
+export type GetArtistAlbumsQueryHookResult = ReturnType<typeof useGetArtistAlbumsQuery>;
+export type GetArtistAlbumsLazyQueryHookResult = ReturnType<typeof useGetArtistAlbumsLazyQuery>;
+export type GetArtistAlbumsSuspenseQueryHookResult = ReturnType<typeof useGetArtistAlbumsSuspenseQuery>;
+export type GetArtistAlbumsQueryResult = Apollo.QueryResult<GetArtistAlbumsQuery, GetArtistAlbumsQueryVariables>;
+export const GetArtistTopTracksDocument = gql`
+    query GetArtistTopTracks($artistId: ID!) {
+  topTracks: tracks(
     filters: {artist: {id: {eq: $artistId}}}
     sort: "playCount:desc"
   ) {
@@ -1763,39 +2265,39 @@ export const ArtistPopularTrackListDocument = gql`
     ${TrackFragmentDoc}`;
 
 /**
- * __useArtistPopularTrackListQuery__
+ * __useGetArtistTopTracksQuery__
  *
- * To run a query within a React component, call `useArtistPopularTrackListQuery` and pass it any options that fit your needs.
- * When your component renders, `useArtistPopularTrackListQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * To run a query within a React component, call `useGetArtistTopTracksQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetArtistTopTracksQuery` returns an object from Apollo Client that contains loading, error, and data properties
  * you can use to render your UI.
  *
  * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
  *
  * @example
- * const { data, loading, error } = useArtistPopularTrackListQuery({
+ * const { data, loading, error } = useGetArtistTopTracksQuery({
  *   variables: {
  *      artistId: // value for 'artistId'
  *   },
  * });
  */
-export function useArtistPopularTrackListQuery(baseOptions: Apollo.QueryHookOptions<ArtistPopularTrackListQuery, ArtistPopularTrackListQueryVariables>) {
+export function useGetArtistTopTracksQuery(baseOptions: Apollo.QueryHookOptions<GetArtistTopTracksQuery, GetArtistTopTracksQueryVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<ArtistPopularTrackListQuery, ArtistPopularTrackListQueryVariables>(ArtistPopularTrackListDocument, options);
+        return Apollo.useQuery<GetArtistTopTracksQuery, GetArtistTopTracksQueryVariables>(GetArtistTopTracksDocument, options);
       }
-export function useArtistPopularTrackListLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<ArtistPopularTrackListQuery, ArtistPopularTrackListQueryVariables>) {
+export function useGetArtistTopTracksLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetArtistTopTracksQuery, GetArtistTopTracksQueryVariables>) {
           const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<ArtistPopularTrackListQuery, ArtistPopularTrackListQueryVariables>(ArtistPopularTrackListDocument, options);
+          return Apollo.useLazyQuery<GetArtistTopTracksQuery, GetArtistTopTracksQueryVariables>(GetArtistTopTracksDocument, options);
         }
-export function useArtistPopularTrackListSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<ArtistPopularTrackListQuery, ArtistPopularTrackListQueryVariables>) {
+export function useGetArtistTopTracksSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<GetArtistTopTracksQuery, GetArtistTopTracksQueryVariables>) {
           const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useSuspenseQuery<ArtistPopularTrackListQuery, ArtistPopularTrackListQueryVariables>(ArtistPopularTrackListDocument, options);
+          return Apollo.useSuspenseQuery<GetArtistTopTracksQuery, GetArtistTopTracksQueryVariables>(GetArtistTopTracksDocument, options);
         }
-export type ArtistPopularTrackListQueryHookResult = ReturnType<typeof useArtistPopularTrackListQuery>;
-export type ArtistPopularTrackListLazyQueryHookResult = ReturnType<typeof useArtistPopularTrackListLazyQuery>;
-export type ArtistPopularTrackListSuspenseQueryHookResult = ReturnType<typeof useArtistPopularTrackListSuspenseQuery>;
-export type ArtistPopularTrackListQueryResult = Apollo.QueryResult<ArtistPopularTrackListQuery, ArtistPopularTrackListQueryVariables>;
-export const ArtistDocument = gql`
-    query Artist($id: ID!) {
+export type GetArtistTopTracksQueryHookResult = ReturnType<typeof useGetArtistTopTracksQuery>;
+export type GetArtistTopTracksLazyQueryHookResult = ReturnType<typeof useGetArtistTopTracksLazyQuery>;
+export type GetArtistTopTracksSuspenseQueryHookResult = ReturnType<typeof useGetArtistTopTracksSuspenseQuery>;
+export type GetArtistTopTracksQueryResult = Apollo.QueryResult<GetArtistTopTracksQuery, GetArtistTopTracksQueryVariables>;
+export const GetArtistDocument = gql`
+    query GetArtist($id: ID!) {
   artist(id: $id) {
     data {
       id
@@ -1803,7 +2305,7 @@ export const ArtistDocument = gql`
         name
         albums {
           data {
-            ...Album
+            ...AlbumPreview
           }
         }
         image {
@@ -1816,50 +2318,90 @@ export const ArtistDocument = gql`
       }
     }
   }
-  popularTracks: tracks(
-    filters: {artist: {id: {eq: $id}}}
-    sort: "playCount:desc"
-  ) {
+  topTracks: tracks(filters: {artist: {id: {eq: $id}}}, sort: "playCount:desc") {
     data {
       ...Track
     }
   }
 }
-    ${AlbumFragmentDoc}
+    ${AlbumPreviewFragmentDoc}
 ${TrackFragmentDoc}`;
 
 /**
- * __useArtistQuery__
+ * __useGetArtistQuery__
  *
- * To run a query within a React component, call `useArtistQuery` and pass it any options that fit your needs.
- * When your component renders, `useArtistQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * To run a query within a React component, call `useGetArtistQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetArtistQuery` returns an object from Apollo Client that contains loading, error, and data properties
  * you can use to render your UI.
  *
  * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
  *
  * @example
- * const { data, loading, error } = useArtistQuery({
+ * const { data, loading, error } = useGetArtistQuery({
  *   variables: {
  *      id: // value for 'id'
  *   },
  * });
  */
-export function useArtistQuery(baseOptions: Apollo.QueryHookOptions<ArtistQuery, ArtistQueryVariables>) {
+export function useGetArtistQuery(baseOptions: Apollo.QueryHookOptions<GetArtistQuery, GetArtistQueryVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<ArtistQuery, ArtistQueryVariables>(ArtistDocument, options);
+        return Apollo.useQuery<GetArtistQuery, GetArtistQueryVariables>(GetArtistDocument, options);
       }
-export function useArtistLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<ArtistQuery, ArtistQueryVariables>) {
+export function useGetArtistLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetArtistQuery, GetArtistQueryVariables>) {
           const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<ArtistQuery, ArtistQueryVariables>(ArtistDocument, options);
+          return Apollo.useLazyQuery<GetArtistQuery, GetArtistQueryVariables>(GetArtistDocument, options);
         }
-export function useArtistSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<ArtistQuery, ArtistQueryVariables>) {
+export function useGetArtistSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<GetArtistQuery, GetArtistQueryVariables>) {
           const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useSuspenseQuery<ArtistQuery, ArtistQueryVariables>(ArtistDocument, options);
+          return Apollo.useSuspenseQuery<GetArtistQuery, GetArtistQueryVariables>(GetArtistDocument, options);
         }
-export type ArtistQueryHookResult = ReturnType<typeof useArtistQuery>;
-export type ArtistLazyQueryHookResult = ReturnType<typeof useArtistLazyQuery>;
-export type ArtistSuspenseQueryHookResult = ReturnType<typeof useArtistSuspenseQuery>;
-export type ArtistQueryResult = Apollo.QueryResult<ArtistQuery, ArtistQueryVariables>;
+export type GetArtistQueryHookResult = ReturnType<typeof useGetArtistQuery>;
+export type GetArtistLazyQueryHookResult = ReturnType<typeof useGetArtistLazyQuery>;
+export type GetArtistSuspenseQueryHookResult = ReturnType<typeof useGetArtistSuspenseQuery>;
+export type GetArtistQueryResult = Apollo.QueryResult<GetArtistQuery, GetArtistQueryVariables>;
+export const GetSeveralArtistsDocument = gql`
+    query GetSeveralArtists($filters: ArtistFiltersInput, $sort: [String] = []) {
+  artists(filters: $filters, sort: $sort) {
+    data {
+      ...ArtistPreview
+    }
+  }
+}
+    ${ArtistPreviewFragmentDoc}`;
+
+/**
+ * __useGetSeveralArtistsQuery__
+ *
+ * To run a query within a React component, call `useGetSeveralArtistsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetSeveralArtistsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetSeveralArtistsQuery({
+ *   variables: {
+ *      filters: // value for 'filters'
+ *      sort: // value for 'sort'
+ *   },
+ * });
+ */
+export function useGetSeveralArtistsQuery(baseOptions?: Apollo.QueryHookOptions<GetSeveralArtistsQuery, GetSeveralArtistsQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetSeveralArtistsQuery, GetSeveralArtistsQueryVariables>(GetSeveralArtistsDocument, options);
+      }
+export function useGetSeveralArtistsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetSeveralArtistsQuery, GetSeveralArtistsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetSeveralArtistsQuery, GetSeveralArtistsQueryVariables>(GetSeveralArtistsDocument, options);
+        }
+export function useGetSeveralArtistsSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<GetSeveralArtistsQuery, GetSeveralArtistsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<GetSeveralArtistsQuery, GetSeveralArtistsQueryVariables>(GetSeveralArtistsDocument, options);
+        }
+export type GetSeveralArtistsQueryHookResult = ReturnType<typeof useGetSeveralArtistsQuery>;
+export type GetSeveralArtistsLazyQueryHookResult = ReturnType<typeof useGetSeveralArtistsLazyQuery>;
+export type GetSeveralArtistsSuspenseQueryHookResult = ReturnType<typeof useGetSeveralArtistsSuspenseQuery>;
+export type GetSeveralArtistsQueryResult = Apollo.QueryResult<GetSeveralArtistsQuery, GetSeveralArtistsQueryVariables>;
 export const ChangePasswordDocument = gql`
     mutation ChangePassword($currentPassword: String!, $password: String!, $passwordConfirmation: String!) {
   changePassword(
@@ -2088,6 +2630,174 @@ export function useResetPasswordMutation(baseOptions?: Apollo.MutationHookOption
 export type ResetPasswordMutationHookResult = ReturnType<typeof useResetPasswordMutation>;
 export type ResetPasswordMutationResult = Apollo.MutationResult<ResetPasswordMutation>;
 export type ResetPasswordMutationOptions = Apollo.BaseMutationOptions<ResetPasswordMutation, ResetPasswordMutationVariables>;
+export const CheckUserSavedTracksDocument = gql`
+    query CheckUserSavedTracks($tracks: [ID]!) {
+  checkUserSavedTracks(tracks: $tracks) {
+    tracks {
+      isSaved
+    }
+  }
+}
+    `;
+
+/**
+ * __useCheckUserSavedTracksQuery__
+ *
+ * To run a query within a React component, call `useCheckUserSavedTracksQuery` and pass it any options that fit your needs.
+ * When your component renders, `useCheckUserSavedTracksQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useCheckUserSavedTracksQuery({
+ *   variables: {
+ *      tracks: // value for 'tracks'
+ *   },
+ * });
+ */
+export function useCheckUserSavedTracksQuery(baseOptions: Apollo.QueryHookOptions<CheckUserSavedTracksQuery, CheckUserSavedTracksQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<CheckUserSavedTracksQuery, CheckUserSavedTracksQueryVariables>(CheckUserSavedTracksDocument, options);
+      }
+export function useCheckUserSavedTracksLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<CheckUserSavedTracksQuery, CheckUserSavedTracksQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<CheckUserSavedTracksQuery, CheckUserSavedTracksQueryVariables>(CheckUserSavedTracksDocument, options);
+        }
+export function useCheckUserSavedTracksSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<CheckUserSavedTracksQuery, CheckUserSavedTracksQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<CheckUserSavedTracksQuery, CheckUserSavedTracksQueryVariables>(CheckUserSavedTracksDocument, options);
+        }
+export type CheckUserSavedTracksQueryHookResult = ReturnType<typeof useCheckUserSavedTracksQuery>;
+export type CheckUserSavedTracksLazyQueryHookResult = ReturnType<typeof useCheckUserSavedTracksLazyQuery>;
+export type CheckUserSavedTracksSuspenseQueryHookResult = ReturnType<typeof useCheckUserSavedTracksSuspenseQuery>;
+export type CheckUserSavedTracksQueryResult = Apollo.QueryResult<CheckUserSavedTracksQuery, CheckUserSavedTracksQueryVariables>;
+export const GetSeveralTracksDocument = gql`
+    query GetSeveralTracks($filters: TrackFiltersInput, $sort: [String] = []) {
+  tracks(filters: $filters, sort: $sort) {
+    data {
+      ...Track
+    }
+  }
+}
+    ${TrackFragmentDoc}`;
+
+/**
+ * __useGetSeveralTracksQuery__
+ *
+ * To run a query within a React component, call `useGetSeveralTracksQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetSeveralTracksQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetSeveralTracksQuery({
+ *   variables: {
+ *      filters: // value for 'filters'
+ *      sort: // value for 'sort'
+ *   },
+ * });
+ */
+export function useGetSeveralTracksQuery(baseOptions?: Apollo.QueryHookOptions<GetSeveralTracksQuery, GetSeveralTracksQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetSeveralTracksQuery, GetSeveralTracksQueryVariables>(GetSeveralTracksDocument, options);
+      }
+export function useGetSeveralTracksLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetSeveralTracksQuery, GetSeveralTracksQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetSeveralTracksQuery, GetSeveralTracksQueryVariables>(GetSeveralTracksDocument, options);
+        }
+export function useGetSeveralTracksSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<GetSeveralTracksQuery, GetSeveralTracksQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<GetSeveralTracksQuery, GetSeveralTracksQueryVariables>(GetSeveralTracksDocument, options);
+        }
+export type GetSeveralTracksQueryHookResult = ReturnType<typeof useGetSeveralTracksQuery>;
+export type GetSeveralTracksLazyQueryHookResult = ReturnType<typeof useGetSeveralTracksLazyQuery>;
+export type GetSeveralTracksSuspenseQueryHookResult = ReturnType<typeof useGetSeveralTracksSuspenseQuery>;
+export type GetSeveralTracksQueryResult = Apollo.QueryResult<GetSeveralTracksQuery, GetSeveralTracksQueryVariables>;
+export const GetTrackDocument = gql`
+    query GetTrack($id: ID!) {
+  track(id: $id) {
+    data {
+      ...Track
+    }
+  }
+}
+    ${TrackFragmentDoc}`;
+
+/**
+ * __useGetTrackQuery__
+ *
+ * To run a query within a React component, call `useGetTrackQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetTrackQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetTrackQuery({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useGetTrackQuery(baseOptions: Apollo.QueryHookOptions<GetTrackQuery, GetTrackQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetTrackQuery, GetTrackQueryVariables>(GetTrackDocument, options);
+      }
+export function useGetTrackLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetTrackQuery, GetTrackQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetTrackQuery, GetTrackQueryVariables>(GetTrackDocument, options);
+        }
+export function useGetTrackSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<GetTrackQuery, GetTrackQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<GetTrackQuery, GetTrackQueryVariables>(GetTrackDocument, options);
+        }
+export type GetTrackQueryHookResult = ReturnType<typeof useGetTrackQuery>;
+export type GetTrackLazyQueryHookResult = ReturnType<typeof useGetTrackLazyQuery>;
+export type GetTrackSuspenseQueryHookResult = ReturnType<typeof useGetTrackSuspenseQuery>;
+export type GetTrackQueryResult = Apollo.QueryResult<GetTrackQuery, GetTrackQueryVariables>;
+export const GetUserSavedTracksDocument = gql`
+    query GetUserSavedTracks {
+  me {
+    savedTracks {
+      ...SavedTrack
+    }
+  }
+}
+    ${SavedTrackFragmentDoc}`;
+
+/**
+ * __useGetUserSavedTracksQuery__
+ *
+ * To run a query within a React component, call `useGetUserSavedTracksQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetUserSavedTracksQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetUserSavedTracksQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useGetUserSavedTracksQuery(baseOptions?: Apollo.QueryHookOptions<GetUserSavedTracksQuery, GetUserSavedTracksQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetUserSavedTracksQuery, GetUserSavedTracksQueryVariables>(GetUserSavedTracksDocument, options);
+      }
+export function useGetUserSavedTracksLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetUserSavedTracksQuery, GetUserSavedTracksQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetUserSavedTracksQuery, GetUserSavedTracksQueryVariables>(GetUserSavedTracksDocument, options);
+        }
+export function useGetUserSavedTracksSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<GetUserSavedTracksQuery, GetUserSavedTracksQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<GetUserSavedTracksQuery, GetUserSavedTracksQueryVariables>(GetUserSavedTracksDocument, options);
+        }
+export type GetUserSavedTracksQueryHookResult = ReturnType<typeof useGetUserSavedTracksQuery>;
+export type GetUserSavedTracksLazyQueryHookResult = ReturnType<typeof useGetUserSavedTracksLazyQuery>;
+export type GetUserSavedTracksSuspenseQueryHookResult = ReturnType<typeof useGetUserSavedTracksSuspenseQuery>;
+export type GetUserSavedTracksQueryResult = Apollo.QueryResult<GetUserSavedTracksQuery, GetUserSavedTracksQueryVariables>;
 export const TrackIncrementPlayCountDocument = gql`
     query TrackIncrementPlayCount($trackId: ID!) {
   trackIncrementPlayCount(trackId: $trackId) {
@@ -2128,93 +2838,107 @@ export type TrackIncrementPlayCountQueryHookResult = ReturnType<typeof useTrackI
 export type TrackIncrementPlayCountLazyQueryHookResult = ReturnType<typeof useTrackIncrementPlayCountLazyQuery>;
 export type TrackIncrementPlayCountSuspenseQueryHookResult = ReturnType<typeof useTrackIncrementPlayCountSuspenseQuery>;
 export type TrackIncrementPlayCountQueryResult = Apollo.QueryResult<TrackIncrementPlayCountQuery, TrackIncrementPlayCountQueryVariables>;
-export const TrackListDocument = gql`
-    query TrackList($filters: TrackFiltersInput, $sort: [String] = []) {
-  tracks(filters: $filters, sort: $sort) {
-    data {
-      ...Track
-    }
+export const RemoveUserSavedTrackDocument = gql`
+    mutation RemoveUserSavedTrack($trackId: ID!) {
+  deleteSavedTrack(trackId: $trackId) {
+    isSaved
   }
 }
-    ${TrackFragmentDoc}`;
+    `;
+export type RemoveUserSavedTrackMutationFn = Apollo.MutationFunction<RemoveUserSavedTrackMutation, RemoveUserSavedTrackMutationVariables>;
 
 /**
- * __useTrackListQuery__
+ * __useRemoveUserSavedTrackMutation__
  *
- * To run a query within a React component, call `useTrackListQuery` and pass it any options that fit your needs.
- * When your component renders, `useTrackListQuery` returns an object from Apollo Client that contains loading, error, and data properties
- * you can use to render your UI.
+ * To run a mutation, you first call `useRemoveUserSavedTrackMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useRemoveUserSavedTrackMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
  *
- * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
  *
  * @example
- * const { data, loading, error } = useTrackListQuery({
+ * const [removeUserSavedTrackMutation, { data, loading, error }] = useRemoveUserSavedTrackMutation({
  *   variables: {
- *      filters: // value for 'filters'
- *      sort: // value for 'sort'
+ *      trackId: // value for 'trackId'
  *   },
  * });
  */
-export function useTrackListQuery(baseOptions?: Apollo.QueryHookOptions<TrackListQuery, TrackListQueryVariables>) {
+export function useRemoveUserSavedTrackMutation(baseOptions?: Apollo.MutationHookOptions<RemoveUserSavedTrackMutation, RemoveUserSavedTrackMutationVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<TrackListQuery, TrackListQueryVariables>(TrackListDocument, options);
+        return Apollo.useMutation<RemoveUserSavedTrackMutation, RemoveUserSavedTrackMutationVariables>(RemoveUserSavedTrackDocument, options);
       }
-export function useTrackListLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<TrackListQuery, TrackListQueryVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<TrackListQuery, TrackListQueryVariables>(TrackListDocument, options);
-        }
-export function useTrackListSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<TrackListQuery, TrackListQueryVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useSuspenseQuery<TrackListQuery, TrackListQueryVariables>(TrackListDocument, options);
-        }
-export type TrackListQueryHookResult = ReturnType<typeof useTrackListQuery>;
-export type TrackListLazyQueryHookResult = ReturnType<typeof useTrackListLazyQuery>;
-export type TrackListSuspenseQueryHookResult = ReturnType<typeof useTrackListSuspenseQuery>;
-export type TrackListQueryResult = Apollo.QueryResult<TrackListQuery, TrackListQueryVariables>;
-export const TrackDocument = gql`
-    query Track($id: ID!) {
-  track(id: $id) {
-    data {
-      ...Track
-    }
+export type RemoveUserSavedTrackMutationHookResult = ReturnType<typeof useRemoveUserSavedTrackMutation>;
+export type RemoveUserSavedTrackMutationResult = Apollo.MutationResult<RemoveUserSavedTrackMutation>;
+export type RemoveUserSavedTrackMutationOptions = Apollo.BaseMutationOptions<RemoveUserSavedTrackMutation, RemoveUserSavedTrackMutationVariables>;
+export const SaveTrackForCurrentUserDocument = gql`
+    mutation SaveTrackForCurrentUser($trackId: ID!) {
+  createSavedTrack(trackId: $trackId) {
+    isSaved
   }
 }
-    ${TrackFragmentDoc}`;
+    `;
+export type SaveTrackForCurrentUserMutationFn = Apollo.MutationFunction<SaveTrackForCurrentUserMutation, SaveTrackForCurrentUserMutationVariables>;
 
 /**
- * __useTrackQuery__
+ * __useSaveTrackForCurrentUserMutation__
  *
- * To run a query within a React component, call `useTrackQuery` and pass it any options that fit your needs.
- * When your component renders, `useTrackQuery` returns an object from Apollo Client that contains loading, error, and data properties
- * you can use to render your UI.
+ * To run a mutation, you first call `useSaveTrackForCurrentUserMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useSaveTrackForCurrentUserMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
  *
- * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
  *
  * @example
- * const { data, loading, error } = useTrackQuery({
+ * const [saveTrackForCurrentUserMutation, { data, loading, error }] = useSaveTrackForCurrentUserMutation({
  *   variables: {
- *      id: // value for 'id'
+ *      trackId: // value for 'trackId'
  *   },
  * });
  */
-export function useTrackQuery(baseOptions: Apollo.QueryHookOptions<TrackQuery, TrackQueryVariables>) {
+export function useSaveTrackForCurrentUserMutation(baseOptions?: Apollo.MutationHookOptions<SaveTrackForCurrentUserMutation, SaveTrackForCurrentUserMutationVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<TrackQuery, TrackQueryVariables>(TrackDocument, options);
+        return Apollo.useMutation<SaveTrackForCurrentUserMutation, SaveTrackForCurrentUserMutationVariables>(SaveTrackForCurrentUserDocument, options);
       }
-export function useTrackLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<TrackQuery, TrackQueryVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<TrackQuery, TrackQueryVariables>(TrackDocument, options);
-        }
-export function useTrackSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<TrackQuery, TrackQueryVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useSuspenseQuery<TrackQuery, TrackQueryVariables>(TrackDocument, options);
-        }
-export type TrackQueryHookResult = ReturnType<typeof useTrackQuery>;
-export type TrackLazyQueryHookResult = ReturnType<typeof useTrackLazyQuery>;
-export type TrackSuspenseQueryHookResult = ReturnType<typeof useTrackSuspenseQuery>;
-export type TrackQueryResult = Apollo.QueryResult<TrackQuery, TrackQueryVariables>;
-export const MeDocument = gql`
-    query Me {
+export type SaveTrackForCurrentUserMutationHookResult = ReturnType<typeof useSaveTrackForCurrentUserMutation>;
+export type SaveTrackForCurrentUserMutationResult = Apollo.MutationResult<SaveTrackForCurrentUserMutation>;
+export type SaveTrackForCurrentUserMutationOptions = Apollo.BaseMutationOptions<SaveTrackForCurrentUserMutation, SaveTrackForCurrentUserMutationVariables>;
+export const FollowArtistDocument = gql`
+    mutation FollowArtist($artistId: ID!) {
+  createFollowingArtist(artistId: $artistId) {
+    isFollowed
+  }
+}
+    `;
+export type FollowArtistMutationFn = Apollo.MutationFunction<FollowArtistMutation, FollowArtistMutationVariables>;
+
+/**
+ * __useFollowArtistMutation__
+ *
+ * To run a mutation, you first call `useFollowArtistMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useFollowArtistMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [followArtistMutation, { data, loading, error }] = useFollowArtistMutation({
+ *   variables: {
+ *      artistId: // value for 'artistId'
+ *   },
+ * });
+ */
+export function useFollowArtistMutation(baseOptions?: Apollo.MutationHookOptions<FollowArtistMutation, FollowArtistMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<FollowArtistMutation, FollowArtistMutationVariables>(FollowArtistDocument, options);
+      }
+export type FollowArtistMutationHookResult = ReturnType<typeof useFollowArtistMutation>;
+export type FollowArtistMutationResult = Apollo.MutationResult<FollowArtistMutation>;
+export type FollowArtistMutationOptions = Apollo.BaseMutationOptions<FollowArtistMutation, FollowArtistMutationVariables>;
+export const GetCurrentUserProfileDocument = gql`
+    query GetCurrentUserProfile {
   me {
     ...Me
   }
@@ -2222,36 +2946,106 @@ export const MeDocument = gql`
     ${MeFragmentDoc}`;
 
 /**
- * __useMeQuery__
+ * __useGetCurrentUserProfileQuery__
  *
- * To run a query within a React component, call `useMeQuery` and pass it any options that fit your needs.
- * When your component renders, `useMeQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * To run a query within a React component, call `useGetCurrentUserProfileQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetCurrentUserProfileQuery` returns an object from Apollo Client that contains loading, error, and data properties
  * you can use to render your UI.
  *
  * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
  *
  * @example
- * const { data, loading, error } = useMeQuery({
+ * const { data, loading, error } = useGetCurrentUserProfileQuery({
  *   variables: {
  *   },
  * });
  */
-export function useMeQuery(baseOptions?: Apollo.QueryHookOptions<MeQuery, MeQueryVariables>) {
+export function useGetCurrentUserProfileQuery(baseOptions?: Apollo.QueryHookOptions<GetCurrentUserProfileQuery, GetCurrentUserProfileQueryVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<MeQuery, MeQueryVariables>(MeDocument, options);
+        return Apollo.useQuery<GetCurrentUserProfileQuery, GetCurrentUserProfileQueryVariables>(GetCurrentUserProfileDocument, options);
       }
-export function useMeLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<MeQuery, MeQueryVariables>) {
+export function useGetCurrentUserProfileLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetCurrentUserProfileQuery, GetCurrentUserProfileQueryVariables>) {
           const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<MeQuery, MeQueryVariables>(MeDocument, options);
+          return Apollo.useLazyQuery<GetCurrentUserProfileQuery, GetCurrentUserProfileQueryVariables>(GetCurrentUserProfileDocument, options);
         }
-export function useMeSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<MeQuery, MeQueryVariables>) {
+export function useGetCurrentUserProfileSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<GetCurrentUserProfileQuery, GetCurrentUserProfileQueryVariables>) {
           const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useSuspenseQuery<MeQuery, MeQueryVariables>(MeDocument, options);
+          return Apollo.useSuspenseQuery<GetCurrentUserProfileQuery, GetCurrentUserProfileQueryVariables>(GetCurrentUserProfileDocument, options);
         }
-export type MeQueryHookResult = ReturnType<typeof useMeQuery>;
-export type MeLazyQueryHookResult = ReturnType<typeof useMeLazyQuery>;
-export type MeSuspenseQueryHookResult = ReturnType<typeof useMeSuspenseQuery>;
-export type MeQueryResult = Apollo.QueryResult<MeQuery, MeQueryVariables>;
+export type GetCurrentUserProfileQueryHookResult = ReturnType<typeof useGetCurrentUserProfileQuery>;
+export type GetCurrentUserProfileLazyQueryHookResult = ReturnType<typeof useGetCurrentUserProfileLazyQuery>;
+export type GetCurrentUserProfileSuspenseQueryHookResult = ReturnType<typeof useGetCurrentUserProfileSuspenseQuery>;
+export type GetCurrentUserProfileQueryResult = Apollo.QueryResult<GetCurrentUserProfileQuery, GetCurrentUserProfileQueryVariables>;
+export const GetUserTopItemsDocument = gql`
+    query GetUserTopItems {
+  userTopItems
+}
+    `;
+
+/**
+ * __useGetUserTopItemsQuery__
+ *
+ * To run a query within a React component, call `useGetUserTopItemsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetUserTopItemsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetUserTopItemsQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useGetUserTopItemsQuery(baseOptions?: Apollo.QueryHookOptions<GetUserTopItemsQuery, GetUserTopItemsQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetUserTopItemsQuery, GetUserTopItemsQueryVariables>(GetUserTopItemsDocument, options);
+      }
+export function useGetUserTopItemsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetUserTopItemsQuery, GetUserTopItemsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetUserTopItemsQuery, GetUserTopItemsQueryVariables>(GetUserTopItemsDocument, options);
+        }
+export function useGetUserTopItemsSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<GetUserTopItemsQuery, GetUserTopItemsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<GetUserTopItemsQuery, GetUserTopItemsQueryVariables>(GetUserTopItemsDocument, options);
+        }
+export type GetUserTopItemsQueryHookResult = ReturnType<typeof useGetUserTopItemsQuery>;
+export type GetUserTopItemsLazyQueryHookResult = ReturnType<typeof useGetUserTopItemsLazyQuery>;
+export type GetUserTopItemsSuspenseQueryHookResult = ReturnType<typeof useGetUserTopItemsSuspenseQuery>;
+export type GetUserTopItemsQueryResult = Apollo.QueryResult<GetUserTopItemsQuery, GetUserTopItemsQueryVariables>;
+export const UnfollowArtistDocument = gql`
+    mutation UnfollowArtist($artistId: ID!) {
+  deleteFollowingArtist(artistId: $artistId) {
+    isFollowed
+  }
+}
+    `;
+export type UnfollowArtistMutationFn = Apollo.MutationFunction<UnfollowArtistMutation, UnfollowArtistMutationVariables>;
+
+/**
+ * __useUnfollowArtistMutation__
+ *
+ * To run a mutation, you first call `useUnfollowArtistMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUnfollowArtistMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [unfollowArtistMutation, { data, loading, error }] = useUnfollowArtistMutation({
+ *   variables: {
+ *      artistId: // value for 'artistId'
+ *   },
+ * });
+ */
+export function useUnfollowArtistMutation(baseOptions?: Apollo.MutationHookOptions<UnfollowArtistMutation, UnfollowArtistMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<UnfollowArtistMutation, UnfollowArtistMutationVariables>(UnfollowArtistDocument, options);
+      }
+export type UnfollowArtistMutationHookResult = ReturnType<typeof useUnfollowArtistMutation>;
+export type UnfollowArtistMutationResult = Apollo.MutationResult<UnfollowArtistMutation>;
+export type UnfollowArtistMutationOptions = Apollo.BaseMutationOptions<UnfollowArtistMutation, UnfollowArtistMutationVariables>;
 export const UpdateUserNotificationsDocument = gql`
     mutation UpdateUserNotifications($data: UpdateUserNotificationsInput) {
   updateUserNotifications(data: $data) {

@@ -1,4 +1,6 @@
 import { type ClassValue, clsx } from 'clsx';
+import * as dateFns from 'date-fns';
+import * as locale from 'date-fns/locale';
 import { twMerge } from 'tailwind-merge';
 
 import { env } from '@/env.mjs';
@@ -42,8 +44,8 @@ export function plural(count: number, messages: string[]) {
   return messages[2];
 }
 
-export const parseDuration = (duration: number | null): string => {
-  if (duration !== null) {
+export const parseDuration = (duration?: number | null): string => {
+  if (duration) {
     const hours = Math.trunc(duration / 3600);
     const minutes = Math.trunc(duration / 60) % 60;
     const seconds = Math.trunc(duration) % 60;
@@ -58,11 +60,15 @@ export const parseDuration = (duration: number | null): string => {
     return result;
   }
 
-  return '0:00';
+  if (duration === 0) {
+    return '0:00';
+  }
+
+  return '-:--';
 };
 
 export const parseAlbumDuration = (duration: number | null): string => {
-  if (duration === null) {
+  if (!duration) {
     return '0:00';
   }
 
@@ -82,3 +88,6 @@ export const parseAlbumDuration = (duration: number | null): string => {
 
   return result;
 };
+
+export const formatDistanceToNow = (date: Date) =>
+  dateFns.formatDistanceToNowStrict(new Date(date), { locale: locale.ru, addSuffix: true });
